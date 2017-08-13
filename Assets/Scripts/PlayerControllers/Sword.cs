@@ -27,9 +27,9 @@ public class Sword : MonoBehaviour {
     protected Rigidbody rigbod;
     protected System.DateTime startTime;
 
-    protected bool attacking = false;
-    protected bool canAttack = true;
-    protected bool shouldAttack = false;
+    public bool attacking = false;
+    public bool canAttack = true;
+    public bool shouldAttack = false;
 
     protected bool blocking = false;
 
@@ -165,5 +165,14 @@ public class Sword : MonoBehaviour {
         shouldRegenBoost = false;
         yield return new WaitForSeconds(ms / 1000f);
         shouldRegenBoost = true;
+    }
+
+    private void OnCollisionEnter(Collision collision)
+    {
+        if (collision.collider.GetComponent<Sword>() != null)
+        {
+            attacking = false;
+            rigbod.velocity = -rigbod.velocity;
+        }
     }
 }

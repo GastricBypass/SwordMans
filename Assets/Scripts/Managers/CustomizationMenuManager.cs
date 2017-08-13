@@ -11,31 +11,37 @@ public class CustomizationMenuManager : MonoBehaviour {
     public List<string> colors;
     public List<string> weapons;
     public List<string> hats;
+    public List<string> misc;
     public List<string> skins;
 
     private int[] colorIndeces = new int[] { 0, 1, 2, 3 };
     private int[] weaponIndeces = new int[] { 0, 0, 0, 0 };
     private int[] hatIndeces = new int[] { 0, 0, 0, 0 };
+    private int[] miscIndeces = new int[] { 0, 0, 0, 0 };
     private int[] skinIndeces = new int[] { 0, 0, 0, 0 };
 
     public Text color1;
     public Text weapon1;
     public Text hat1;
+    public Text misc1;
     public Text skin1;
 
     public Text color2;
     public Text weapon2;
     public Text hat2;
+    public Text misc2;
     public Text skin2;
 
     public Text color3;
     public Text weapon3;
     public Text hat3;
+    public Text misc3;
     public Text skin3;
 
     public Text color4;
     public Text weapon4;
     public Text hat4;
+    public Text misc4;
     public Text skin4;
 
     // Use this for initialization
@@ -45,45 +51,53 @@ public class CustomizationMenuManager : MonoBehaviour {
         color1.text = manager.gsm.player1Color;
         weapon1.text = manager.gsm.player1Weapon;
         hat1.text = manager.gsm.player1Hat;
+        misc1.text = manager.gsm.player1Misc;
         skin1.text = manager.gsm.player1Skin;
 
         colorIndeces[0] = colors.IndexOf(color1.text);
         weaponIndeces[0] = weapons.IndexOf(weapon1.text);
         hatIndeces[0] = hats.IndexOf(hat1.text);
+        miscIndeces[0] = misc.IndexOf(misc1.text);
         skinIndeces[0] = skins.IndexOf(skin1.text);
 
         // Player 2 presets
         color2.text = manager.gsm.player2Color;
         weapon2.text = manager.gsm.player2Weapon;
         hat2.text = manager.gsm.player2Hat;
+        misc2.text = manager.gsm.player2Misc;
         skin2.text = manager.gsm.player2Skin;
 
         colorIndeces[1] = colors.IndexOf(color2.text);
         weaponIndeces[1] = weapons.IndexOf(weapon2.text);
         hatIndeces[1] = hats.IndexOf(hat2.text);
+        miscIndeces[1] = misc.IndexOf(misc2.text);
         skinIndeces[1] = skins.IndexOf(skin2.text);
 
         // Player 3 presets
         color3.text = manager.gsm.player3Color;
         weapon3.text = manager.gsm.player3Weapon;
         hat3.text = manager.gsm.player3Hat;
+        misc3.text = manager.gsm.player3Misc;
         skin3.text = manager.gsm.player3Skin;
 
 
         colorIndeces[2] = colors.IndexOf(color3.text);
         weaponIndeces[2] = weapons.IndexOf(weapon3.text);
         hatIndeces[2] = hats.IndexOf(hat3.text);
+        miscIndeces[2] = misc.IndexOf(misc3.text);
         skinIndeces[2] = skins.IndexOf(skin3.text);
 
         // Player 4 presets
         color4.text = manager.gsm.player4Color;
         weapon4.text = manager.gsm.player4Weapon;
         hat4.text = manager.gsm.player4Hat;
+        misc4.text = manager.gsm.player4Misc;
         skin4.text = manager.gsm.player4Skin;
 
         colorIndeces[3] = colors.IndexOf(color4.text);
         weaponIndeces[3] = weapons.IndexOf(weapon4.text);
         hatIndeces[3] = hats.IndexOf(hat4.text);
+        miscIndeces[3] = misc.IndexOf(misc4.text);
         skinIndeces[3] = skins.IndexOf(skin4.text);
     }
 	
@@ -168,6 +182,32 @@ public class CustomizationMenuManager : MonoBehaviour {
         }
 
         SetHat(hatIndeces[playerNum - 1], playerNum);
+        manager.gsm.SpawnMenuPlayers();
+    }
+
+    public void ForwardMisc(int playerNum)
+    {
+        miscIndeces[playerNum - 1]++;
+
+        if (miscIndeces[playerNum - 1] > misc.Count - 1)
+        {
+            miscIndeces[playerNum - 1] = 0;
+        }
+
+        SetMisc(miscIndeces[playerNum - 1], playerNum);
+        manager.gsm.SpawnMenuPlayers();
+    }
+
+    public void BackMisc(int playerNum)
+    {
+        miscIndeces[playerNum - 1]--;
+
+        if (miscIndeces[playerNum - 1] < 0)
+        {
+            miscIndeces[playerNum - 1] = misc.Count - 1;
+        }
+
+        SetMisc(miscIndeces[playerNum - 1], playerNum);
         manager.gsm.SpawnMenuPlayers();
     }
 
@@ -266,6 +306,30 @@ public class CustomizationMenuManager : MonoBehaviour {
         {
             hat4.text = hats[index];
             manager.gsm.player4Hat = hat4.text;
+        }
+    }
+
+    private void SetMisc(int index, int playerNum)
+    {
+        if (playerNum == 1)
+        {
+            misc1.text = misc[index];
+            manager.gsm.player1Misc = misc1.text;
+        }
+        if (playerNum == 2)
+        {
+            misc2.text = misc[index];
+            manager.gsm.player2Misc = misc2.text;
+        }
+        if (playerNum == 3)
+        {
+            misc3.text = misc[index];
+            manager.gsm.player3Misc = misc3.text;
+        }
+        if (playerNum == 4)
+        {
+            misc4.text = misc[index];
+            manager.gsm.player4Misc = misc4.text;
         }
     }
 

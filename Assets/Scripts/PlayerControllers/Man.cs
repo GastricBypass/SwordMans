@@ -17,6 +17,7 @@ public class Man : MonoBehaviour {
     public string color;
     public string weapon;
     public string hat;
+    public string misc;
     public string skin;
 
     private System.DateTime hitTime;
@@ -30,6 +31,7 @@ public class Man : MonoBehaviour {
         SetSkin(skin);
         SetColor(color);
         SetWeapon(weapon);
+        SetMisc(misc);
         SetHat(hat);
     }
 
@@ -68,6 +70,11 @@ public class Man : MonoBehaviour {
         {
             transform.Find("Body/Body Head/").GetChild(i).GetComponent<MeshRenderer>().material.color = toSet;
         }
+
+        for (int i = 0; i < transform.Find("Body/Body Spine/").childCount; i++)
+        {
+            transform.Find("Body/Body Spine/").GetChild(i).GetComponent<MeshRenderer>().material.color = toSet;
+        }
     }
 
     void SetWeapon(string w)
@@ -80,6 +87,14 @@ public class Man : MonoBehaviour {
         if (h != "None")
         {
             transform.Find("Body/Body Head/" + h).gameObject.SetActive(true);
+        }
+    }
+
+    void SetMisc(string m)
+    {
+        if (m != "None")
+        {
+            transform.Find("Body/Body Spine/" + m).gameObject.SetActive(true);
         }
     }
 

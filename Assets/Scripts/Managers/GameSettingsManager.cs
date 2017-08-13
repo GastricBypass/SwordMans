@@ -27,21 +27,25 @@ public class GameSettingsManager : MonoBehaviour {
     public string player1Color;
     public string player1Weapon;
     public string player1Hat;
+    public string player1Misc;
     public string player1Skin;
 
     public string player2Color;
     public string player2Weapon;
     public string player2Hat;
+    public string player2Misc;
     public string player2Skin;
 
     public string player3Color;
     public string player3Weapon;
     public string player3Hat;
+    public string player3Misc;
     public string player3Skin;
 
     public string player4Color;
     public string player4Weapon;
     public string player4Hat;
+    public string player4Misc;
     public string player4Skin;
 
     public Settings settings = new Settings();
@@ -109,6 +113,7 @@ public class GameSettingsManager : MonoBehaviour {
             player1.color = player1Color;
             player1.weapon = player1Weapon;
             player1.hat = player1Hat;
+            player1.misc = player1Misc;
             player1.skin = player1Skin;
 }
         if (numberOfPlayers >= 2)
@@ -122,6 +127,7 @@ public class GameSettingsManager : MonoBehaviour {
             player2.color = player2Color;
             player2.weapon = player2Weapon;
             player2.hat = player2Hat;
+            player2.misc = player2Misc;
             player2.skin = player2Skin;
         }
         if (numberOfPlayers >= 3)
@@ -135,6 +141,7 @@ public class GameSettingsManager : MonoBehaviour {
             player3.color = player3Color;
             player3.weapon = player3Weapon;
             player3.hat = player3Hat;
+            player3.misc = player3Misc;
             player3.skin = player3Skin;
         }
         if (numberOfPlayers >= 4)
@@ -148,6 +155,7 @@ public class GameSettingsManager : MonoBehaviour {
             player4.color = player4Color;
             player4.weapon = player4Weapon;
             player4.hat = player4Hat;
+            player4.misc = player4Misc;
             player4.skin = player4Skin;
         }
     }
