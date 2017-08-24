@@ -6,10 +6,12 @@ public class Player : Sword {
 
     protected override void Move()
     {
+        // ORIGINAL Vector3 moveVector = new Vector3(0, 0, 0);
         Vector3 moveVector = new Vector3(0, 0, 0);
 
         float x = Input.GetAxis(playerNumber + "Horizontal");
         float z = Input.GetAxis(playerNumber + "Vertical");
+        // ORIGINAL: moveVector += new Vector3(x, 0, -z).normalized * moveSpeed;
         moveVector += new Vector3(x, 0, -z).normalized * moveSpeed;
 
         if (boost > 0 && Input.GetButton(playerNumber + "Rise"))
@@ -35,9 +37,14 @@ public class Player : Sword {
 
         if (normalizedBoostVelocity)
         {
-            moveVector = moveVector.normalized * moveSpeed;
+            moveVector = moveVector.normalized * moveSpeed * 100;
         }
+        
+        // ORIGINAL: rigbod.velocity = moveVector;
 
+        if (moveVector.y == 0) {
+            moveVector += new Vector3(0, rigbod.velocity.y, 0);
+        }
         rigbod.velocity = moveVector;
     }
 

@@ -3,26 +3,25 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class GlobalGravity : MonoBehaviour {
-
-    public bool useGravity = true;
+    
     public float gravityScale = 1;
 
-	// Use this for initialization
-	void Start () {
-        Rigidbody[] rigbods = FindObjectsOfType<Rigidbody>();
+    private Vector3 oldGravity;
 
-        for (int i = 0; i < rigbods.Length; i++)
-        {
-            rigbods[i].useGravity = this.useGravity;
-            if (this.useGravity)
-            {
-                rigbods[i].drag = rigbods[i].drag / gravityScale;
-            }
-        }
+	// Use this for initialization
+	void Start ()
+    {
+        oldGravity = Physics.gravity;
+        Physics.gravity = Physics.gravity * gravityScale; // THIS AFFECTS THE GRAVITY ACROSS ALL SCENES!!!
 	}
 	
 	// Update is called once per frame
 	void Update () {
 		
 	}
+
+    private void OnDestroy()
+    {
+        Physics.gravity = oldGravity;
+    }
 }

@@ -65,15 +65,16 @@ public class Man : MonoBehaviour {
 
         transform.Find("Body/Body Spine").GetComponent<MeshRenderer>().material.color = toSet;
         transform.Find("Body/Body Pelvis").GetComponent<MeshRenderer>().material.color = toSet;
+        transform.Find("Body/Body Pelvis/Fill").GetComponent<MeshRenderer>().material.color = toSet;
 
         for (int i = 0; i < transform.Find("Body/Body Head/").childCount; i++)
         {
             transform.Find("Body/Body Head/").GetChild(i).GetComponent<MeshRenderer>().material.color = toSet;
         }
 
-        for (int i = 0; i < transform.Find("Body/Body Spine/").childCount; i++)
+        for (int i = 0; i < transform.Find("Body/Body Spine/Items/").childCount; i++)
         {
-            transform.Find("Body/Body Spine/").GetChild(i).GetComponent<MeshRenderer>().material.color = toSet;
+            transform.Find("Body/Body Spine/Items/").GetChild(i).GetComponent<MeshRenderer>().material.color = toSet;
         }
     }
 
@@ -94,7 +95,7 @@ public class Man : MonoBehaviour {
     {
         if (m != "None")
         {
-            transform.Find("Body/Body Spine/" + m).gameObject.SetActive(true);
+            transform.Find("Body/Body Spine/Items/" + m).gameObject.SetActive(true);
         }
     }
 
@@ -103,19 +104,19 @@ public class Man : MonoBehaviour {
         Color toSet = Color.gray;
         if (s == "Light")
         {
-            toSet = new Color(255f / 255f, 200f / 255f, 180f / 255f);
+            toSet = GameConstants.SkinColors.light;
         }
         if (s == "Medium")
         {
-            toSet = new Color(200f / 255f, 140f / 255f, 70f / 255f);
+            toSet = GameConstants.SkinColors.medium;
         }
         if (s == "Dark")
         {
-            toSet = new Color(60f / 255f, 30f / 255f, 0f / 255f);
+            toSet = GameConstants.SkinColors.dark;
         }
         if (s == "Green")
         {
-            toSet = new Color(50f / 255f, 100f / 255f, 35f / 255f);
+            toSet = GameConstants.SkinColors.green;
         }
 
         Transform thisBody = transform.Find("Body");
@@ -139,7 +140,6 @@ public class Man : MonoBehaviour {
     {
         if (damage > 0 && health > 0 && (System.DateTime.Now - hitTime).TotalMilliseconds > invinceTimeMS)
         {
-            Debug.Log("Player " + this.playerNumber + ": " + damage + " damage taken");
             ChangeHealth(health - damage);
             ui.ShowHurtImage(playerNumber, damage);
             hitTime = System.DateTime.Now;

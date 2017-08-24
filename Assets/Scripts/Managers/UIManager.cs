@@ -20,24 +20,9 @@ public class UIManager : MonoBehaviour {
     public Text[] healthValues;
     public Slider[] boostMeters;
     public Image[] hurtDisplays;
+    public Text[] damageTexts;
 
     public Image[] roundBubbles;
-
-    //public Slider healthMeter1;
-    //private Text healthValues1;
-    //public Slider boostMeter1;
-
-    //public Slider healthMeter2;
-    //private Text healthValues2;
-    //public Slider boostMeter2;
-
-    //public Slider healthMeter3;
-    //private Text healthValues3;
-    //public Slider boostMeter3;
-
-    //public Slider healthMeter4;
-    //private Text healthValues4;
-    //public Slider boostMeter4;
 
     public GameObject pauseMenu;
 
@@ -56,10 +41,16 @@ public class UIManager : MonoBehaviour {
         pauseMenu.SetActive(false);
         endGamePlayerWinText.gameObject.SetActive(false);
         endGameCountdownTimer.gameObject.SetActive(false);
+
         hurtDisplays[0].gameObject.SetActive(false);
         hurtDisplays[1].gameObject.SetActive(false);
         hurtDisplays[2].gameObject.SetActive(false);
         hurtDisplays[3].gameObject.SetActive(false);
+
+        damageTexts[0].gameObject.SetActive(false);
+        damageTexts[1].gameObject.SetActive(false);
+        damageTexts[2].gameObject.SetActive(false);
+        damageTexts[3].gameObject.SetActive(false);
 
         gsm = FindObjectOfType<GameSettingsManager>();
         gsm.player1Spawn = player1Spawn;
@@ -97,28 +88,6 @@ public class UIManager : MonoBehaviour {
             healthMeters[playerNumber - 1].value = percent * 1000;
             healthValues[playerNumber - 1].text = ((int)(healthMeters[playerNumber - 1].value + 0.9f) + " / " + GameConstants.Players.playerMaxHealth);
         }
-
-        //if (playerNumber == 1)
-        //{
-        //    healthMeter1.value = percent * 1000;
-        //    healthValues1.text = ((int)(healthMeter1.value + 0.9f) + " / " + GameConstants.Players.playerMaxHealth);
-
-        //}
-        //if (playerNumber == 2)
-        //{
-        //    healthMeter2.value = percent * 1000;
-        //    healthValues2.text = ((int)(healthMeter2.value + 0.9f) + " / " + GameConstants.Players.playerMaxHealth);
-        //}
-        //if (playerNumber == 3)
-        //{
-        //    healthMeter3.value = percent * 1000;
-        //    healthValues3.text = ((int)(healthMeter3.value + 0.9f) + " / " + GameConstants.Players.playerMaxHealth);
-        //}
-        //if (playerNumber == 4)
-        //{
-        //    healthMeter4.value = percent * 1000;
-        //    healthValues4.text = ((int)(healthMeter4.value + 0.9f) + " / " + GameConstants.Players.playerMaxHealth);
-        //}
     }
 
     public void ShowHurtImage(int playerNumber, float damage)
@@ -126,6 +95,7 @@ public class UIManager : MonoBehaviour {
         if (playerNumber > 0)
         {
             StartCoroutine(ShowImageForSeconds(hurtDisplays[playerNumber - 1], damage, 0.2f));
+            StartCoroutine(ShowTextForSeconds(damageTexts[playerNumber - 1], damage, 0.5f));
         }
     }
 
@@ -137,30 +107,23 @@ public class UIManager : MonoBehaviour {
         image.gameObject.SetActive(false);
     }
 
+    public IEnumerator ShowTextForSeconds(Text text, float damage, float time)
+    {
+        text.text = ((int)damage).ToString();
+        if (text.text != "0")
+        {
+            text.gameObject.SetActive(true);
+        }
+        yield return new WaitForSeconds(time);
+        text.gameObject.SetActive(false);
+    }
+
     public void ChangeBoost(float percent, int playerNumber)
     {
         if (playerNumber > 0)
         {
             boostMeters[playerNumber - 1].value = percent * 100;
         }
-
-        //temp
-        //if (playerNumber == 1)
-        //{
-        //    boostMeter1.value = percent * 100;
-        //}
-        //if (playerNumber == 2)
-        //{
-        //    boostMeter2.value = percent * 100;
-        //}
-        //if (playerNumber == 3)
-        //{
-        //    boostMeter3.value = percent * 100;
-        //}
-        //if (playerNumber == 4)
-        //{
-        //    boostMeter4.value = percent * 100;
-        //}
     }
 
     public void DisplayRoundBubbles()
@@ -410,6 +373,11 @@ public class UIManager : MonoBehaviour {
         endGamePlayerWinText.text = "Player " + winningPlayerNumber + " Wins!";
         gsm.wins[gsm.roundNumber - 1] = winningPlayerNumber;
         DisplayRoundBubbles();
+
+        if (gsm.roundNumber == gsm.settings.roundsPerStage)
+        {
+            gsm.music.FadeOut(3);
+        }
 
         endGameCountdownTimer.gameObject.SetActive(true);
         endGameCountdownTimer.text = "3";

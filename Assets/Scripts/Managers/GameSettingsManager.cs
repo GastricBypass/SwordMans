@@ -54,13 +54,16 @@ public class GameSettingsManager : MonoBehaviour {
 
     public int[] wins;
 
-    AudioSource music;
+    public MusicManager music;
 
     // Use this for initialization
     void Start ()
     {
         DontDestroyOnLoad(this);
-        music = this.GetComponent<AudioSource>();
+        if (music == null)
+        {
+            music = this.GetComponent<MusicManager>();
+        }
 	}
 	
 	// Update is called once per frame
@@ -219,10 +222,12 @@ public class GameSettingsManager : MonoBehaviour {
 
     public void LoadStage(string name)
     {
+        bool songChange = false;
         if (name != currentStage)
         {
             roundNumber = 1;
             wins = new int[settings.roundsPerStage];
+            songChange = true;
         }
         if (name != "Main Menu")
         {
@@ -233,9 +238,14 @@ public class GameSettingsManager : MonoBehaviour {
         {
             currentStage = "Main Menu";
         }
-
+        
         Debug.Log("Load stage: " + currentStage);
         SceneManager.LoadScene(currentStage, LoadSceneMode.Single);
+
+        if (songChange)
+        {
+            music.SetSong(currentStage);
+        }
     }
 
     public void LoadMainMenu()
@@ -248,11 +258,11 @@ public class GameSettingsManager : MonoBehaviour {
         settings.musicOn = !settings.musicOn;
         if (settings.musicOn)
         {
-            music.mute = false;
+            music.Mute(false);
         }
         else
         {
-            music.mute = true;
+            music.Mute(true);
         }
     }
 
@@ -265,5 +275,6 @@ public class GameSettingsManager : MonoBehaviour {
         public bool randomStateSelect = false;
 
         public bool musicOn = true;
+        public float musicVolume = 1;
     }
 }

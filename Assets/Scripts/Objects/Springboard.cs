@@ -36,6 +36,5 @@ public class Springboard : IEntity
             rigbod.velocity = springForce;
         }
         lastSpring = System.DateTime.Now;
-        Debug.Log(this.name + " springing");
     }
 }

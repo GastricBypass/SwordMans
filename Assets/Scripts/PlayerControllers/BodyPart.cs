@@ -35,8 +35,8 @@ public class BodyPart : MonoBehaviour {
                 //damage = Mathf.Pow(collision.relativeVelocity.magnitude, 2) * colliderBod.mass; // Kinetic Energy
                 //damage = collision.relativeVelocity.magnitude * colliderBod.mass; // Momentum
                 //damage = Vector3.Dot(collision.contacts[0].normal, collision.relativeVelocity) * colliderBod.mass; // something else
-                damage = colliderBod.mass * colliderBod.velocity.magnitude * (thisBod.velocity - colliderBod.velocity).magnitude; // Momentum of collider times velocity difference
-                //damage = colliderBod.mass * colliderBod.velocity.magnitude * collision.relativeVelocity.magnitude; // Momentum of collider times velocity difference
+                //damage = colliderBod.mass * colliderBod.velocity.magnitude * (thisBod.velocity - colliderBod.velocity).magnitude; // Momentum of collider times velocity difference
+                damage = colliderBod.mass * colliderBod.velocity.magnitude * collision.relativeVelocity.magnitude; // Momentum of collider times velocity difference
 
                 if (colliderBod.velocity.magnitude < 0.05)
                 {

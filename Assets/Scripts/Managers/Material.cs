@@ -1,7 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEditor;
 
 public class Material : MonoBehaviour {
 
@@ -17,12 +16,14 @@ public class Material : MonoBehaviour {
     private bool canSound = true;
 
 	// Use this for initialization
-	void Start () {
+	void Start ()
+    {
         audioSource = gameObject.AddComponent<AudioSource>();
     }
 	
 	// Update is called once per frame
-	void Update () {
+	void Update ()
+    {
 		
 	}
 
@@ -133,7 +134,7 @@ public class Material : MonoBehaviour {
     public void PlaySound(string sound, float volume)
     {
         int suffix = (int)Random.Range(1, 4);
-        AudioClip clip = (AudioClip)AssetDatabase.LoadAssetAtPath("Assets/Sounds/" + sound + suffix + ".wav", typeof(AudioClip));
+        AudioClip clip = (AudioClip)Resources.Load("Sounds/" + sound + suffix, typeof(AudioClip));
 
         audioSource.volume = volume * volumeMultiplier;
         audioSource.clip = clip;
