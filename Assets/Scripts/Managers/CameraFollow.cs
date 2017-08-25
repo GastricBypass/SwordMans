@@ -1,29 +1,41 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class CameraFollow : MonoBehaviour {
+public class CameraFollow : MonoBehaviour
+{
 
     public List<GameObject> targets;
     public Vector3 offset = new Vector3(0, 6, -10);
     public float moveAmount = 1;
+    public float preMoveDelay = 0.01f; // must be > 0 or else it causes a race condition with players being spawned and may not find players
+
+    private bool shouldFollow = false;
+    private bool targetsSet = false;
 
     private string targetBodyPart = "Body/Body Spine";
     // Use this for initialization
-    void Start () {
-        Man[] men = FindObjectsOfType<Man>();
+    void Start()
+    {
+        StartCoroutine(WaitToFollow(preMoveDelay));
+    }
 
-        for (int i = 0; i < men.Length; i++)
+    // Update is called once per frame
+    void Update()
+    {
+        if (shouldFollow && !targetsSet)
         {
-            if (men[i].isCameraTarget)
+            Man[] men = FindObjectsOfType<Man>();
+            for (int i = 0; i < men.Length; i++)
             {
-                targets.Add(men[i].transform.Find(targetBodyPart).gameObject);
+                if (men[i].isCameraTarget)
+                {
+                    targets.Add(men[i].transform.Find(targetBodyPart).gameObject);
+                }
             }
+            targetsSet = true;
         }
-	}
-	
-	// Update is called once per frame
-	void Update () {
 
         if (targets.Count > 0)
         {
@@ -64,6 +76,13 @@ public class CameraFollow : MonoBehaviour {
         {
             transform.position = transform.position + positionDif.normalized * moveAmount;
         }
+    }
+
+    private IEnumerator WaitToFollow(float time)
+    {
+        shouldFollow = false;
+        yield return new WaitForSeconds(time);
+        shouldFollow = true;
     }
 
     public void Delete(Man man)
