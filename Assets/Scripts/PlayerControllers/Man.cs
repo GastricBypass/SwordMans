@@ -143,6 +143,7 @@ public class Man : MonoBehaviour {
             ChangeHealth(health - damage);
             ui.ShowHurtImage(playerNumber, damage);
             hitTime = System.DateTime.Now;
+            //Debug.Log("Player " + playerNumber + ": " + damage + " damage taken");
         }
     }
 
