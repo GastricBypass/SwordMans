@@ -27,14 +27,23 @@ public class CameraFollow : MonoBehaviour
         if (shouldFollow && !targetsSet)
         {
             Man[] men = FindObjectsOfType<Man>();
-            for (int i = 0; i < men.Length; i++)
+
+            if (men.Length == 0)
             {
-                if (men[i].isCameraTarget)
-                {
-                    targets.Add(men[i].transform.Find(targetBodyPart).gameObject);
-                }
+                StartCoroutine(WaitToFollow(preMoveDelay)); // if we did not find any players, wait again and try after waiting.
             }
-            targetsSet = true;
+
+            else
+            {
+                for (int i = 0; i < men.Length; i++)
+                {
+                    if (men[i].isCameraTarget)
+                    {
+                        targets.Add(men[i].transform.Find(targetBodyPart).gameObject);
+                    }
+                }
+                targetsSet = true;
+            }
         }
 
         if (targets.Count > 0)

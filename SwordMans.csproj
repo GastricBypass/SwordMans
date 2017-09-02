@@ -78,7 +78,10 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Assets\Scripts\Enemy AIs\EnemyMan.cs" />
+    <Compile Include="Assets\Scripts\Enemy AIs\RandomForceAdder.cs" />
     <Compile Include="Assets\Scripts\Managers\CameraFollow.cs" />
+    <Compile Include="Assets\Scripts\Managers\CampaignUIManager.cs" />
     <Compile Include="Assets\Scripts\Managers\CustomizationMenuManager.cs" />
     <Compile Include="Assets\Scripts\Managers\EnemySpawner.cs" />
     <Compile Include="Assets\Scripts\Managers\GameConstants.cs" />
@@ -95,12 +98,14 @@
     <Compile Include="Assets\Scripts\Objects\IEntity.cs" />
     <Compile Include="Assets\Scripts\Objects\ItemSpawner.cs" />
     <Compile Include="Assets\Scripts\Objects\KeepUpright.cs" />
+    <Compile Include="Assets\Scripts\Objects\NextLevelArea.cs" />
     <Compile Include="Assets\Scripts\Objects\Oscillator.cs" />
     <Compile Include="Assets\Scripts\Objects\Pickup.cs" />
     <Compile Include="Assets\Scripts\Objects\PushingArea.cs" />
     <Compile Include="Assets\Scripts\Objects\Spinner.cs" />
     <Compile Include="Assets\Scripts\Objects\Springboard.cs" />
     <Compile Include="Assets\Scripts\Objects\StayFuckingStill.cs" />
+    <Compile Include="Assets\Scripts\Objects\StickyObject.cs" />
     <Compile Include="Assets\Scripts\Objects\Toggler.cs" />
     <Compile Include="Assets\Scripts\Objects\ViscousArea.cs" />
     <Compile Include="Assets\Scripts\PlayerControllers\AIEnemy.cs" />

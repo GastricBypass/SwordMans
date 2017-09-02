@@ -33,10 +33,11 @@ public class UIManager : MonoBehaviour {
     public Text endGameCountdownTimer;
     public bool gameOver;
 
+    protected bool[] deadPlayers;
     private int winningPlayerNumber = 0;
 
     // Use this for initialization
-    void Start()
+    public virtual void Start()
     {
         pauseMenu.SetActive(false);
         endGamePlayerWinText.gameObject.SetActive(false);
@@ -58,6 +59,8 @@ public class UIManager : MonoBehaviour {
         gsm.player3Spawn = player3Spawn;
         gsm.player4Spawn = player4Spawn;
 
+        deadPlayers = new bool[4];
+
         DisplayRoundBubbles();
 
         gsm.SpawnPlayers();
@@ -68,7 +71,7 @@ public class UIManager : MonoBehaviour {
     }
 	
 	// Update is called once per frame
-	void Update ()
+	public void Update ()
     {
 		if (Input.GetButtonDown("Start"))
         {
@@ -81,16 +84,16 @@ public class UIManager : MonoBehaviour {
         }
 	}
 
-    public void ChangeHealth(float percent, int playerNumber)
+    public virtual void ChangeHealth(float percent, int playerNumber)
     {
         if (playerNumber > 0)
         {
-            healthMeters[playerNumber - 1].value = percent * 1000;
+            healthMeters[playerNumber - 1].value = percent * GameConstants.Players.playerMaxHealth;
             healthValues[playerNumber - 1].text = ((int)(healthMeters[playerNumber - 1].value + 0.9f) + " / " + GameConstants.Players.playerMaxHealth);
         }
     }
 
-    public void ShowHurtImage(int playerNumber, float damage)
+    public virtual void ShowHurtImage(int playerNumber, float damage)
     {
         if (playerNumber > 0)
         {
@@ -332,7 +335,7 @@ public class UIManager : MonoBehaviour {
         }
     }
 
-    public bool CheckWinStatus()
+    public virtual bool CheckWinStatus()
     {
         if (SceneManager.GetActiveScene().name == "Main Menu")
         {
@@ -342,9 +345,9 @@ public class UIManager : MonoBehaviour {
         int numDead = 0;
         int alivePlayer = 0;
 
-        for (int i = 0; i < gsm.numberOfPlayers; i++)
+        for (int i = 0; i < deadPlayers.Length; i++)
         {
-            if (healthMeters[i].value <= 0)
+            if (deadPlayers[i])
             {
                 numDead++;
             }
@@ -353,6 +356,18 @@ public class UIManager : MonoBehaviour {
                 alivePlayer = i + 1;
             }
         }
+
+        //for (int i = 0; i < gsm.numberOfPlayers; i++)
+        //{
+        //    if (healthMeters[i].value <= 0)
+        //    {
+        //        numDead++;
+        //    }
+        //    else
+        //    {
+        //        alivePlayer = i + 1;
+        //    }
+        //}
 
         if (numDead >= gsm.numberOfPlayers - 1)
         {
@@ -365,7 +380,15 @@ public class UIManager : MonoBehaviour {
         }
     }
 
-    public IEnumerator StartEndGameCountdown()
+    public virtual void PlayerDead(int playerNum)
+    {
+        if (playerNum > 0)
+        {
+            deadPlayers[playerNum - 1] = true;
+        }
+    }
+
+    public virtual IEnumerator StartEndGameCountdown()
     {
         gameOver = true;
 

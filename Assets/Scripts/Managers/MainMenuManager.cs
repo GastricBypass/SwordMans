@@ -27,6 +27,7 @@ public class MainMenuManager : MonoBehaviour {
     public float moveDelayMS;
     private int optionIndex;
     private bool interactable = true;
+    public bool shouldRestoreDefaults = true;
 
     private Camera menuCamera;
 
@@ -67,33 +68,6 @@ public class MainMenuManager : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-
-        if (interactable)
-        {
-            /*if (Input.GetAxis("Horizontal") > moveThresh)
-            {
-                Debug.Log("Right");
-                MoveSelectRight();
-            }
-
-            if (Input.GetAxis("Horizontal") < -moveThresh)
-            {
-                Debug.Log("Left");
-                MoveSelectLeft();
-            }
-
-            if (Input.GetAxis("Vertical") > moveThresh)
-            {
-                Debug.Log("Up");
-                MoveSelectUp();
-            }
-
-            if (Input.GetAxis("Vertical") < -moveThresh)
-            {
-                Debug.Log("Down");
-                MoveSelectDown();
-            }*/
-        }
 
         if (Input.GetButton("Cancel"))
         {
@@ -149,101 +123,8 @@ public class MainMenuManager : MonoBehaviour {
     {
         DisableAllMenus();
         mainMenu.SetActive(true);
+        shouldRestoreDefaults = true;
         mainMenuStartOption.Select();
         SendCameraToTransform(mainMenuCameraPosition);
     }
-
-    
-    /*
-    void MoveSelectRight()
-    {
-        if (mainMenu.activeSelf)
-        {
-            // no action
-        }
-
-        else if (settingsMenu.activeSelf)
-        {
-
-        }
-
-        else if (playMenu.activeSelf)
-        {
-
-        }
-    }
-
-    void MoveSelectLeft()
-    {
-        if (mainMenu.activeSelf)
-        {
-            // no action
-        }
-
-        else if (settingsMenu.activeSelf)
-        {
-
-        }
-
-        else if (playMenu.activeSelf)
-        {
-
-        }
-    }
-
-    void MoveSelectUp()
-    {
-        if (mainMenu.activeSelf)
-        {
-            StartCoroutine(UpdateOptionIndex(optionIndex - 1, mainMenuOptions));
-        }
-
-        else if (settingsMenu.activeSelf)
-        {
-
-        }
-
-        else if (playMenu.activeSelf)
-        {
-
-        }
-    }
-
-    void MoveSelectDown()
-    {
-        if (mainMenu.activeSelf)
-        {
-            StartCoroutine(UpdateOptionIndex(optionIndex + 1, mainMenuOptions));
-        }
-
-        else if (settingsMenu.activeSelf)
-        {
-
-        }
-
-        else if (playMenu.activeSelf)
-        {
-
-        }
-    }
-
-    IEnumerator UpdateOptionIndex(int newIndex, List<Button> list)
-    {
-        optionIndex = newIndex;
-
-        if (optionIndex > list.Count - 1)
-        {
-            optionIndex = 0;
-        }
-
-        if (optionIndex < 0)
-        {
-            optionIndex = list.Count - 1;
-        }
-
-        list[optionIndex].Select();
-        interactable = false;
-        yield return new WaitForSeconds(moveDelayMS / 1000);
-        interactable = true;
-    }*/
 }

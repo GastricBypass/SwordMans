@@ -6,16 +6,28 @@ public class AIEnemy : Sword {
 
     public GameObject target;
     public float aggroDistance;
+    public float aggroWaitTime;
+
+    private bool waiting = false;
 
     protected override void Start()
     {
         base.Start();
-        target = FindTarget(); 
     }
 
     protected override void Move()
     {
-        if ((target.transform.position - this.transform.position).magnitude < aggroDistance)
+        if (!waiting && target == null)
+        {
+            StartCoroutine(WaitToFindTarget(aggroWaitTime));
+        }
+
+        if (target == null)
+        {
+            return;
+        }
+
+        else if ((target.transform.position - this.transform.position).magnitude < aggroDistance)
         {
             Vector3 moveVector = new Vector3(0, 0, 0);
 
@@ -65,7 +77,17 @@ public class AIEnemy : Sword {
                 moveVector = moveVector.normalized * moveSpeed;
             }
 
+            if (moveVector.y == 0)
+            {
+                moveVector += new Vector3(0, rigbod.velocity.y, 0);
+            }
+
             rigbod.velocity = moveVector;
+        }
+
+        else
+        {
+            target = null;
         }
     }
 
@@ -85,15 +107,27 @@ public class AIEnemy : Sword {
 
         BodyPart[] possibleTargets = FindObjectsOfType<BodyPart>();
 
+        // TODO: Make this more efficient
         for (int i = 0; i < possibleTargets.Length; i++)
         {
             if (possibleTargets[i].owner.playerNumber != this.owner.playerNumber)
             {
-                toReturn = possibleTargets[i].gameObject;
-                break;
+                if ((possibleTargets[i].gameObject.transform.position - this.transform.position).magnitude < aggroDistance) 
+                {
+                    toReturn = possibleTargets[i].gameObject;
+                    break;
+                }
             }
         }
 
         return toReturn;
+    }
+
+    public IEnumerator WaitToFindTarget(float time)
+    {
+        waiting = true;
+        yield return new WaitForSeconds(time);
+        target = FindTarget();
+        waiting = false;
     }
 }

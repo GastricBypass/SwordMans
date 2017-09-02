@@ -14,7 +14,7 @@ public class GameSettingsManager : MonoBehaviour {
     public Man playerPrefab;
 
     public string currentStage = "Main Menu";
-    private List<string> stages;
+    public List<string> stages;
     public int activeStageIndex;
 
     public Transform player1Spawn;
@@ -275,6 +275,6 @@ public class GameSettingsManager : MonoBehaviour {
         public bool randomStateSelect = false;
 
         public bool musicOn = true;
-        public float musicVolume = 1;
+        public float musicVolume = 0.6f;
     }
 }

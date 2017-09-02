@@ -17,7 +17,8 @@ public class BodyPart : MonoBehaviour {
 		if (owner.ui.useInBounds && OutOfBounds())
         {
             owner.TakeDamage(1000f);
-            StartCoroutine(DestroyAfterTime(owner.gameObject, 0f));
+            Destroy(owner.gameObject);
+            //StartCoroutine(DestroyAfterTime(owner.gameObject, 0f));
         }
 	}
 
@@ -38,7 +39,6 @@ public class BodyPart : MonoBehaviour {
                 //damage = colliderBod.mass * colliderBod.velocity.magnitude * (thisBod.velocity - colliderBod.velocity).magnitude; // Momentum of collider times velocity difference
                 //damage = colliderBod.mass * colliderBod.velocity.magnitude * collision.relativeVelocity.magnitude; // Momentum of collider times velocity difference
                 damage = collision.impulse.magnitude; // It can't be that simple, can it?
-                Debug.Log(Time.fixedDeltaTime);
                 if (colliderBod.velocity.magnitude < 0.05)
                 {
                     damage = 0;
@@ -46,7 +46,7 @@ public class BodyPart : MonoBehaviour {
             }
             else
             {
-                damage = colliderBod.mass * colliderBod.velocity.sqrMagnitude;
+                damage = collision.impulse.magnitude;
             }
 
             // no damage if it is a body part with the same owner

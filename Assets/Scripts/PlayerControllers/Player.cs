@@ -45,6 +45,7 @@ public class Player : Sword {
         if (moveVector.y == 0) {
             moveVector += new Vector3(0, rigbod.velocity.y, 0);
         }
+
         rigbod.velocity = moveVector;
     }
 

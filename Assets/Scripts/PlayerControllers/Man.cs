@@ -20,10 +20,10 @@ public class Man : MonoBehaviour {
     public string misc;
     public string skin;
 
-    private System.DateTime hitTime;
+    protected System.DateTime hitTime;
 
 	// Use this for initialization
-	void Start () {
+	public virtual void Start () {
         health = maxHealth;
         hitTime = System.DateTime.Now;
         ui = FindObjectOfType<UIManager>();
@@ -153,13 +153,20 @@ public class Man : MonoBehaviour {
         if (health <= 0)
         {
             health = 0;
+            ui.PlayerDead(playerNumber);
             CameraFollow camera = FindObjectOfType<CameraFollow>();
             camera.Delete(this);
+            ExtraDeathEffects();
         }
         if (health > maxHealth)
         {
             health = maxHealth;
         }
         ui.ChangeHealth(health / maxHealth, playerNumber);
+    }
+
+    protected virtual void ExtraDeathEffects()
+    {
+        // None
     }
 }
