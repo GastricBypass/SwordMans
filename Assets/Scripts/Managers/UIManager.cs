@@ -59,7 +59,7 @@ public class UIManager : MonoBehaviour {
         gsm.player3Spawn = player3Spawn;
         gsm.player4Spawn = player4Spawn;
 
-        deadPlayers = new bool[4];
+        deadPlayers = new bool[gsm.numberOfPlayers];
 
         DisplayRoundBubbles();
 
