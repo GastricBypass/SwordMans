@@ -59,7 +59,7 @@ public class UIManager : MonoBehaviour {
         gsm.player3Spawn = player3Spawn;
         gsm.player4Spawn = player4Spawn;
 
-        deadPlayers = new bool[gsm.numberOfPlayers];
+        deadPlayers = new bool[gsm.numberOfPlayers + gsm.numberOfAIPlayers];
 
         DisplayRoundBubbles();
 
@@ -86,7 +86,7 @@ public class UIManager : MonoBehaviour {
 
     public virtual void ChangeHealth(float percent, int playerNumber)
     {
-        if (playerNumber > 0)
+        if (playerNumber > 0 && playerNumber <= 4)
         {
             healthMeters[playerNumber - 1].value = percent * GameConstants.Players.playerMaxHealth;
             healthValues[playerNumber - 1].text = ((int)(healthMeters[playerNumber - 1].value + 0.9f) + " / " + GameConstants.Players.playerMaxHealth);
@@ -95,7 +95,7 @@ public class UIManager : MonoBehaviour {
 
     public virtual void ShowHurtImage(int playerNumber, float damage)
     {
-        if (playerNumber > 0)
+        if (playerNumber > 0 && playerNumber <= 4)
         {
             StartCoroutine(ShowImageForSeconds(hurtDisplays[playerNumber - 1], damage, 0.2f));
             StartCoroutine(ShowTextForSeconds(damageTexts[playerNumber - 1], damage, 0.5f));
@@ -123,7 +123,7 @@ public class UIManager : MonoBehaviour {
 
     public void ChangeBoost(float percent, int playerNumber)
     {
-        if (playerNumber > 0)
+        if (playerNumber > 0 && playerNumber <= 4)
         {
             boostMeters[playerNumber - 1].value = percent * 100;
         }
@@ -171,7 +171,7 @@ public class UIManager : MonoBehaviour {
         else return Color.gray;
     }
 
-    public void StartPressed()
+    public virtual void StartPressed()
     {
         if (paused)
         {
@@ -208,7 +208,7 @@ public class UIManager : MonoBehaviour {
     {
         int i = 0;
         // Set active players' health bars active
-        while (i < gsm.numberOfPlayers)
+        while (i < gsm.numberOfPlayers + gsm.numberOfAIPlayers)
         {
             healthMeters[i].gameObject.SetActive(true);
             boostMeters[i].gameObject.SetActive(true);
@@ -234,62 +234,6 @@ public class UIManager : MonoBehaviour {
 
             i++;
         }
-
-        //if (gsm.numberOfPlayers >= 1)
-        //{
-        //    healthMeter1.gameObject.SetActive(true);
-        //    boostMeter1.gameObject.SetActive(true);
-
-        //    SetHealthBarColor(healthMeter1, gsm.player1Color);
-        //    healthValues1.gameObject.SetActive(gsm.settings.showHealthValues);
-        //}
-        //else
-        //{
-        //    healthMeter1.gameObject.SetActive(false);
-        //    boostMeter1.gameObject.SetActive(false);
-        //}
-
-        //if (gsm.numberOfPlayers >= 2)
-        //{
-        //    healthMeter2.gameObject.SetActive(true);
-        //    boostMeter2.gameObject.SetActive(true);
-
-        //    SetHealthBarColor(healthMeter2, gsm.player2Color);
-        //    healthValues2.gameObject.SetActive(gsm.settings.showHealthValues);
-        //}
-        //else
-        //{
-        //    healthMeter2.gameObject.SetActive(false);
-        //    boostMeter2.gameObject.SetActive(false);
-        //}
-
-        //if (gsm.numberOfPlayers >= 3)
-        //{
-        //    healthMeter3.gameObject.SetActive(true);
-        //    boostMeter3.gameObject.SetActive(true);
-
-        //    SetHealthBarColor(healthMeter3, gsm.player3Color);
-        //    healthValues3.gameObject.SetActive(gsm.settings.showHealthValues);
-        //}
-        //else
-        //{
-        //    healthMeter3.gameObject.SetActive(false);
-        //    boostMeter3.gameObject.SetActive(false);
-        //}
-
-        //if (gsm.numberOfPlayers >= 4)
-        //{
-        //    healthMeter4.gameObject.SetActive(true);
-        //    boostMeter4.gameObject.SetActive(true);
-
-        //    SetHealthBarColor(healthMeter4, gsm.player4Color);
-        //    healthValues4.gameObject.SetActive(gsm.settings.showHealthValues);
-        //}
-        //else
-        //{
-        //    healthMeter4.gameObject.SetActive(false);
-        //    boostMeter4.gameObject.SetActive(false);
-        //}
     }
 
     public void SetHealthBarColor(Slider healthBar, string color)
@@ -357,19 +301,7 @@ public class UIManager : MonoBehaviour {
             }
         }
 
-        //for (int i = 0; i < gsm.numberOfPlayers; i++)
-        //{
-        //    if (healthMeters[i].value <= 0)
-        //    {
-        //        numDead++;
-        //    }
-        //    else
-        //    {
-        //        alivePlayer = i + 1;
-        //    }
-        //}
-
-        if (numDead >= gsm.numberOfPlayers - 1)
+        if (numDead >= gsm.numberOfPlayers + gsm.numberOfAIPlayers - 1)
         {
             winningPlayerNumber = alivePlayer;
             return true;
@@ -380,11 +312,11 @@ public class UIManager : MonoBehaviour {
         }
     }
 
-    public virtual void PlayerDead(int playerNum)
+    public virtual void PlayerDead(int playerNumber)
     {
-        if (playerNum > 0)
+        if (playerNumber > 0 && playerNumber <= 4)
         {
-            deadPlayers[playerNum - 1] = true;
+            deadPlayers[playerNumber - 1] = true;
         }
     }
 

@@ -23,6 +23,7 @@ public class PlayMenuManager : MonoBehaviour {
     public List<string> stages;
     public Text selectedStage;
     public Text numberOfPlayers;
+    public Text numberOfAIPlayers;
 
     public List<string> coopStages;
     public Text coopSelectedStage;
@@ -31,6 +32,7 @@ public class PlayMenuManager : MonoBehaviour {
 
     private int activeStageIndex;
     private int numPlayers = 1;
+    private int numAIPlayers = 0;
 
     private int coopActiveStageIndex;
 
@@ -41,7 +43,9 @@ public class PlayMenuManager : MonoBehaviour {
         coopMenu.SetActive(false);
 
         numPlayers = manager.gsm.numberOfPlayers;
+        numAIPlayers = manager.gsm.numberOfAIPlayers;
         numberOfPlayers.text = manager.gsm.numberOfPlayers.ToString();
+        numberOfAIPlayers.text = manager.gsm.numberOfAIPlayers.ToString();
         coopNumberOfPlayers.text = manager.gsm.numberOfPlayers.ToString();
 
         if (GSMStagesEqual(stages))
@@ -181,6 +185,13 @@ public class PlayMenuManager : MonoBehaviour {
             numPlayers = 1;
         }
 
+        if (numPlayers + numAIPlayers > 4)
+        {
+            numAIPlayers = 4 - numPlayers;
+            numberOfAIPlayers.text = numAIPlayers.ToString();
+            manager.gsm.numberOfAIPlayers = numAIPlayers;
+        }
+
         numberOfPlayers.text = numPlayers.ToString();
         coopNumberOfPlayers.text = numPlayers.ToString();
         manager.gsm.numberOfPlayers = numPlayers;
@@ -194,9 +205,40 @@ public class PlayMenuManager : MonoBehaviour {
             numPlayers = 4;
         }
 
+        if (numPlayers + numAIPlayers > 4)
+        {
+            numAIPlayers = 4 - numPlayers;
+            numberOfAIPlayers.text = numAIPlayers.ToString();
+            manager.gsm.numberOfAIPlayers = numAIPlayers;
+        }
+
         numberOfPlayers.text = numPlayers.ToString();
         coopNumberOfPlayers.text = numPlayers.ToString();
         manager.gsm.numberOfPlayers = numPlayers;
+    }
+
+    public void IncNumAIPlayers()
+    {
+        numAIPlayers++;
+        if (numAIPlayers > 4 - numPlayers)
+        {
+            numAIPlayers = 0;
+        }
+
+        numberOfAIPlayers.text = numAIPlayers.ToString();
+        manager.gsm.numberOfAIPlayers = numAIPlayers;
+    }
+
+    public void DecNumAIPlayers()
+    {
+        numAIPlayers--;
+        if (numAIPlayers < 0)
+        {
+            numAIPlayers = 4 - numPlayers;
+        }
+
+        numberOfAIPlayers.text = numAIPlayers.ToString();
+        manager.gsm.numberOfAIPlayers = numAIPlayers;
     }
 
     private bool GSMStagesEqual(List<string> compare)

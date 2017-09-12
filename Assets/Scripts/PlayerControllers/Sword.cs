@@ -43,7 +43,7 @@ public class Sword : MonoBehaviour {
         playerNumber = owner.playerNumber;
     }
 
-    private void Update()
+    protected virtual void Update()
     {
         if (!ui.paused)
         {

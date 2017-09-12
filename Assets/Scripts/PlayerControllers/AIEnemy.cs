@@ -5,8 +5,9 @@ using UnityEngine;
 public class AIEnemy : Sword {
 
     public GameObject target;
-    public float aggroDistance;
-    public float aggroWaitTime;
+    public bool changeTargetsAfterDeath = false;
+    public float aggroDistance = 15;
+    public float aggroWaitTime = 0.1f;
 
     private bool waiting = false;
 
@@ -20,6 +21,18 @@ public class AIEnemy : Sword {
         if (!waiting && target == null)
         {
             StartCoroutine(WaitToFindTarget(aggroWaitTime));
+        }
+
+        if (changeTargetsAfterDeath && target != null)
+        {
+            BodyPart targetBodyPart = target.GetComponent<BodyPart>();
+            if (targetBodyPart != null)
+            {
+                if (targetBodyPart.owner.health <= 0)
+                {
+                    target = null;
+                }
+            }
         }
 
         if (target == null)
@@ -112,7 +125,7 @@ public class AIEnemy : Sword {
         {
             if (possibleTargets[i].owner.playerNumber != this.owner.playerNumber)
             {
-                if ((possibleTargets[i].gameObject.transform.position - this.transform.position).magnitude < aggroDistance) 
+                if ((possibleTargets[i].gameObject.transform.position - this.transform.position).magnitude < aggroDistance && possibleTargets[i].owner.health > 0) 
                 {
                     toReturn = possibleTargets[i].gameObject;
                     break;

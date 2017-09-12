@@ -12,7 +12,9 @@ public class CampaignUIManager : UIManager {
     public Slider bossHealthBar;
     public Text bossHealthValue;
     public float bossMaxHealth;
-    
+
+    public bool introLevel;
+
     private bool playersLost;
 
 	// Use this for initialization
@@ -38,12 +40,16 @@ public class CampaignUIManager : UIManager {
         gsm.player2Spawn = player2Spawn;
         gsm.player3Spawn = player3Spawn;
         gsm.player4Spawn = player4Spawn;
+        
+        gsm.numberOfAIPlayers = 0;
 
-        deadPlayers = new bool[4];
-
+        deadPlayers = new bool[gsm.numberOfPlayers];
         gsm.SpawnPlayers();
 
-        SetHealthBars();
+        if (!introLevel)
+        {
+            SetHealthBars();
+        }
 
         bossHealthBar.gameObject.SetActive(bossLevel);
     }
@@ -65,6 +71,18 @@ public class CampaignUIManager : UIManager {
         {
             StartCoroutine(ShowImageForSeconds(hurtDisplays[4], damage, 0.2f));
             StartCoroutine(ShowTextForSeconds(damageTexts[4], damage, 0.5f));
+        }
+    }
+
+    public override void StartPressed()
+    {
+        if (introLevel)
+        {
+            StartCoroutine(StartEndGameCountdown());
+        }
+        else
+        {
+            base.StartPressed();
         }
     }
 
@@ -127,7 +145,12 @@ public class CampaignUIManager : UIManager {
         }
         else
         {
-            gsm.LoadStage(nextLevelName);
+            StartNextLevel();
         }
+    }
+
+    public void StartNextLevel()
+    {
+        gsm.LoadStage(nextLevelName);
     }
 }

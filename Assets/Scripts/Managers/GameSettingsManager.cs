@@ -12,6 +12,7 @@ public class GameSettingsManager : MonoBehaviour {
     public Vector3 inBoundsMax = new Vector3(100, 100, 100);
 
     public Man playerPrefab;
+    public Man AIPlayerPrefab;
 
     public string currentStage = "Main Menu";
     public List<string> stages;
@@ -23,6 +24,7 @@ public class GameSettingsManager : MonoBehaviour {
     public Transform player4Spawn;
 
     public int numberOfPlayers = 1;
+    public int numberOfAIPlayers = 0;
 
     public string player1Color;
     public string player1Weapon;
@@ -119,10 +121,19 @@ public class GameSettingsManager : MonoBehaviour {
             player1.misc = player1Misc;
             player1.skin = player1Skin;
 }
-        if (numberOfPlayers >= 2)
+        if (numberOfPlayers + numberOfAIPlayers >= 2)
         {
             // spawn player 2
-            Man player2 = Instantiate(playerPrefab) as Man;
+            Man player2;
+            if (numberOfPlayers >= 2)
+            {
+                player2 = Instantiate(playerPrefab) as Man;
+            }
+            else
+            {
+                player2 = Instantiate(AIPlayerPrefab) as Man;
+            }
+
             player2.transform.position = player2Spawn.position;
             player2.transform.rotation = player2Spawn.rotation;
 
@@ -133,10 +144,19 @@ public class GameSettingsManager : MonoBehaviour {
             player2.misc = player2Misc;
             player2.skin = player2Skin;
         }
-        if (numberOfPlayers >= 3)
+        if (numberOfPlayers + numberOfAIPlayers >= 3)
         {
             // spawn player 3
-            Man player3 = Instantiate(playerPrefab) as Man;
+            Man player3;
+            if (numberOfPlayers >= 3)
+            {
+                player3 = Instantiate(playerPrefab) as Man;
+            }
+            else
+            {
+                player3 = Instantiate(AIPlayerPrefab) as Man;
+            }
+
             player3.transform.position = player3Spawn.position;
             player3.transform.rotation = player3Spawn.rotation;
 
@@ -147,10 +167,19 @@ public class GameSettingsManager : MonoBehaviour {
             player3.misc = player3Misc;
             player3.skin = player3Skin;
         }
-        if (numberOfPlayers >= 4)
+        if (numberOfPlayers + numberOfAIPlayers >= 4)
         {
             // spawn player 4
-            Man player4 = Instantiate(playerPrefab) as Man;
+            Man player4;
+            if (numberOfPlayers >= 4)
+            {
+                player4 = Instantiate(playerPrefab) as Man;
+            }
+            else
+            {
+                player4 = Instantiate(AIPlayerPrefab) as Man;
+            }
+
             player4.transform.position = player4Spawn.position;
             player4.transform.rotation = player4Spawn.rotation;
 

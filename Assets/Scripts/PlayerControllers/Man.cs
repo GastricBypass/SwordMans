@@ -155,7 +155,10 @@ public class Man : MonoBehaviour {
             health = 0;
             ui.PlayerDead(playerNumber);
             CameraFollow camera = FindObjectOfType<CameraFollow>();
-            camera.Delete(this);
+            if (camera != null)
+            {
+                camera.Delete(this);
+            }
             ExtraDeathEffects();
         }
         if (health > maxHealth)

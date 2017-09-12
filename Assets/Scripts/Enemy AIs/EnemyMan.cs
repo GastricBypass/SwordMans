@@ -7,13 +7,21 @@ public class EnemyMan : Man {
     public bool isEnemy = true;
     public bool disappearsOnDeath = true;
     public bool isBoss;
+    public bool hasSamePlayerCustomizationOptions = false;
 
 	// Use this for initialization
 	public override void Start ()
     {
-        health = maxHealth;
-        hitTime = System.DateTime.Now;
-        ui = FindObjectOfType<UIManager>();
+        if (hasSamePlayerCustomizationOptions)
+        {
+            base.Start();
+        }
+        else
+        {
+            health = maxHealth;
+            hitTime = System.DateTime.Now;
+            ui = FindObjectOfType<UIManager>();
+        }
     }
 	
 	// Update is called once per frame
