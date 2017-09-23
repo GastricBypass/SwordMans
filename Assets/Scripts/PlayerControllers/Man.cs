@@ -69,12 +69,26 @@ public class Man : MonoBehaviour {
 
         for (int i = 0; i < transform.Find("Body/Body Head/").childCount; i++)
         {
-            transform.Find("Body/Body Head/").GetChild(i).GetComponent<MeshRenderer>().material.color = toSet;
+            if (transform.Find("Body/Body Head/").GetChild(i).GetComponent<SkinnedMeshRenderer>() != null)
+            {
+                transform.Find("Body/Body Head/").GetChild(i).GetComponent<SkinnedMeshRenderer>().material.color = toSet;
+            }
+            else
+            {
+                transform.Find("Body/Body Head/").GetChild(i).GetComponent<MeshRenderer>().material.color = toSet;
+            }
         }
 
         for (int i = 0; i < transform.Find("Body/Body Spine/Items/").childCount; i++)
         {
-            transform.Find("Body/Body Spine/Items/").GetChild(i).GetComponent<MeshRenderer>().material.color = toSet;
+            if (transform.Find("Body/Body Spine/Items/").GetChild(i).GetComponent<SkinnedMeshRenderer>() != null)
+            {
+                transform.Find("Body/Body Spine/Items/").GetChild(i).GetComponent<SkinnedMeshRenderer>().material.color = toSet;
+            }
+            else
+            {
+                transform.Find("Body/Body Spine/Items/").GetChild(i).GetComponent<MeshRenderer>().material.color = toSet;
+            }
         }
     }
 
@@ -126,7 +140,10 @@ public class Man : MonoBehaviour {
             childBody.GetComponent<MeshRenderer>().material.color = toSet;
             for (int j = 0; j < childBody.childCount; j++)
             {
-                childBody.GetChild(j).GetComponent<MeshRenderer>().material.color = toSet;
+                if (childBody.GetChild(j).GetComponent<MeshRenderer>() != null)
+                {
+                    childBody.GetChild(j).GetComponent<MeshRenderer>().material.color = toSet;
+                }
             }
         }
     }

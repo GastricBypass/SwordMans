@@ -9,18 +9,6 @@ public class DamagingArea : IEntity
 
     //private System.DateTime lastTick;
 
-    // Use this for initialization
-    void Start()
-    {
-        //lastTick = System.DateTime.Now;
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-
-    }
-
     private void OnTriggerStay(Collider other)
     {
         if (active)

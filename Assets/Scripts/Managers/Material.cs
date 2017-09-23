@@ -19,6 +19,7 @@ public class Material : MonoBehaviour {
 	void Start ()
     {
         audioSource = gameObject.AddComponent<AudioSource>();
+        //Resources.LoadAll("Sounds"); // causes load time on levels to increase dramatically. Also there is still a delay on the first time a sound is loaded.
     }
 	
 	// Update is called once per frame

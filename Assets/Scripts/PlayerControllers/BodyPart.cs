@@ -51,7 +51,6 @@ public class BodyPart : MonoBehaviour {
 
             // no damage if it is a body part with the same owner
             BodyPart bodyPart = collision.collider.GetComponent<BodyPart>();
-
             if (bodyPart != null)
             {
                 if (bodyPart.owner == this.owner)
@@ -60,18 +59,22 @@ public class BodyPart : MonoBehaviour {
                 }
             }
 
+            // no damage if it is hit with its own weapon
             Sword sword = collision.collider.GetComponent<Sword>();
-
             if (sword != null)
             {
                 if (sword.owner == this.owner)
                 {
                     damage = 0;
                 }
-                else
-                {
-                    damage = damage * 5; // double damage from weapons
-                }
+            }
+
+            // extra damage from weapons or other damaging objects
+            DamageMultiplyingObject extraDamageObject = collision.collider.GetComponent<DamageMultiplyingObject>();
+            if (extraDamageObject != null)
+            {
+                damage = damage * extraDamageObject.damageMultiplier; 
+            
             }
 
             owner.TakeDamage(damage * damageMultiplier);

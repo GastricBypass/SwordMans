@@ -12,6 +12,9 @@ public class PlayMenuManager : MonoBehaviour {
 
     public GameObject playOptionsMenu;
 
+    public GameObject howToPlayMenu;
+    public Button howToPlayMenuStartOption;
+
     public Button versusButton;
     public GameObject versusMenu;
     public Button versusMenuStartOption;
@@ -41,6 +44,7 @@ public class PlayMenuManager : MonoBehaviour {
     {
         versusMenu.SetActive(false);
         coopMenu.SetActive(false);
+        howToPlayMenu.SetActive(false);
 
         numPlayers = manager.gsm.numberOfPlayers;
         numAIPlayers = manager.gsm.numberOfAIPlayers;
@@ -106,6 +110,20 @@ public class PlayMenuManager : MonoBehaviour {
             manager.gsm.activeStageIndex = 0;
             manager.gsm.SetStages(coopStages);
         }
+    }
+
+    public void HowToPlayPressed()
+    {
+        playOptionsMenu.SetActive(false);
+        howToPlayMenu.SetActive(true);
+        howToPlayMenuStartOption.Select();
+    }
+
+    public void GotItButtonPressed()
+    {
+        playOptionsMenu.SetActive(true);
+        howToPlayMenu.SetActive(false);
+        manager.playMenuStartOption.Select();
     }
     
     public void PlayButtonPressed()

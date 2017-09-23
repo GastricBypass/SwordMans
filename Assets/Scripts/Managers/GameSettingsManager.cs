@@ -62,6 +62,15 @@ public class GameSettingsManager : MonoBehaviour {
     void Start ()
     {
         DontDestroyOnLoad(this);
+        //Resources.LoadAll("Sounds"); // this causes loading the main menu to take longer. Also the first sound loaded takes just as long
+
+        // This might help a little, but there's still a delay when the first sound loads.
+        AudioClip clip = (AudioClip)Resources.Load("Sounds/metalOnMetal1", typeof(AudioClip));
+        AudioSource audioSource = gameObject.AddComponent<AudioSource>();
+        audioSource.volume = 0;
+        audioSource.clip = clip;
+        audioSource.Play();
+
         if (music == null)
         {
             music = this.GetComponent<MusicManager>();
