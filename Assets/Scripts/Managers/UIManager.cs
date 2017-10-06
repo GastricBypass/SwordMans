@@ -73,14 +73,17 @@ public class UIManager : MonoBehaviour {
 	// Update is called once per frame
 	public void Update ()
     {
-		if (Input.GetButtonDown("Start"))
+        if (gsm.currentStage != "Main Menu")
         {
-            StartPressed();
-        }
+            if (Input.GetButtonDown("Start"))
+            {
+                StartPressed();
+            }
 
-        if (!gameOver && CheckWinStatus())
-        {
-            StartCoroutine(StartEndGameCountdown());
+            if (!gameOver && CheckWinStatus())
+            {
+                StartCoroutine(StartEndGameCountdown());
+            }
         }
 	}
 

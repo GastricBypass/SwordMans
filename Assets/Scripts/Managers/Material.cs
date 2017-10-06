@@ -18,6 +18,8 @@ public class Material : MonoBehaviour {
 	// Use this for initialization
 	void Start ()
     {
+        volumeMultiplier = volumeMultiplier * FindObjectOfType<GameSettingsManager>().settings.effectsVolume;
+
         audioSource = gameObject.AddComponent<AudioSource>();
         //Resources.LoadAll("Sounds"); // causes load time on levels to increase dramatically. Also there is still a delay on the first time a sound is loaded.
     }

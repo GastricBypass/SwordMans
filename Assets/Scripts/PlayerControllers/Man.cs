@@ -14,6 +14,8 @@ public class Man : MonoBehaviour {
     public float health;
     public float invinceTimeMS;
 
+    public bool invincible = false; // not used with the i-frames that come from invinceTimeMS
+
     public string color;
     public string weapon;
     public string hat;
@@ -153,12 +155,13 @@ public class Man : MonoBehaviour {
 		
 	}
 
-    public void TakeDamage(float damage)
+    public void TakeDamage(float damage, bool alwaysDealsDamage = false)
     {
-        if (damage > 0 && health > 0 && (System.DateTime.Now - hitTime).TotalMilliseconds > invinceTimeMS)
+        if (!invincible && damage > 0 && health > 0 && (alwaysDealsDamage || (System.DateTime.Now - hitTime).TotalMilliseconds > invinceTimeMS))
         {
             ChangeHealth(health - damage);
             ui.ShowHurtImage(playerNumber, damage);
+
             hitTime = System.DateTime.Now;
             //Debug.Log("Player " + playerNumber + ": " + damage + " damage taken");
         }

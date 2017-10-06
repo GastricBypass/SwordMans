@@ -4,8 +4,8 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 
-public class CampaignUIManager : UIManager {
-
+public class CampaignUIManager : UIManager
+{
     public string nextLevelName;
     public NextLevelArea nextLevelProgressionArea;
     public bool bossLevel;
@@ -151,6 +151,7 @@ public class CampaignUIManager : UIManager {
 
     public void StartNextLevel()
     {
+        gsm.data.UnlockCoopStage(nextLevelName);
         gsm.LoadStage(nextLevelName);
     }
 }

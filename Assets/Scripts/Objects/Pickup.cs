@@ -7,13 +7,17 @@ public class Pickup : MonoBehaviour {
     public bool destroyedOnPickup = true;
     public int healthGained;
 
-	// Use this for initialization
-	void Start () {
+    public float duration; // there needs to be a better way to do this. If someone has the effects of a pickup when another spawns, they keep the effects forever.
+
+    // Use this for initialization
+    void Start ()
+    {
 		
 	}
 	
 	// Update is called once per frame
-	void Update () {
+	void Update ()
+    {
 		
 	}
 
@@ -27,7 +31,11 @@ public class Pickup : MonoBehaviour {
             ExtraEffects(recipient);
             if (destroyedOnPickup)
             {
-                Destroy(this.gameObject);
+                
+                StartCoroutine(WaitToDestroy(this.gameObject, duration));
+                this.GetComponent<Collider>().enabled = false;
+                this.GetComponent<MeshRenderer>().enabled = false;
+                //this.gameObject.SetActive(false); // hide the object and destroy later commenting this out makes it actually get to the end, but it doesn't set everything back to normal
             }
         }
     }
@@ -35,5 +43,11 @@ public class Pickup : MonoBehaviour {
     protected virtual void ExtraEffects(BodyPart recipient)
     {
         // Implement for extra effects on pickup
+    }
+
+    protected virtual IEnumerator WaitToDestroy(GameObject obj, float time)
+    {
+        yield return new WaitForSeconds(time + 1);
+        Destroy(obj);
     }
 }

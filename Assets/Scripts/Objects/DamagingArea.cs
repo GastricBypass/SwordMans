@@ -5,23 +5,33 @@ using UnityEngine;
 public class DamagingArea : IEntity
 {
     public float damagePerTick;
-    //public float tickLengthMS; not working properly. When active, not all people 
-
-    //private System.DateTime lastTick;
+    public float tickLengthMS;
+    public List<Man> immuneToDamage;
+    public bool alwaysDealsDamage = true;
 
     private void OnTriggerStay(Collider other)
     {
         if (active)
         {
-            //if ((System.DateTime.Now - lastTick).TotalMilliseconds > tickLengthMS)
-            //{
-            //lastTick = System.DateTime.Now;
-            BodyPart[] recipients = other.GetComponents<BodyPart>();
-            for (int i = 0; i < recipients.Length; i++)
+            BodyPart recipient = other.GetComponent<BodyPart>();
+            if (recipient != null && !immuneToDamage.Contains(recipient.owner))
             {
-                recipients[i].owner.TakeDamage(damagePerTick);
+                recipient.owner.TakeDamage(damagePerTick, alwaysDealsDamage);
+                StartCoroutine(WaitToDealDamageAgain(tickLengthMS, recipient.owner));
             }
-            //}
+            
+        }
+    }
+
+    private IEnumerator WaitToDealDamageAgain(float time, Man man)
+    {
+        immuneToDamage.Add(man);
+
+        yield return new WaitForSeconds(time / 1000f);
+
+        if (man != null)
+        {
+            immuneToDamage.Remove(man);
         }
     }
 }

@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class ItemSpawner : MonoBehaviour {
 
-    public GameObject item;
+    public List<GameObject> items;
 
     public Vector3 minRange;
     public Vector3 maxRange;
@@ -14,12 +14,21 @@ public class ItemSpawner : MonoBehaviour {
 
     public float timeBetweenSpawnsMinMS;
     public float timeBetweenSpawnsMaxMS;
+    public bool destroyOldSpawnsOnNewSpawn = false;
+    public bool spawnRelativeToSpawner = false;
+    public bool spawnOnLoad = false;
+
     private bool canSpawn = true;
+
+    private GameObject previousSpawn;
 
     // Use this for initialization
     void Start ()
     {
-		
+		if (!spawnOnLoad)
+        {
+            StartCoroutine(ToggleCanSpawn());
+        }
 	}
 	
 	// Update is called once per frame
@@ -33,15 +42,34 @@ public class ItemSpawner : MonoBehaviour {
 
     public void SpawnItem()
     {
+        if (destroyOldSpawnsOnNewSpawn && previousSpawn != null)
+        {
+            Destroy(previousSpawn.gameObject);
+        }
+
         float x = Random.Range(minRange.x, maxRange.x);
         float y = Random.Range(minRange.y, maxRange.y);
         float z = Random.Range(minRange.z, maxRange.z);
+
+        Vector3 spawnPosition = new Vector3(x, y, z);
 
         float xMove = Random.Range(initialVelocityMin.x, initialVelocityMax.x);
         float yMove = Random.Range(initialVelocityMin.y, initialVelocityMax.y);
         float zMove = Random.Range(initialVelocityMin.z, initialVelocityMax.z);
 
-        GameObject newlySpawned = Instantiate(item, new Vector3(x, y, z), Quaternion.identity);
+        int itemIndex = Random.Range(0, items.Count);
+
+        if (spawnRelativeToSpawner)
+        {
+            spawnPosition = spawnPosition + this.transform.position;
+        }
+
+        GameObject newlySpawned = Instantiate(items[itemIndex], spawnPosition, items[itemIndex].transform.rotation);
+
+        if (destroyOldSpawnsOnNewSpawn)
+        {
+            previousSpawn = newlySpawned;
+        }
 
         Rigidbody newRigidbody = newlySpawned.GetComponent<Rigidbody>();
         if (newRigidbody != null)

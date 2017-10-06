@@ -25,7 +25,6 @@ public class NextLevelArea : MonoBehaviour {
         if (player != null && player.playerNumber != 0 && !playersInArea.Contains(player.playerNumber))
         {
             playersInArea.Add(player.playerNumber);
-            Debug.Log(System.DateTime.Now + ": " + playersInArea.Count + " players in exit area");
         }
     }
 
@@ -36,7 +35,6 @@ public class NextLevelArea : MonoBehaviour {
         if (player != null && player.playerNumber != 0 && playersInArea.Contains(player.playerNumber))
         {
             playersInArea.Remove(player.playerNumber);
-            Debug.Log(System.DateTime.Now + ": " + playersInArea.Count + " players in exit area");
         }
     }
 }

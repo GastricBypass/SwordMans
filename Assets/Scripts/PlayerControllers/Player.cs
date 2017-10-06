@@ -6,12 +6,10 @@ public class Player : Sword {
 
     protected override void Move()
     {
-        // ORIGINAL Vector3 moveVector = new Vector3(0, 0, 0);
         Vector3 moveVector = new Vector3(0, 0, 0);
 
         float x = Input.GetAxis(playerNumber + "Horizontal");
         float z = Input.GetAxis(playerNumber + "Vertical");
-        // ORIGINAL: moveVector += new Vector3(x, 0, -z).normalized * moveSpeed;
         moveVector += new Vector3(x, 0, -z).normalized * moveSpeed;
 
         if (boost > 0 && Input.GetButton(playerNumber + "Rise"))
@@ -39,13 +37,19 @@ public class Player : Sword {
         {
             moveVector = moveVector.normalized * moveSpeed * 100;
         }
-        
-        // ORIGINAL: rigbod.velocity = moveVector;
 
-        if (moveVector.y == 0) {
+        if (moveVector.y == 0)
+        {
             moveVector += new Vector3(0, rigbod.velocity.y, 0);
         }
 
+        // This makes it so you don't stop on a dime when letting go of the stick, but also ruins moving on the ground and attack while standing still.
+        //if (moveVector.x == 0 && moveVector.z == 0)
+        //{
+        //     moveVector += new Vector3(rigbod.velocity.x, 0, 0);
+        //    moveVector += new Vector3(0, 0, rigbod.velocity.z);
+        //}
+        
         rigbod.velocity = moveVector;
     }
 

@@ -53,15 +53,34 @@ public class GameSettingsManager : MonoBehaviour {
     public Settings settings = new Settings();
 
     public int roundNumber = 1;
-
     public int[] wins;
 
     public MusicManager music;
 
+    public GameData data;
+
+    private GameSettingsManager singletonGsm;
+
     // Use this for initialization
     void Start ()
     {
-        DontDestroyOnLoad(this);
+        if (singletonGsm == null)
+        {
+            singletonGsm = this;
+            DontDestroyOnLoad(this);
+        }
+        else
+        {
+            Destroy(this.gameObject);
+        }
+
+        Debug.Log("Attempting to set up game data");
+        if (data == null)
+        {
+            data = this.GetComponent<GameData>();
+        }
+        SetupGameData();
+        
         //Resources.LoadAll("Sounds"); // this causes loading the main menu to take longer. Also the first sound loaded takes just as long
 
         // This might help a little, but there's still a delay when the first sound loads.
@@ -76,9 +95,40 @@ public class GameSettingsManager : MonoBehaviour {
             music = this.GetComponent<MusicManager>();
         }
 	}
-	
-	// Update is called once per frame
-	void Update ()
+
+    private void SetupGameData()
+    {
+        Debug.Log("Setting up game data");
+        SaveManager.Load(GameConstants.Files.dataFileName, data);
+        
+        if (data.hats.Count == 0 && data.misc.Count == 0 && data.versusStages.Count == 0 && data.coopStages.Count == 0)
+        {
+            Debug.Log("Creating new game data");
+
+            data.hats = GameConstants.Unlocks.startingHats;
+            data.hats.Sort();
+
+            data.misc = GameConstants.Unlocks.startingMisc;
+            data.misc.Sort();
+
+            data.versusStages = GameConstants.Unlocks.startingVersusStages;
+            data.versusStages.Sort();
+
+            data.coopStages = GameConstants.Unlocks.startingCoopStages;
+            data.coopStages.Sort();
+
+            data.Save();
+        }
+
+        Debug.Log("Creating game data successful\nThe data is as follows:" +
+            "\nnum hats: " + data.hats.Count + 
+            "\nnum misc: " + data.misc.Count +
+            "\nnum versus stages: " + data.versusStages.Count +
+            "\nnum coop stages: " + data.coopStages.Count);
+    }
+
+    // Update is called once per frame
+    void Update ()
     {
         
 	}
@@ -304,6 +354,16 @@ public class GameSettingsManager : MonoBehaviour {
         }
     }
 
+    public void SetMusicVolume(float volume)
+    {
+        settings.musicVolume = volume;
+
+        if (music != null)
+        {
+            music.SetVolume(volume);
+        }
+    }
+
     public class Settings
     {
         public bool colorizeHealthBars = true;
@@ -314,5 +374,6 @@ public class GameSettingsManager : MonoBehaviour {
 
         public bool musicOn = true;
         public float musicVolume = 0.6f;
+        public float effectsVolume = 1f;
     }
 }

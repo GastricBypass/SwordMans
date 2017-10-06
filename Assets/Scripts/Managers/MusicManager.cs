@@ -77,6 +77,14 @@ public class MusicManager : MonoBehaviour {
         audioSource.mute = muted;
     }
 
+    public void SetVolume(float volume)
+    {
+        if (audioSource != null)
+        {
+            audioSource.volume = volume;
+        }
+    }
+
     public void FadeIn(float time)
     {
         StartCoroutine(Fade(true, time));

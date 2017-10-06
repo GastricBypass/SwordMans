@@ -35,15 +35,16 @@ public class AIEnemy : Sword {
             }
         }
 
+        Vector3 moveVector = new Vector3(0, 0, 0);
+
         if (target == null)
         {
+            rigbod.velocity = moveVector;
             return;
         }
 
-        else if ((target.transform.position - this.transform.position).magnitude < aggroDistance)
+        else if (target != null && (target.transform.position - this.transform.position).magnitude < aggroDistance)
         {
-            Vector3 moveVector = new Vector3(0, 0, 0);
-
             if (target.transform.position.x > rigbod.transform.position.x)
             {
                 moveVector += new Vector3(moveSpeed, 0, 0);
@@ -94,14 +95,14 @@ public class AIEnemy : Sword {
             {
                 moveVector += new Vector3(0, rigbod.velocity.y, 0);
             }
-
-            rigbod.velocity = moveVector;
         }
 
         else
         {
             target = null;
         }
+
+        rigbod.velocity = moveVector;
     }
 
     protected override void Attack()

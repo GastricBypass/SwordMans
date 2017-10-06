@@ -42,6 +42,9 @@ public class PlayMenuManager : MonoBehaviour {
     // Use this for initialization
     void Start ()
     {
+        Debug.Log("About to set up unlocked stages");
+        StartCoroutine(RepeatedlyTryToSetStages(0.1f));
+
         versusMenu.SetActive(false);
         coopMenu.SetActive(false);
         howToPlayMenu.SetActive(false);
@@ -51,13 +54,36 @@ public class PlayMenuManager : MonoBehaviour {
         numberOfPlayers.text = manager.gsm.numberOfPlayers.ToString();
         numberOfAIPlayers.text = manager.gsm.numberOfAIPlayers.ToString();
         coopNumberOfPlayers.text = manager.gsm.numberOfPlayers.ToString();
+	}
 
-        if (GSMStagesEqual(stages))
+    public IEnumerator RepeatedlyTryToSetStages(float time)
+    {
+        Debug.Log("Waiting to set up stages.");
+        yield return new WaitForSecondsRealtime(time);
+        Debug.Log("Setting up stages.");
+
+        if (manager.gsm.data == null)
+        {
+            Debug.Log("Game data not yet ready to give stages, waiting and retrying...");
+            StartCoroutine(RepeatedlyTryToSetStages(time));
+        }
+        else
+        {
+            Debug.Log("Game data ready. Setting stages from file.");
+            stages = manager.gsm.data.versusStages;
+            coopStages = manager.gsm.data.coopStages;
+            SetStagePresets();
+        }
+    }
+	
+    public void SetStagePresets()
+    {
+        if (GsmStagesEqual(stages))
         {
             activeStageIndex = manager.gsm.activeStageIndex;
             selectedStage.text = stages[activeStageIndex];
         }
-        else if (GSMStagesEqual(coopStages))
+        else if (GsmStagesEqual(coopStages))
         {
             coopActiveStageIndex = manager.gsm.activeStageIndex;
             coopSelectedStage.text = coopStages[coopActiveStageIndex];
@@ -70,8 +96,8 @@ public class PlayMenuManager : MonoBehaviour {
             selectedStage.text = stages[activeStageIndex];
             coopSelectedStage.text = coopStages[coopActiveStageIndex];
         }
-	}
-	
+    }
+
 	// Update is called once per frame
 	void Update () {
 		if (manager.shouldRestoreDefaults)
@@ -90,7 +116,7 @@ public class PlayMenuManager : MonoBehaviour {
         versusMenuStartOption.Select();
         versus = true;
 
-        if (!GSMStagesEqual(stages))
+        if (!GsmStagesEqual(stages))
         {
             manager.gsm.activeStageIndex = 0;
             manager.gsm.SetStages(stages);
@@ -105,7 +131,7 @@ public class PlayMenuManager : MonoBehaviour {
         coopMenuStartOption.Select();
         versus = false;
 
-        if (!GSMStagesEqual(coopStages))
+        if (!GsmStagesEqual(coopStages))
         {
             manager.gsm.activeStageIndex = 0;
             manager.gsm.SetStages(coopStages);
@@ -259,8 +285,8 @@ public class PlayMenuManager : MonoBehaviour {
         manager.gsm.numberOfAIPlayers = numAIPlayers;
     }
 
-    private bool GSMStagesEqual(List<string> compare)
+    private bool GsmStagesEqual(List<string> compare)
     {
-        return manager.gsm.stages.Count == compare.Count;
+        return manager.gsm.stages.Count == compare.Count; // Lazy, fix later
     }
 }

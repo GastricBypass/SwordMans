@@ -47,6 +47,32 @@ public class CustomizationMenuManager : MonoBehaviour {
     // Use this for initialization
     void Start ()
     {
+        Debug.Log("About to set up unlocked cosmetics");
+        StartCoroutine(RepeatedlyTryToSetUnlockables(0.1f));
+    }
+
+    public IEnumerator RepeatedlyTryToSetUnlockables(float time)
+    {
+        Debug.Log("Waiting to set up cosmetics.");
+        yield return new WaitForSecondsRealtime(time);
+        Debug.Log("Setting up cosmetics.");
+
+        if (manager.gsm.data == null)
+        {
+            Debug.Log("Game data not yet ready to give cosmetics, waiting and retrying...");
+            StartCoroutine(RepeatedlyTryToSetUnlockables(time));
+        }
+        else
+        {
+            Debug.Log("Game data ready. Setting cosmetics from file.");
+            hats = manager.gsm.data.hats;
+            misc = manager.gsm.data.misc;
+            SetCustomizationPresets();
+        }
+    }
+
+    public void SetCustomizationPresets()
+    {
         // Player 1 presets
         color1.text = manager.gsm.player1Color;
         weapon1.text = manager.gsm.player1Weapon;
@@ -100,9 +126,9 @@ public class CustomizationMenuManager : MonoBehaviour {
         miscIndeces[3] = misc.IndexOf(misc4.text);
         skinIndeces[3] = skins.IndexOf(skin4.text);
     }
-	
-	// Update is called once per frame
-	void Update ()
+
+    // Update is called once per frame
+    void Update ()
     {
 		
 	}
