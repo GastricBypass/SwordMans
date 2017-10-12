@@ -23,8 +23,6 @@ public class AISwordMan : AIEnemy {
     protected override void Update()
     {
         base.Update();
-
-        
     }
 
     protected override void Move()

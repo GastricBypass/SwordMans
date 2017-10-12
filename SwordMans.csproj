@@ -81,6 +81,7 @@
     <Compile Include="Assets\Scripts\Enemy AIs\AISwordMan.cs" />
     <Compile Include="Assets\Scripts\Enemy AIs\EnemyMan.cs" />
     <Compile Include="Assets\Scripts\Enemy AIs\RandomForceAdder.cs" />
+    <Compile Include="Assets\Scripts\Enemy AIs\Spider.cs" />
     <Compile Include="Assets\Scripts\Managers\CameraFollow.cs" />
     <Compile Include="Assets\Scripts\Managers\CampaignUIManager.cs" />
     <Compile Include="Assets\Scripts\Managers\CustomizationMenuManager.cs" />

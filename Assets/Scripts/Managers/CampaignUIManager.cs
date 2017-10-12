@@ -20,6 +20,8 @@ public class CampaignUIManager : UIManager
 	// Use this for initialization
 	public override void Start ()
     {
+        audioSource = gameObject.AddComponent<AudioSource>();
+
         pauseMenu.SetActive(false);
         endGameCountdownTimer.gameObject.SetActive(false);
 
@@ -34,6 +36,8 @@ public class CampaignUIManager : UIManager
         damageTexts[2].gameObject.SetActive(false);
         damageTexts[3].gameObject.SetActive(false);
         damageTexts[4].gameObject.SetActive(false);
+
+        unlockedItem.SetActive(false);
 
         gsm = FindObjectOfType<GameSettingsManager>();
         gsm.player1Spawn = player1Spawn;
@@ -69,8 +73,8 @@ public class CampaignUIManager : UIManager
         base.ShowHurtImage(playerNumber, damage);
         if (bossLevel && playerNumber == 0)
         {
-            StartCoroutine(ShowImageForSeconds(hurtDisplays[4], damage, 0.2f));
-            StartCoroutine(ShowTextForSeconds(damageTexts[4], damage, 0.5f));
+            StartCoroutine(ShowHurtImageForSeconds(hurtDisplays[4], damage, 0.2f));
+            StartCoroutine(ShowHurtTextForSeconds(damageTexts[4], damage, 0.5f));
         }
     }
 

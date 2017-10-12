@@ -28,6 +28,7 @@ public class Unlocker : IEntity {
         if (player != null)
         {
             UnlockAllItems();
+            Destroy(this.gameObject);
         }
     }
 

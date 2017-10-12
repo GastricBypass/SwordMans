@@ -5,10 +5,13 @@ using UnityEngine;
 public class BoostPowerup : Pickup
 {
     public GameObject bubblePrefab;
-    private float oldBoostDrainRate;
 
-	// Use this for initialization
-	void Start ()
+    private float oldBoostDrainRate;
+    private Sword swordToEnhance;
+    private GameObject bubble;
+
+    // Use this for initialization
+    void Start ()
     {
 		
 	}
@@ -41,7 +44,9 @@ public class BoostPowerup : Pickup
 
     private IEnumerator noBoostLimitForDuration(Sword sword, float time)
     {
-        GameObject bubble = Instantiate(bubblePrefab);
+        swordToEnhance = sword;
+
+        bubble = Instantiate(bubblePrefab);
         bubble.transform.parent = sword.transform;
         bubble.transform.position = sword.transform.position;
         bubble.transform.rotation = sword.transform.rotation;
@@ -53,5 +58,11 @@ public class BoostPowerup : Pickup
 
         sword.boostDrainSpeed = oldBoostDrainRate;
         Destroy(bubble.gameObject);
+    }
+
+    private void OnDestroy()
+    {
+        if (swordToEnhance != null) swordToEnhance.boostDrainSpeed = oldBoostDrainRate;
+        if (bubble != null) Destroy(bubble.gameObject);
     }
 }

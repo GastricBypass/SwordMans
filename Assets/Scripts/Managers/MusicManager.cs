@@ -16,7 +16,8 @@ public class MusicManager : MonoBehaviour {
     {
         if (FindObjectsOfType<MusicManager>().Length > 1)
         {
-            // Not the best, but I need to make sure there are never multiple instances of the music manager. Even for a breif instance as is the case when you return to the main menu.
+            // Not the best, but I need to make sure there are never multiple instances of the music manager. Even for a breif instance as is the case when you return to the main menu. 
+            // This might be fixed now with the new way I handle deleting the extra gsm's. Needs testing though.
             Destroy(this.gameObject);
             return;
         }
@@ -31,13 +32,20 @@ public class MusicManager : MonoBehaviour {
         audioSource = gameObject.AddComponent<AudioSource>();
         audioSource.loop = true;
         SetSong("Main Menu");
-        audioSource.Play();
     }
 
     // Update is called once per frame
     void Update()
     {
 
+    }
+
+    public void Play()
+    {
+        if (audioSource != null)
+        {
+            audioSource.Play();
+        }
     }
 
     public void SetSong(string stage, bool fadeIn = false)
@@ -74,7 +82,10 @@ public class MusicManager : MonoBehaviour {
 
     public void Mute(bool muted)
     {
-        audioSource.mute = muted;
+        if (audioSource != null)
+        {
+            audioSource.mute = muted;
+        }
     }
 
     public void SetVolume(float volume)

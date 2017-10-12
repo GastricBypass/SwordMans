@@ -5,7 +5,10 @@ using UnityEngine;
 public class DamageBoostPowerup : Pickup
 {
     public GameObject bubblePrefab;
+
     private float oldDamageMultiplier;
+    private DamageMultiplyingObject damagingObjectToEnhance;
+    private GameObject bubble;
 
     protected override void ExtraEffects(BodyPart recipient)
     {
@@ -29,7 +32,9 @@ public class DamageBoostPowerup : Pickup
 
     private IEnumerator noBoostLimitForDuration(DamageMultiplyingObject damagingObject, float time)
     {
-        GameObject bubble = Instantiate(bubblePrefab);
+        damagingObjectToEnhance = damagingObject;
+
+        bubble = Instantiate(bubblePrefab);
         bubble.transform.parent = damagingObject.transform;
         bubble.transform.position = damagingObject.transform.position;
         bubble.transform.rotation = damagingObject.transform.rotation;
@@ -41,5 +46,11 @@ public class DamageBoostPowerup : Pickup
 
         damagingObject.damageMultiplier = oldDamageMultiplier;
         Destroy(bubble.gameObject);
+    }
+
+    private void OnDestroy()
+    {
+        if (damagingObjectToEnhance != null) damagingObjectToEnhance.damageMultiplier = oldDamageMultiplier;
+        if (bubble != null) Destroy(bubble.gameObject);
     }
 }

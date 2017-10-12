@@ -33,13 +33,23 @@ public class UIManager : MonoBehaviour {
     public Text endGameCountdownTimer;
     public bool gameOver;
 
+    public GameObject unlockedItem;
+    public Image unlockedItemImage;
+    public Text unlockedItemText;
+
     protected bool[] deadPlayers;
+    protected AudioSource audioSource;
     private int winningPlayerNumber = 0;
 
     // Use this for initialization
     public virtual void Start()
     {
+        audioSource = gameObject.AddComponent<AudioSource>();
+
         pauseMenu.SetActive(false);
+        RectTransform backdrop = pauseMenu.transform.Find("Backdrop").GetComponent<RectTransform>();
+        backdrop.sizeDelta = new Vector2(Screen.width * 2, Screen.height * 2);
+
         endGamePlayerWinText.gameObject.SetActive(false);
         endGameCountdownTimer.gameObject.SetActive(false);
 
@@ -52,6 +62,8 @@ public class UIManager : MonoBehaviour {
         damageTexts[1].gameObject.SetActive(false);
         damageTexts[2].gameObject.SetActive(false);
         damageTexts[3].gameObject.SetActive(false);
+
+        unlockedItem.SetActive(false);
 
         gsm = FindObjectOfType<GameSettingsManager>();
         gsm.player1Spawn = player1Spawn;
@@ -100,12 +112,12 @@ public class UIManager : MonoBehaviour {
     {
         if (playerNumber > 0 && playerNumber <= 4)
         {
-            StartCoroutine(ShowImageForSeconds(hurtDisplays[playerNumber - 1], damage, 0.2f));
-            StartCoroutine(ShowTextForSeconds(damageTexts[playerNumber - 1], damage, 0.5f));
+            StartCoroutine(ShowHurtImageForSeconds(hurtDisplays[playerNumber - 1], damage, 0.2f));
+            StartCoroutine(ShowHurtTextForSeconds(damageTexts[playerNumber - 1], damage, 0.5f));
         }
     }
 
-    public IEnumerator ShowImageForSeconds(Image image, float damage, float time)
+    public IEnumerator ShowHurtImageForSeconds(Image image, float damage, float time)
     {
         image.color = new Color(image.color.r, image.color.g, image.color.b, damage / 200);
         image.gameObject.SetActive(true);
@@ -113,7 +125,7 @@ public class UIManager : MonoBehaviour {
         image.gameObject.SetActive(false);
     }
 
-    public IEnumerator ShowTextForSeconds(Text text, float damage, float time)
+    public IEnumerator ShowHurtTextForSeconds(Text text, float damage, float time)
     {
         text.text = ((int)damage).ToString();
         if (text.text != "0")
@@ -325,6 +337,8 @@ public class UIManager : MonoBehaviour {
 
     public virtual IEnumerator StartEndGameCountdown()
     {
+        UnlockItemByChance();
+
         gameOver = true;
 
         endGamePlayerWinText.gameObject.SetActive(true);
@@ -356,5 +370,49 @@ public class UIManager : MonoBehaviour {
         roundNumber.text = gsm.currentStage + "\nRound " + gsm.roundNumber;
         yield return new WaitForSeconds(2);
         roundNumber.gameObject.SetActive(false);
+    }
+
+    public void UnlockItemByChance()
+    {
+        if (Random.Range(0f, 1f) < gsm.chanceToUnlockItemsEachRound)
+        {
+            int itemIndex = Random.Range(0, GameConstants.Unlocks.allHats.Count + GameConstants.Unlocks.allMisc.Count);
+
+            if (itemIndex < GameConstants.Unlocks.allHats.Count)
+            {
+                gsm.data.UnlockHat(GameConstants.Unlocks.allHats[itemIndex]);
+            }
+            else
+            {
+                gsm.data.UnlockMisc(GameConstants.Unlocks.allMisc[itemIndex - GameConstants.Unlocks.allHats.Count]);
+            }
+        }
+    }
+
+    public void UnlockItem(string itemName)
+    {
+        Sprite newImage = (Sprite)Resources.Load("ItemImages/" + itemName, typeof(Sprite));
+
+        if (newImage != null)
+        {
+            unlockedItemImage.sprite = newImage;
+        }
+        unlockedItemText.text = itemName;
+
+        AudioClip clip = (AudioClip)Resources.Load("Sounds/unlockItem", typeof(AudioClip));
+        audioSource.clip = clip;
+        audioSource.volume = gsm.settings.effectsVolume;
+        audioSource.Play();
+
+        StartCoroutine(ShowUnlockForSeconds(3));
+    }
+
+    public IEnumerator ShowUnlockForSeconds(float time)
+    {
+        unlockedItem.SetActive(true);
+
+        yield return new WaitForSeconds(time);
+
+        unlockedItem.SetActive(false);
     }
 }

@@ -47,22 +47,36 @@ public class SettingsMenuManager : MonoBehaviour {
         randomStageSelectSelected = toggleRandomStageSelect.transform.Find("Selected").gameObject;
         musicOnSelected = toggleMusicOn.transform.Find("Selected").gameObject;
 
-        colorizeHealthBarsSelected.SetActive(manager.gsm.settings.colorizeHealthBars);
-        showHealthValuesSelected.SetActive(manager.gsm.settings.showHealthValues);
-        numberOfRounds.text = manager.gsm.settings.roundsPerStage.ToString();
-        randomStageSelectSelected.SetActive(manager.gsm.settings.randomStateSelect);
-
-        musicOnSelected.SetActive(manager.gsm.settings.musicOn);
-        musicVolumeSlider.value = (int)(manager.gsm.settings.musicVolume * 100);
-        effectsVolumeSlider.value = (int)(manager.gsm.settings.effectsVolume * 100);
-        musicVolume.text = musicVolumeSlider.value.ToString();
-        effectsVolume.text = effectsVolumeSlider.value.ToString();
+        StartCoroutine(RepeatedlyTryToSetSettings(0.1f));
 
         GoToTab(0);
     }
-	
-	// Update is called once per frame
-	void Update () {
+
+    public IEnumerator RepeatedlyTryToSetSettings(float time)
+    {
+        yield return new WaitForSecondsRealtime(time);
+
+        if (manager.gsm.data == null)
+        {
+            StartCoroutine(RepeatedlyTryToSetSettings(time));
+        }
+        else
+        {
+            colorizeHealthBarsSelected.SetActive(manager.gsm.settings.colorizeHealthBars);
+            showHealthValuesSelected.SetActive(manager.gsm.settings.showHealthValues);
+            numberOfRounds.text = manager.gsm.settings.roundsPerStage.ToString();
+            randomStageSelectSelected.SetActive(manager.gsm.settings.randomStageSelect);
+
+            musicOnSelected.SetActive(manager.gsm.settings.musicOn);
+            musicVolumeSlider.value = (int)(manager.gsm.settings.musicVolume * 100);
+            effectsVolumeSlider.value = (int)(manager.gsm.settings.effectsVolume * 100);
+            musicVolume.text = musicVolumeSlider.value.ToString();
+            effectsVolume.text = effectsVolumeSlider.value.ToString();
+        }
+    }
+
+    // Update is called once per frame
+    void Update () {
         if (manager.settingsMenu.activeSelf)
         {
             if (Input.GetButtonDown("RightBumper"))
@@ -118,23 +132,23 @@ public class SettingsMenuManager : MonoBehaviour {
 
     public void ToggleColorizeHealthBars()
     {
-        manager.gsm.settings.colorizeHealthBars = !manager.gsm.settings.colorizeHealthBars;
+        manager.gsm.settings.SetColorizeHealthBars(!manager.gsm.settings.colorizeHealthBars);
         colorizeHealthBarsSelected.SetActive(!colorizeHealthBarsSelected.activeSelf);
     }
 
     public void ToggleShowHealthValues()
     {
-        manager.gsm.settings.showHealthValues = !manager.gsm.settings.showHealthValues;
+        manager.gsm.settings.SetShowHealthValues(!manager.gsm.settings.showHealthValues);
         showHealthValuesSelected.SetActive(!showHealthValuesSelected.activeSelf);
     }
 
     public void ForwardNumRounds()
     {
-        manager.gsm.settings.roundsPerStage ++;
+        manager.gsm.settings.SetRoundsPerStage(manager.gsm.settings.roundsPerStage + 1);
         
         if (manager.gsm.settings.roundsPerStage > maxNumberOfRounds)
         {
-            manager.gsm.settings.roundsPerStage = 1;
+            manager.gsm.settings.SetRoundsPerStage(1);
         }
 
         numberOfRounds.text = manager.gsm.settings.roundsPerStage.ToString();
@@ -142,11 +156,11 @@ public class SettingsMenuManager : MonoBehaviour {
 
     public void BackNumRounds()
     {
-        manager.gsm.settings.roundsPerStage --;
+        manager.gsm.settings.SetRoundsPerStage(manager.gsm.settings.roundsPerStage - 1);
 
         if (manager.gsm.settings.roundsPerStage < 1)
         {
-            manager.gsm.settings.roundsPerStage = maxNumberOfRounds;
+            manager.gsm.settings.SetRoundsPerStage(maxNumberOfRounds);
         }
 
         numberOfRounds.text = manager.gsm.settings.roundsPerStage.ToString();
@@ -154,13 +168,13 @@ public class SettingsMenuManager : MonoBehaviour {
 
     public void ToggleRandomStageSelect()
     {
-        manager.gsm.settings.randomStateSelect = !manager.gsm.settings.randomStateSelect;
+        manager.gsm.settings.SetRandomStageSelect(!manager.gsm.settings.randomStageSelect);
         randomStageSelectSelected.SetActive(!randomStageSelectSelected.activeSelf);
     }
 
     public void ToggleMusicOn()
     {
-        manager.gsm.ToggleMusicOn();
+        manager.gsm.SetMusicOn(!manager.gsm.settings.musicOn);
         musicOnSelected.SetActive(!musicOnSelected.activeSelf);
     }
 
@@ -175,7 +189,7 @@ public class SettingsMenuManager : MonoBehaviour {
     public void SetEffectscVolume()
     {
         float volume = effectsVolumeSlider.value / 100f;
-        manager.gsm.settings.effectsVolume = volume;
+        manager.gsm.settings.SetEffectsVolume(volume);
 
         effectsVolume.text = effectsVolumeSlider.value.ToString();
     }

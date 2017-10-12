@@ -42,7 +42,6 @@ public class PlayMenuManager : MonoBehaviour {
     // Use this for initialization
     void Start ()
     {
-        Debug.Log("About to set up unlocked stages");
         StartCoroutine(RepeatedlyTryToSetStages(0.1f));
 
         versusMenu.SetActive(false);
@@ -58,18 +57,14 @@ public class PlayMenuManager : MonoBehaviour {
 
     public IEnumerator RepeatedlyTryToSetStages(float time)
     {
-        Debug.Log("Waiting to set up stages.");
         yield return new WaitForSecondsRealtime(time);
-        Debug.Log("Setting up stages.");
 
         if (manager.gsm.data == null)
         {
-            Debug.Log("Game data not yet ready to give stages, waiting and retrying...");
             StartCoroutine(RepeatedlyTryToSetStages(time));
         }
         else
         {
-            Debug.Log("Game data ready. Setting stages from file.");
             stages = manager.gsm.data.versusStages;
             coopStages = manager.gsm.data.coopStages;
             SetStagePresets();

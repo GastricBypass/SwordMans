@@ -5,6 +5,10 @@ using UnityEngine;
 public class DefenseBoostPowerup : Pickup
 {
     public GameObject bubblePrefab;
+
+    private Man manToEnhance;
+    private GameObject bubble;
+
     protected override void ExtraEffects(BodyPart recipient)
     {
         base.ExtraEffects(recipient);
@@ -14,7 +18,9 @@ public class DefenseBoostPowerup : Pickup
 
     private IEnumerator noBoostLimitForDuration(Man man, float time)
     {
-        GameObject bubble = Instantiate(bubblePrefab);
+        manToEnhance = man;
+
+        bubble = Instantiate(bubblePrefab);
         Transform spine = man.transform.Find("Body/Body Spine");
         bubble.transform.parent = spine;
         bubble.transform.position = spine.position;
@@ -26,5 +32,11 @@ public class DefenseBoostPowerup : Pickup
 
         man.invincible = false;
         Destroy(bubble.gameObject);
+    }
+
+    private void OnDestroy()
+    {
+        if (manToEnhance != null) manToEnhance.invincible = false;
+        if (bubble != null) Destroy(bubble.gameObject);
     }
 }

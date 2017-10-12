@@ -4,19 +4,42 @@ using UnityEngine;
 
 public class GameData : MonoBehaviour {
 
+    // Cosmetics
+    public bool hasSavedCosmetics = true;
+
     public List<string> hats;
     public List<string> misc;
     public List<string> versusStages;
     public List<string> coopStages;
-	
-	public void Save()
+
+    // Settings
+    public bool hasSavedSettings = true;
+
+    public bool colorizeHealthBars;
+    public bool showHealthValues;
+
+    public int roundsPerStage;
+    public bool randomStageSelect;
+
+    public bool musicOn;
+    public float musicVolume;
+    public float effectsVolume;
+
+    public void Save()
     {
-        SaveManager.Save(GameConstants.Files.dataFileName, this);
-	}
+        SaveManager.SaveCosmetics(GameConstants.Files.cosmeticsFileName, this);
+        SaveManager.SaveSettings(GameConstants.Files.settingsFileName, this);
+    }
+
+    public void Load()
+    {
+        SaveManager.LoadCosmetics(GameConstants.Files.cosmeticsFileName, this);
+        SaveManager.LoadSettings(GameConstants.Files.settingsFileName, this);
+    }
 
     public void UnlockHat(string hatName)
     {
-        if (!hats.Contains(hatName))
+        if (!hats.Contains(hatName) && GameConstants.Unlocks.allHats.Contains(hatName))
         {
             Insert(hats, hatName);
             Save();
@@ -25,7 +48,7 @@ public class GameData : MonoBehaviour {
 
     public void UnlockMisc(string miscName)
     {
-        if (!misc.Contains(miscName))
+        if (!misc.Contains(miscName) && GameConstants.Unlocks.allMisc.Contains(miscName))
         {
             Insert(misc, miscName);
             Save();
@@ -34,7 +57,7 @@ public class GameData : MonoBehaviour {
 
     public void UnlockVersusStage(string stageName)
     {
-        if (!versusStages.Contains(stageName) && stageName != "Main Menu")
+        if (!versusStages.Contains(stageName) && GameConstants.Unlocks.allVersusStages.Contains(stageName))
         {
             Insert(versusStages, stageName);
             Save();
@@ -43,7 +66,7 @@ public class GameData : MonoBehaviour {
 
     public void UnlockCoopStage(string stageName)
     {
-        if (!coopStages.Contains(stageName) && stageName != "Main Menu")
+        if (!coopStages.Contains(stageName) && GameConstants.Unlocks.allCoopStages.Contains(stageName))
         {
             Insert(coopStages, stageName);
             Save();
@@ -65,6 +88,11 @@ public class GameData : MonoBehaviour {
                 list.Add(item);
                 break;
             }
+        }
+
+        if (list == hats || list == misc)
+        {
+            FindObjectOfType<UIManager>().UnlockItem(item);
         }
     }
 }

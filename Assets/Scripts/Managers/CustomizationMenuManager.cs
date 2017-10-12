@@ -47,24 +47,19 @@ public class CustomizationMenuManager : MonoBehaviour {
     // Use this for initialization
     void Start ()
     {
-        Debug.Log("About to set up unlocked cosmetics");
         StartCoroutine(RepeatedlyTryToSetUnlockables(0.1f));
     }
 
     public IEnumerator RepeatedlyTryToSetUnlockables(float time)
     {
-        Debug.Log("Waiting to set up cosmetics.");
         yield return new WaitForSecondsRealtime(time);
-        Debug.Log("Setting up cosmetics.");
 
         if (manager.gsm.data == null)
         {
-            Debug.Log("Game data not yet ready to give cosmetics, waiting and retrying...");
             StartCoroutine(RepeatedlyTryToSetUnlockables(time));
         }
         else
         {
-            Debug.Log("Game data ready. Setting cosmetics from file.");
             hats = manager.gsm.data.hats;
             misc = manager.gsm.data.misc;
             SetCustomizationPresets();

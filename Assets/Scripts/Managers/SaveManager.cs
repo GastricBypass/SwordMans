@@ -5,32 +5,54 @@ using System;
 using System.IO;
 using System.Runtime.Serialization.Formatters.Binary;
 
-public class SaveManager : MonoBehaviour {
-
-	// Use this for initialization
-	void Start () {
-		
-	}
-	
-	// Update is called once per frame
-	void Update () {
-		
-	}
-
-    public static void Save(string filename, GameData data)
+public class SaveManager : MonoBehaviour
+{
+    public static void SaveCosmetics(string filename, GameData data)
     {
-        Debug.Log("SaveManager saving all of the game data to the file: " + Application.persistentDataPath + "/" + filename);
         BinaryFormatter formatter = new BinaryFormatter();
         FileStream file = File.Create(Application.persistentDataPath + "/" + filename);
-        Debug.Log("File created");
-        SwordMansData serializableData = new SwordMansData(data);
-        Debug.Log("Serializable data created");
+
+        SwordMansCosmeticData serializableData = new SwordMansCosmeticData(data);
         formatter.Serialize(file, serializableData);
-        Debug.Log("Data serialized and saved in a file");
+
         file.Close();
     }
 
-    public static void Load(string filename, GameData data)
+    public static void LoadCosmetics(string filename, GameData data)
+    {
+        string filePath = Application.persistentDataPath + "/" + filename;
+
+        if (File.Exists(filePath))
+        {
+            BinaryFormatter formatter = new BinaryFormatter();
+            FileStream file = File.Open(filePath, FileMode.Open);
+
+            SwordMansCosmeticData serializableData = (SwordMansCosmeticData)formatter.Deserialize(file);
+            serializableData.UpdateGameData(data);
+
+            file.Close();
+
+            data.hasSavedCosmetics = true;
+        }
+
+        else
+        {
+            data.hasSavedCosmetics = false;
+        }
+    }
+
+    public static void SaveSettings(string filename, GameData data)
+    {
+        BinaryFormatter formatter = new BinaryFormatter();
+        FileStream file = File.Create(Application.persistentDataPath + "/" + filename);
+
+        SwordMansSettingsData serializableData = new SwordMansSettingsData(data);
+        formatter.Serialize(file, serializableData);
+
+        file.Close();
+    }
+
+    public static void LoadSettings(string filename, GameData data)
     {
         string filePath = Application.persistentDataPath + "/" + filename;
 
@@ -41,22 +63,29 @@ public class SaveManager : MonoBehaviour {
             BinaryFormatter formatter = new BinaryFormatter();
             FileStream file = File.Open(filePath, FileMode.Open);
 
-            SwordMansData serializableData = (SwordMansData)formatter.Deserialize(file); // load from file
+            SwordMansSettingsData serializableData = (SwordMansSettingsData)formatter.Deserialize(file);
             serializableData.UpdateGameData(data);
 
             file.Close();
+
+            data.hasSavedSettings = true;
+        }
+
+        else
+        {
+            data.hasSavedSettings = false;
         }
     }
 
     [Serializable]
-    private class SwordMansData
+    private class SwordMansCosmeticData
     {
         private List<string> unlockedHats;
         private List<string> unlockedMisc;
         private List<string> unlockedVersusStages;
         private List<string> unlockedCoopStages;
 
-        public SwordMansData(GameData data)
+        public SwordMansCosmeticData(GameData data)
         {
             Map(data);
         }
@@ -75,7 +104,52 @@ public class SaveManager : MonoBehaviour {
             data.misc = unlockedMisc;
             data.versusStages = unlockedVersusStages;
             data.coopStages = unlockedCoopStages;
-         }
+        }
+    }
+
+    [Serializable]
+    private class SwordMansSettingsData
+    {
+        public bool colorizeHealthBars;
+        public bool showHealthValues;
+
+        public int roundsPerStage;
+        public bool randomStageSelect;
+
+        public bool musicOn;
+        public float musicVolume;
+        public float effectsVolume;
+
+        public SwordMansSettingsData(GameData data)
+        {
+            Map(data);
+        }
+
+        public void Map(GameData data)
+        {
+            colorizeHealthBars = data.colorizeHealthBars;
+            showHealthValues = data.showHealthValues;
+
+            roundsPerStage = data.roundsPerStage;
+            randomStageSelect = data.randomStageSelect;
+
+            musicOn = data.musicOn;
+            musicVolume = data.musicVolume;
+            effectsVolume = data.effectsVolume;
+        }
+
+        public void UpdateGameData(GameData data)
+        {
+            data.colorizeHealthBars = colorizeHealthBars;
+            data.showHealthValues = showHealthValues;
+
+            data.roundsPerStage = roundsPerStage;
+            data.randomStageSelect = randomStageSelect;
+
+            data.musicOn = musicOn;
+            data.musicVolume = musicVolume;
+            data.effectsVolume = effectsVolume;
+        }
     }
 }
 

@@ -7,6 +7,8 @@ public class GameSettingsManager : MonoBehaviour {
 
     public bool active = false;
 
+    public float chanceToUnlockItemsEachRound = 0.1f;
+
     // If players are within the play zone, they will not be killed.
     public Vector3 inBoundsMin = new Vector3(-100, -100, -100);
     public Vector3 inBoundsMax = new Vector3(100, 100, 100);
@@ -74,37 +76,35 @@ public class GameSettingsManager : MonoBehaviour {
             Destroy(this.gameObject);
         }
 
-        Debug.Log("Attempting to set up game data");
+        if (music == null)
+        {
+            music = this.GetComponent<MusicManager>();
+        }
+
         if (data == null)
         {
             data = this.GetComponent<GameData>();
         }
         SetupGameData();
-        
+
+        music.Play();
+
         //Resources.LoadAll("Sounds"); // this causes loading the main menu to take longer. Also the first sound loaded takes just as long
 
         // This might help a little, but there's still a delay when the first sound loads.
-        AudioClip clip = (AudioClip)Resources.Load("Sounds/metalOnMetal1", typeof(AudioClip));
-        AudioSource audioSource = gameObject.AddComponent<AudioSource>();
-        audioSource.volume = 0;
-        audioSource.clip = clip;
-        audioSource.Play();
-
-        if (music == null)
-        {
-            music = this.GetComponent<MusicManager>();
-        }
+        //AudioClip clip = (AudioClip)Resources.Load("Sounds/metalOnMetal1", typeof(AudioClip));
+        //AudioSource audioSource = gameObject.AddComponent<AudioSource>();
+        //audioSource.volume = 0;
+        //audioSource.clip = clip;
+        //audioSource.Play();
 	}
 
     private void SetupGameData()
     {
-        Debug.Log("Setting up game data");
-        SaveManager.Load(GameConstants.Files.dataFileName, data);
-        
-        if (data.hats.Count == 0 && data.misc.Count == 0 && data.versusStages.Count == 0 && data.coopStages.Count == 0)
-        {
-            Debug.Log("Creating new game data");
+        data.Load();
 
+        if (!data.hasSavedCosmetics)
+        {
             data.hats = GameConstants.Unlocks.startingHats;
             data.hats.Sort();
 
@@ -120,11 +120,7 @@ public class GameSettingsManager : MonoBehaviour {
             data.Save();
         }
 
-        Debug.Log("Creating game data successful\nThe data is as follows:" +
-            "\nnum hats: " + data.hats.Count + 
-            "\nnum misc: " + data.misc.Count +
-            "\nnum versus stages: " + data.versusStages.Count +
-            "\nnum coop stages: " + data.coopStages.Count);
+        settings.SetupData(this);
     }
 
     // Update is called once per frame
@@ -254,7 +250,7 @@ public class GameSettingsManager : MonoBehaviour {
     public void LoadNextStage()
     {
         int index = 0;
-        if (settings.randomStateSelect)
+        if (settings.randomStageSelect)
         {
             index = Random.Range(0, stages.Count);
             roundNumber = 1;
@@ -275,7 +271,7 @@ public class GameSettingsManager : MonoBehaviour {
     public void LoadPrevStage()
     {
         int index = 0;
-        if (settings.randomStateSelect)
+        if (settings.randomStageSelect)
         {
             index = Random.Range(0, stages.Count);
             roundNumber = 1;
@@ -341,9 +337,10 @@ public class GameSettingsManager : MonoBehaviour {
         LoadStage("Main Menu");
     }
 
-    public void ToggleMusicOn()
+    public void SetMusicOn(bool musicOn)
     {
-        settings.musicOn = !settings.musicOn;
+        settings.SetMusicOn(musicOn);
+
         if (settings.musicOn)
         {
             music.Mute(false);
@@ -356,7 +353,7 @@ public class GameSettingsManager : MonoBehaviour {
 
     public void SetMusicVolume(float volume)
     {
-        settings.musicVolume = volume;
+        settings.SetMusicVolume(volume);
 
         if (music != null)
         {
@@ -370,10 +367,124 @@ public class GameSettingsManager : MonoBehaviour {
         public bool showHealthValues = true;
 
         public int roundsPerStage = 3;
-        public bool randomStateSelect = false;
+        public bool randomStageSelect = false;
 
         public bool musicOn = true;
         public float musicVolume = 0.6f;
         public float effectsVolume = 1f;
+        
+        private GameData data;
+
+        public void SetupData(GameSettingsManager gsm)
+        {
+            this.data = gsm.data;
+
+            if (data.hasSavedSettings)
+            {
+                MapFromData();
+            }
+            else
+            {
+                UpdateData();
+            }
+
+            Debug.Log("Creating game settings data successful\nThe data is as follows:" +
+            "\ncolorizeHealthBars: " + data.colorizeHealthBars +
+            "\nshowHealthValues: " + data.showHealthValues +
+            "\nroundsPerStage: " + data.roundsPerStage +
+            "\nrandomStageSelect: " + data.randomStageSelect +
+            "\nmusicOn: " + data.musicOn +
+            "\nmusicVolume: " + data.musicVolume +
+            "\neffectsVolume: " + data.effectsVolume);
+
+            gsm.SetMusicOn(musicOn);
+            gsm.SetMusicVolume(musicVolume);
+        }
+
+        public void MapFromData()
+        {
+            Debug.Log("Mapping settings from data");
+            colorizeHealthBars = data.colorizeHealthBars;
+            showHealthValues = data.showHealthValues;
+
+            roundsPerStage = data.roundsPerStage;
+            randomStageSelect = data.randomStageSelect;
+
+            musicOn = data.musicOn;
+            musicVolume = data.musicVolume;
+            effectsVolume = data.effectsVolume;
+        }
+
+        public void UpdateData()
+        {
+            Debug.Log("Updating data to default settings");
+            data.colorizeHealthBars = colorizeHealthBars;
+            data.showHealthValues = showHealthValues;
+
+            data.roundsPerStage = roundsPerStage;
+            data.randomStageSelect = randomStageSelect;
+
+            data.musicOn = musicOn;
+            data.musicVolume = musicVolume;
+            data.effectsVolume = effectsVolume;
+
+            data.Save();
+        }
+
+        public void SetColorizeHealthBars(bool value)
+        {
+            colorizeHealthBars = value;
+            data.colorizeHealthBars = value;
+
+            data.Save();
+        }
+
+        public void SetShowHealthValues(bool value)
+        {
+            showHealthValues = value;
+            data.showHealthValues = value;
+
+            data.Save();
+        }
+
+        public void SetRoundsPerStage(int value)
+        {
+            roundsPerStage = value;
+            data.roundsPerStage = value;
+
+            data.Save();
+        }
+
+        public void SetRandomStageSelect(bool value)
+        {
+            randomStageSelect = value;
+            data.randomStageSelect = value;
+
+            data.Save();
+        }
+
+        public void SetMusicOn(bool value)
+        {
+            musicOn = value;
+            data.musicOn = value;
+
+            data.Save();
+        }
+
+        public void SetMusicVolume(float value)
+        {
+            musicVolume = value;
+            data.musicVolume = value;
+
+            data.Save();
+        }
+
+        public void SetEffectsVolume(float value)
+        {
+            effectsVolume = value;
+            data.effectsVolume = value;
+
+            data.Save();
+        }
     }
 }
