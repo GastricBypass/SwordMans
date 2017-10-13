@@ -22,6 +22,17 @@ public class CampaignUIManager : UIManager
     {
         audioSource = gameObject.AddComponent<AudioSource>();
 
+        gsm = FindObjectOfType<GameSettingsManager>();
+
+        for (int i = 0; i < gsm.playerSpawns.Count; i++)
+        {
+            if (playerSpawns[i] == null)
+            {
+                GameObject.Find("PlayerSpawn" + i);
+            }
+            gsm.playerSpawns[i] = playerSpawns[i];
+        }
+
         pauseMenu.SetActive(false);
         endGameCountdownTimer.gameObject.SetActive(false);
 
@@ -39,12 +50,11 @@ public class CampaignUIManager : UIManager
 
         unlockedItem.SetActive(false);
 
-        gsm = FindObjectOfType<GameSettingsManager>();
-        gsm.player1Spawn = player1Spawn;
-        gsm.player2Spawn = player2Spawn;
-        gsm.player3Spawn = player3Spawn;
-        gsm.player4Spawn = player4Spawn;
-        
+        //gsm.player1Spawn = player1Spawn;
+        //gsm.player2Spawn = player2Spawn;
+        //gsm.player3Spawn = player3Spawn;
+        //gsm.player4Spawn = player4Spawn;
+
         gsm.numberOfAIPlayers = 0;
 
         deadPlayers = new bool[gsm.numberOfPlayers];

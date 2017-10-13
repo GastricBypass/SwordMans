@@ -111,7 +111,7 @@ public class MainMenuManager : MonoBehaviour {
     {
         DisableAllMenus();
         customizationMenu.SetActive(true);
-        customizationMenuStartOption.Select();
+        //customizationMenuStartOption.Select();
         SendCameraToTransform(customizationMenuCameraPosition);
         customizationMenuManager.SetCustomizationPresets();
         gsm.SpawnMenuPlayers();

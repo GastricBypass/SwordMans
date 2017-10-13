@@ -99,6 +99,7 @@ public class PlayMenuManager : MonoBehaviour {
         {
             versusMenu.SetActive(false);
             coopMenu.SetActive(false);
+            howToPlayMenu.SetActive(false);
             playOptionsMenu.SetActive(true);
             manager.shouldRestoreDefaults = false;
         }

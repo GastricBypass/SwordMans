@@ -12,6 +12,40 @@ public static class GameConstants {
         public static Color yellow = Color.yellow;
         public static Color orange = new Color(255f / 255f, 100f / 255f, 0f / 255f);
         public static Color purple = Color.magenta;
+
+        // Returns a color by the given name if it exists, otherwise it returns black
+        public static Color ParseFromName(string name)
+        {
+            string lowerCaseName = name.ToLower();
+            Color color = Color.black;
+
+            if (lowerCaseName == "red")
+            {
+                color = red;
+            }
+            else if (lowerCaseName == "blue")
+            {
+                color = blue;
+            }
+            else if (lowerCaseName == "green")
+            {
+                color = green;
+            }
+            else if (lowerCaseName == "yellow")
+            {
+                color = yellow;
+            }
+            else if (lowerCaseName == "orange")
+            {
+                color = orange;
+            }
+            else if (lowerCaseName == "purple")
+            {
+                color = purple;
+            }
+
+            return color;
+        }
     }
 
     public static class SkinColors
@@ -20,6 +54,32 @@ public static class GameConstants {
         public static Color medium = new Color(200f / 255f, 140f / 255f, 70f / 255f);
         public static Color dark = new Color(60f / 255f, 30f / 255f, 0f / 255f);
         public static Color green = new Color(50f / 255f, 100f / 255f, 35f / 255f);
+
+        // Returns a color by the given name if it exists, otherwise it returns black
+        public static Color ParseFromName(string name)
+        {
+            string lowerCaseName = name.ToLower();
+            Color color = Color.black;
+
+            if (lowerCaseName == "light")
+            {
+                color = light;
+            }
+            else if (lowerCaseName == "medium")
+            {
+                color = medium;
+            }
+            else if (lowerCaseName == "dark")
+            {
+                color = dark;
+            }
+            else if (lowerCaseName == "green")
+            {
+                color = green;
+            }
+
+            return color;
+        }
     }
 
     public static class Players

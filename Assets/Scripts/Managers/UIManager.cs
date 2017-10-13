@@ -9,10 +9,13 @@ public class UIManager : MonoBehaviour {
 
     public GameSettingsManager gsm;
     public bool useInBounds = true;
-    public Transform player1Spawn;
-    public Transform player2Spawn;
-    public Transform player3Spawn;
-    public Transform player4Spawn;
+
+    public List<Transform> playerSpawns;
+
+    //public Transform player1Spawn;
+    //public Transform player2Spawn;
+    //public Transform player3Spawn;
+    //public Transform player4Spawn;
 
     public StandaloneInputModule control;
 
@@ -66,10 +69,21 @@ public class UIManager : MonoBehaviour {
         unlockedItem.SetActive(false);
 
         gsm = FindObjectOfType<GameSettingsManager>();
-        gsm.player1Spawn = player1Spawn;
-        gsm.player2Spawn = player2Spawn;
-        gsm.player3Spawn = player3Spawn;
-        gsm.player4Spawn = player4Spawn;
+
+        for (int i = 0; i < gsm.playerSpawns.Count; i++)
+        {
+            if (playerSpawns[i] == null)
+            {
+                Debug.Log("player " + i + " spawn found");
+                GameObject spawn = GameObject.Find("Player Spawn (" + (i + 1) + ")");
+                playerSpawns[i] = spawn.transform;
+            }
+            gsm.playerSpawns[i] = playerSpawns[i];
+        }
+        //gsm.player1Spawn = player1Spawn;
+        //gsm.player2Spawn = player2Spawn;
+        //gsm.player3Spawn = player3Spawn;
+        //gsm.player4Spawn = player4Spawn;
 
         deadPlayers = new bool[gsm.numberOfPlayers + gsm.numberOfAIPlayers];
 
@@ -150,14 +164,17 @@ public class UIManager : MonoBehaviour {
         while (i < gsm.settings.roundsPerStage && i < gsm.wins.Length)
         {
             roundBubbles[i].gameObject.SetActive(true);
-            if (gsm.wins[i] == 1)
-                roundBubbles[i].color = DetermineColor(gsm.player1Color); 
-            else if (gsm.wins[i] == 2)
-                roundBubbles[i].color = DetermineColor(gsm.player2Color);
-            else if (gsm.wins[i] == 3)
-                roundBubbles[i].color = DetermineColor(gsm.player3Color);
-            else if (gsm.wins[i] == 4)
-                roundBubbles[i].color = DetermineColor(gsm.player4Color);
+
+            roundBubbles[i].color = GameConstants.PlayerColors.ParseFromName(gsm.playerColors[i]);
+
+            //if (gsm.wins[i] == 1)
+            //    roundBubbles[i].color = DetermineColor(gsm.player1Color); 
+            //else if (gsm.wins[i] == 2)
+            //    roundBubbles[i].color = DetermineColor(gsm.player2Color);
+            //else if (gsm.wins[i] == 3)
+            //    roundBubbles[i].color = DetermineColor(gsm.player3Color);
+            //else if (gsm.wins[i] == 4)
+            //    roundBubbles[i].color = DetermineColor(gsm.player4Color);
 
             i++;
         }
@@ -169,22 +186,22 @@ public class UIManager : MonoBehaviour {
         }
     }
 
-    public Color DetermineColor(string c)
-    {
-        if (c == "Red") 
-            return GameConstants.PlayerColors.red;
-        if (c == "Blue")
-            return GameConstants.PlayerColors.blue;
-        if (c == "Green")
-            return GameConstants.PlayerColors.green;
-        if (c == "Yellow")
-            return GameConstants.PlayerColors.yellow;
-        if (c == "Purple")
-            return GameConstants.PlayerColors.purple;
-        if (c == "Orange")
-            return GameConstants.PlayerColors.orange;
-        else return Color.gray;
-    }
+    //public Color DetermineColor(string c)
+    //{
+    //    if (c == "Red") 
+    //        return GameConstants.PlayerColors.red;
+    //    if (c == "Blue")
+    //        return GameConstants.PlayerColors.blue;
+    //    if (c == "Green")
+    //        return GameConstants.PlayerColors.green;
+    //    if (c == "Yellow")
+    //        return GameConstants.PlayerColors.yellow;
+    //    if (c == "Purple")
+    //        return GameConstants.PlayerColors.purple;
+    //    if (c == "Orange")
+    //        return GameConstants.PlayerColors.orange;
+    //    else return Color.gray;
+    //}
 
     public virtual void StartPressed()
     {
@@ -227,15 +244,17 @@ public class UIManager : MonoBehaviour {
         {
             healthMeters[i].gameObject.SetActive(true);
             boostMeters[i].gameObject.SetActive(true);
+            
+            SetHealthBarColor(healthMeters[i], gsm.playerColors[i]);
 
-            if (i == 0)
-                SetHealthBarColor(healthMeters[i], gsm.player1Color);
-            if (i == 1)
-                SetHealthBarColor(healthMeters[i], gsm.player2Color);
-            if (i == 2)
-                SetHealthBarColor(healthMeters[i], gsm.player3Color);
-            if (i == 3)
-                SetHealthBarColor(healthMeters[i], gsm.player4Color);
+            //if (i == 0)
+            //    SetHealthBarColor(healthMeters[i], gsm.player1Color);
+            //if (i == 1)
+            //    SetHealthBarColor(healthMeters[i], gsm.player2Color);
+            //if (i == 2)
+            //    SetHealthBarColor(healthMeters[i], gsm.player3Color);
+            //if (i == 3)
+            //    SetHealthBarColor(healthMeters[i], gsm.player4Color);
 
             healthValues[i].gameObject.SetActive(gsm.settings.showHealthValues);
 

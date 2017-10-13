@@ -20,37 +20,45 @@ public class GameSettingsManager : MonoBehaviour {
     public List<string> stages;
     public int activeStageIndex;
 
-    public Transform player1Spawn;
-    public Transform player2Spawn;
-    public Transform player3Spawn;
-    public Transform player4Spawn;
+    public List<Transform> playerSpawns = new List<Transform>(new Transform[4]);
+
+    //public Transform player1Spawn;
+    //public Transform player2Spawn;
+    //public Transform player3Spawn;
+    //public Transform player4Spawn;
 
     public int numberOfPlayers = 1;
     public int numberOfAIPlayers = 0;
 
-    public string player1Color;
-    public string player1Weapon;
-    public string player1Hat;
-    public string player1Misc;
-    public string player1Skin;
+    public List<string> playerColors = new List<string>(new string[4]);
+    public List<string> playerWeapons = new List<string>(new string[4]);
+    public List<string> playerHats = new List<string>(new string[4]);
+    public List<string> playerMisc = new List<string>(new string[4]);
+    public List<string> playerSkins = new List<string>(new string[4]);
 
-    public string player2Color;
-    public string player2Weapon;
-    public string player2Hat;
-    public string player2Misc;
-    public string player2Skin;
+    //public string player1Color;
+    //public string player1Weapon;
+    //public string player1Hat;
+    //public string player1Misc;
+    //public string player1Skin;
 
-    public string player3Color;
-    public string player3Weapon;
-    public string player3Hat;
-    public string player3Misc;
-    public string player3Skin;
+    //public string player2Color;
+    //public string player2Weapon;
+    //public string player2Hat;
+    //public string player2Misc;
+    //public string player2Skin;
 
-    public string player4Color;
-    public string player4Weapon;
-    public string player4Hat;
-    public string player4Misc;
-    public string player4Skin;
+    //public string player3Color;
+    //public string player3Weapon;
+    //public string player3Hat;
+    //public string player3Misc;
+    //public string player3Skin;
+
+    //public string player4Color;
+    //public string player4Weapon;
+    //public string player4Hat;
+    //public string player4Misc;
+    //public string player4Skin;
 
     public Settings settings = new Settings();
 
@@ -142,6 +150,7 @@ public class GameSettingsManager : MonoBehaviour {
 
     public void SpawnMenuPlayers()
     {
+        Debug.Log("Spawn Menu Players");
         Man[] men = FindObjectsOfType<Man>();
         foreach(Man man in men)
         {
@@ -162,89 +171,126 @@ public class GameSettingsManager : MonoBehaviour {
 
     public void SpawnPlayers()
     {
-        if (numberOfPlayers >= 1)
-        {
-            // spawn player 1
-            Man player1 = Instantiate(playerPrefab) as Man;
-            player1.transform.position = player1Spawn.position;
-            player1.transform.rotation = player1Spawn.rotation;
+        //if (playerSpawns.Count == 0)
+        //{
+        //    // sucks...
+        //    return;
+        //}
 
-            player1.playerNumber = 1;
-            player1.color = player1Color;
-            player1.weapon = player1Weapon;
-            player1.hat = player1Hat;
-            player1.misc = player1Misc;
-            player1.skin = player1Skin;
-}
-        if (numberOfPlayers + numberOfAIPlayers >= 2)
+        Debug.Log("Spawn Players");
+        for (int i = 0; i < numberOfPlayers + numberOfAIPlayers; i++)
         {
-            // spawn player 2
-            Man player2;
-            if (numberOfPlayers >= 2)
+            //if (playerSpawns[i] == null)
+            //{
+            //    //sucks
+            //    continue;
+            //}
+
+            Man player;
+            if (numberOfPlayers >= i)
             {
-                player2 = Instantiate(playerPrefab) as Man;
+                player = Instantiate(playerPrefab) as Man;
             }
             else
             {
-                player2 = Instantiate(AIPlayerPrefab) as Man;
+                player = Instantiate(AIPlayerPrefab) as Man;
             }
 
-            player2.transform.position = player2Spawn.position;
-            player2.transform.rotation = player2Spawn.rotation;
+            Debug.Log(playerSpawns.Count + " player spawns. At " + i + ". This one: " + playerSpawns[i]);
+            player.transform.position = playerSpawns[i].position;
+            player.transform.rotation = playerSpawns[i].rotation;
 
-            player2.playerNumber = 2;
-            player2.color = player2Color;
-            player2.weapon = player2Weapon;
-            player2.hat = player2Hat;
-            player2.misc = player2Misc;
-            player2.skin = player2Skin;
+            player.playerNumber = i + 1;
+            player.color = playerColors[i];
+            player.weapon = playerWeapons[i];
+            player.hat = playerHats[i];
+            player.misc = playerMisc[i];
+            player.skin = playerSkins[i];
         }
-        if (numberOfPlayers + numberOfAIPlayers >= 3)
-        {
-            // spawn player 3
-            Man player3;
-            if (numberOfPlayers >= 3)
-            {
-                player3 = Instantiate(playerPrefab) as Man;
-            }
-            else
-            {
-                player3 = Instantiate(AIPlayerPrefab) as Man;
-            }
 
-            player3.transform.position = player3Spawn.position;
-            player3.transform.rotation = player3Spawn.rotation;
+//        if (numberOfPlayers >= 1)
+//        {
+//            // spawn player 1
+//            Man player1 = Instantiate(playerPrefab) as Man;
+//            player1.transform.position = player1Spawn.position;
+//            player1.transform.rotation = player1Spawn.rotation;
 
-            player3.playerNumber = 3;
-            player3.color = player3Color;
-            player3.weapon = player3Weapon;
-            player3.hat = player3Hat;
-            player3.misc = player3Misc;
-            player3.skin = player3Skin;
-        }
-        if (numberOfPlayers + numberOfAIPlayers >= 4)
-        {
-            // spawn player 4
-            Man player4;
-            if (numberOfPlayers >= 4)
-            {
-                player4 = Instantiate(playerPrefab) as Man;
-            }
-            else
-            {
-                player4 = Instantiate(AIPlayerPrefab) as Man;
-            }
+//            player1.playerNumber = 1;
+//            player1.color = player1Color;
+//            player1.weapon = player1Weapon;
+//            player1.hat = player1Hat;
+//            player1.misc = player1Misc;
+//            player1.skin = player1Skin;
+//}
+//        if (numberOfPlayers + numberOfAIPlayers >= 2)
+//        {
+//            // spawn player 2
+//            Man player2;
+//            if (numberOfPlayers >= 2)
+//            {
+//                player2 = Instantiate(playerPrefab) as Man;
+//            }
+//            else
+//            {
+//                player2 = Instantiate(AIPlayerPrefab) as Man;
+//            }
 
-            player4.transform.position = player4Spawn.position;
-            player4.transform.rotation = player4Spawn.rotation;
+//            player2.transform.position = player2Spawn.position;
+//            player2.transform.rotation = player2Spawn.rotation;
 
-            player4.playerNumber = 4;
-            player4.color = player4Color;
-            player4.weapon = player4Weapon;
-            player4.hat = player4Hat;
-            player4.misc = player4Misc;
-            player4.skin = player4Skin;
-        }
+//            player2.playerNumber = 2;
+//            player2.color = player2Color;
+//            player2.weapon = player2Weapon;
+//            player2.hat = player2Hat;
+//            player2.misc = player2Misc;
+//            player2.skin = player2Skin;
+//        }
+//        if (numberOfPlayers + numberOfAIPlayers >= 3)
+//        {
+//            // spawn player 3
+//            Man player3;
+//            if (numberOfPlayers >= 3)
+//            {
+//                player3 = Instantiate(playerPrefab) as Man;
+//            }
+//            else
+//            {
+//                player3 = Instantiate(AIPlayerPrefab) as Man;
+//            }
+
+//            player3.transform.position = player3Spawn.position;
+//            player3.transform.rotation = player3Spawn.rotation;
+
+//            player3.playerNumber = 3;
+//            player3.color = player3Color;
+//            player3.weapon = player3Weapon;
+//            player3.hat = player3Hat;
+//            player3.misc = player3Misc;
+//            player3.skin = player3Skin;
+//        }
+//        if (numberOfPlayers + numberOfAIPlayers >= 4)
+//        {
+//            // spawn player 4
+//            Man player4;
+//            if (numberOfPlayers >= 4)
+//            {
+//                player4 = Instantiate(playerPrefab) as Man;
+//            }
+//            else
+//            {
+//                player4 = Instantiate(AIPlayerPrefab) as Man;
+//            }
+
+//            player4.transform.position = player4Spawn.position;
+//            player4.transform.rotation = player4Spawn.rotation;
+
+//            player4.playerNumber = 4;
+//            player4.color = player4Color;
+//            player4.weapon = player4Weapon;
+//            player4.hat = player4Hat;
+//            player4.misc = player4Misc;
+//            player4.skin = player4Skin;
+//        }
     }
 
     public void LoadNextStage()
