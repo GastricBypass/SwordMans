@@ -12,11 +12,6 @@ public class UIManager : MonoBehaviour {
 
     public List<Transform> playerSpawns;
 
-    //public Transform player1Spawn;
-    //public Transform player2Spawn;
-    //public Transform player3Spawn;
-    //public Transform player4Spawn;
-
     public StandaloneInputModule control;
 
     public Slider[] healthMeters;
@@ -80,10 +75,6 @@ public class UIManager : MonoBehaviour {
             }
             gsm.playerSpawns[i] = playerSpawns[i];
         }
-        //gsm.player1Spawn = player1Spawn;
-        //gsm.player2Spawn = player2Spawn;
-        //gsm.player3Spawn = player3Spawn;
-        //gsm.player4Spawn = player4Spawn;
 
         deadPlayers = new bool[gsm.numberOfPlayers + gsm.numberOfAIPlayers];
 
@@ -167,15 +158,6 @@ public class UIManager : MonoBehaviour {
 
             roundBubbles[i].color = GameConstants.PlayerColors.ParseFromName(gsm.playerColors[i]);
 
-            //if (gsm.wins[i] == 1)
-            //    roundBubbles[i].color = DetermineColor(gsm.player1Color); 
-            //else if (gsm.wins[i] == 2)
-            //    roundBubbles[i].color = DetermineColor(gsm.player2Color);
-            //else if (gsm.wins[i] == 3)
-            //    roundBubbles[i].color = DetermineColor(gsm.player3Color);
-            //else if (gsm.wins[i] == 4)
-            //    roundBubbles[i].color = DetermineColor(gsm.player4Color);
-
             i++;
         }
 
@@ -247,15 +229,6 @@ public class UIManager : MonoBehaviour {
             
             SetHealthBarColor(healthMeters[i], gsm.playerColors[i]);
 
-            //if (i == 0)
-            //    SetHealthBarColor(healthMeters[i], gsm.player1Color);
-            //if (i == 1)
-            //    SetHealthBarColor(healthMeters[i], gsm.player2Color);
-            //if (i == 2)
-            //    SetHealthBarColor(healthMeters[i], gsm.player3Color);
-            //if (i == 3)
-            //    SetHealthBarColor(healthMeters[i], gsm.player4Color);
-
             healthValues[i].gameObject.SetActive(gsm.settings.showHealthValues);
 
             i++;
@@ -272,6 +245,7 @@ public class UIManager : MonoBehaviour {
 
     public void SetHealthBarColor(Slider healthBar, string color)
     {
+        // Add faded colors to the game constants
         if (!gsm.settings.colorizeHealthBars)
         {
             return;
