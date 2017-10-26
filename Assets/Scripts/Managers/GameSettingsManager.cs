@@ -128,9 +128,12 @@ public class GameSettingsManager : MonoBehaviour {
         }
 
         int temp = numberOfPlayers;
+        int tempAI = numberOfAIPlayers;
         numberOfPlayers = 4;
+        numberOfAIPlayers = 0;
         SpawnPlayers();
         numberOfPlayers = temp;
+        numberOfAIPlayers = tempAI;
 
         men = FindObjectsOfType<Man>();
         foreach (Man man in men)
@@ -144,7 +147,7 @@ public class GameSettingsManager : MonoBehaviour {
         for (int i = 0; i < numberOfPlayers + numberOfAIPlayers; i++)
         {
             Man player;
-            if (numberOfPlayers >= i)
+            if (numberOfPlayers > i)
             {
                 player = Instantiate(playerPrefab) as Man;
             }
@@ -163,7 +166,6 @@ public class GameSettingsManager : MonoBehaviour {
             player.misc = playerMisc[i];
             player.skin = playerSkins[i];
         }
-        
     }
 
     public void LoadNextStage()

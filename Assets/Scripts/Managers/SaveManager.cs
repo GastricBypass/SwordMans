@@ -80,10 +80,14 @@ public class SaveManager : MonoBehaviour
     [Serializable]
     private class SwordMansCosmeticData
     {
+        private float gold;
         private List<string> unlockedHats;
         private List<string> unlockedMisc;
         private List<string> unlockedVersusStages;
         private List<string> unlockedCoopStages;
+        private List<string> currentShopItems;
+
+        private DateTime lastPlayDate;
 
         public SwordMansCosmeticData(GameData data)
         {
@@ -92,18 +96,40 @@ public class SaveManager : MonoBehaviour
 
         public void Map(GameData data)
         {
+            gold = data.gold;
             unlockedHats = data.hats;
             unlockedMisc = data.misc;
             unlockedVersusStages = data.versusStages;
             unlockedCoopStages = data.coopStages;
+            
+            currentShopItems = data.shopItems;
+
+            // This whole mess was to reset the shop at midnight, but I think just storing the lastPlayDate on the data should do it.
+            if (data.lastPlayDate.Date != DateTime.UtcNow.Date) // reset shop items at midnight utc. This should only take effect after reloading the game
+            {
+                //data.shopItems = new List<string>(); // To reset shop immediately at midnight utc, otherwise it resets afterwards
+                data.lastPlayDate = DateTime.UtcNow;
+            }
+
+            lastPlayDate = data.lastPlayDate; // Will be the time you started playing, not the time you stopped.
         }
 
         public void UpdateGameData(GameData data)
         {
+            data.gold = gold;
             data.hats = unlockedHats;
             data.misc = unlockedMisc;
             data.versusStages = unlockedVersusStages;
             data.coopStages = unlockedCoopStages;
+
+            if (lastPlayDate.Date == DateTime.UtcNow.Date) // Resets shop if you stop playing and then come back on a different day
+            {
+                data.shopItems = currentShopItems;
+            }
+            else
+            {
+                data.shopItems = new List<string>();
+            }
         }
     }
 

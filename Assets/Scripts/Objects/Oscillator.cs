@@ -49,7 +49,7 @@ public class Oscillator : IEntity
     }
 	
 	// Update is called once per frame
-	void Update ()
+	void FixedUpdate ()
     {
         if (active)
         {
@@ -57,7 +57,7 @@ public class Oscillator : IEntity
             float y = transform.position.y;
             float z = transform.position.z;
 
-            float timeDifSeconds = (float)(System.DateTime.Now - levelStartTime).TotalSeconds;
+            float timeDifSeconds = Time.timeSinceLevelLoad; // (float)(System.DateTime.Now - levelStartTime).TotalSeconds;
 
             // if you set moveX to false, it will accelerate in the x direction very quickly.
             /*if (moveX)*/ x = difX / 2 * Mathf.Sin(timeDifSeconds / (waveTimeMS / 1000)) + avgX;

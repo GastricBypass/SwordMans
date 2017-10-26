@@ -348,7 +348,7 @@ public class CustomizationMenuManager : MonoBehaviour {
     {
         for (int i = 0; i < 4; i++)
         {
-            playerSelectedImages[i].color = GameConstants.PlayerColors.ParseFromName(selectedColors[i].text);
+            playerSelectedImages[i].color = GameConstants.UIColors.ParseFromName(selectedColors[i].text, 150);
         }
     }
 }

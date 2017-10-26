@@ -68,6 +68,7 @@ public class SettingsMenuManager : MonoBehaviour {
             randomStageSelectSelected.SetActive(manager.gsm.settings.randomStageSelect);
 
             musicOnSelected.SetActive(manager.gsm.settings.musicOn);
+            manager.gsm.SetMusicOn(manager.gsm.settings.musicOn);
             musicVolumeSlider.value = (int)(manager.gsm.settings.musicVolume * 100);
             effectsVolumeSlider.value = (int)(manager.gsm.settings.effectsVolume * 100);
             musicVolume.text = musicVolumeSlider.value.ToString();

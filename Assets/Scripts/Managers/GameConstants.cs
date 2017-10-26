@@ -82,6 +82,49 @@ public static class GameConstants {
         }
     }
 
+    public static class UIColors
+    {
+        public static Color red = new Color(255f / 255f, 50f / 255f, 50f / 255f);
+        public static Color blue = new Color(60f / 255f, 60f / 255f, 255f / 255f);
+        public static Color green = Color.green;
+        public static Color yellow = new Color(200f / 255f, 200f / 255f, 0f / 255f);
+        public static Color orange = new Color(255f / 255f, 100f / 255f, 0f / 255f);
+        public static Color purple = Color.magenta;
+
+        public static Color ParseFromName(string name, int transparency = 255)
+        {
+            string lowerCaseName = name.ToLower();
+            Color color = Color.black;
+
+            if (lowerCaseName == "red")
+            {
+                color = red;
+            }
+            else if (lowerCaseName == "blue")
+            {
+                color = blue;
+            }
+            else if (lowerCaseName == "green")
+            {
+                color = green;
+            }
+            else if (lowerCaseName == "yellow")
+            {
+                color = yellow;
+            }
+            else if (lowerCaseName == "orange")
+            {
+                color = orange;
+            }
+            else if (lowerCaseName == "purple")
+            {
+                color = purple;
+            }
+
+            return new Color(color.r, color.g, color.b, transparency / 255f);
+        }
+    }
+
     public static class Players
     {
         public static int playerMaxHealth = 1000;
@@ -109,14 +152,63 @@ public static class GameConstants {
         public static List<string> startingHats = new List<string>(new string[] { "None", "Bandana", "Coif", "Helmet", "Hood", "Jester", "Noble" });
         public static List<string> startingMisc = new List<string>(new string[] { "None", "Belt", "Cape", "Spaulders" });
 
-        public static List<string> startingVersusStages = new List<string>(new string[] { "Arena", "Castle", "Tavern", "Cabin", "Tower", "Ship", "Throne Room", "Pond", "Highlands", "Icebergs", "Bridge", "Market", "Volcano", "Colosseum", "Dungeon", "Mill" });
+        public static List<string> startingVersusStages = new List<string>(new string[] { "Arena", "Castle", "Tavern", "Cabin", "Tower", "Ship", "Throne Room", "Pond", "Highlands", "Icebergs", "Bridge", "Market", "Volcano", "Colosseum", "Dungeon", "Mill", "Mansion" });
         public static List<string> startingCoopStages = new List<string>(new string[] { "Ch 1" });
 
         public static List<string> allHats = new List<string>(new string[] { "None", "Bandana", "Coif", "Helmet", "Hood", "Jester", "Noble", "Cap", "Crown", "Viking", "Space", "Tricorn", "Spartan", "Fedora", "Bowler", "Tophat", "Boater", "Shades", "Bucket", "Cone", "Sunhat", "Tiara", "Circlet", "Headband", "Elf Hat", "Mustache" });
         public static List<string> allMisc = new List<string>(new string[] { "None", "Belt", "Cape", "Spaulders", "Breastplate", "Armor", "Necklace", "Collar", "Ruff", "Spikes", "Dagger", "Equipment", "Vest", "Sweater Vest", "Skirt", "Tabard", "Loincloth", "Poncho" });
 
-        public static List<string> allVersusStages = new List<string>(new string[] { "Arena", "Castle", "Tavern", "Cabin", "Tower", "Ship", "Space Station", "Throne Room", "Pond", "Highlands", "Icebergs", "Bridge", "Market", "Volcano", "Colosseum", "Dungeon", "Mill" });
+        public static List<string> allVersusStages = new List<string>(new string[] { "Arena", "Castle", "Tavern", "Cabin", "Tower", "Ship", "Space Station", "Throne Room", "Pond", "Highlands", "Icebergs", "Bridge", "Market", "Volcano", "Colosseum", "Dungeon", "Mill", "Mansion" });
         public static List<string> allCoopStages = new List<string>(new string[] { "Ch 1", "Ch 1 Part 1", "Ch 1 Part 2", "Ch 1 Part 3"});
+
+        public static List<string> purchasableHats = new List<string>(new string[] { "Bandana", "Coif", "Helmet", "Hood", "Jester", "Noble", "Cap", "Viking", "Tricorn", "Spartan", "Fedora", "Bowler", "Tophat", "Boater", "Shades", "Bucket", "Cone", "Sunhat", "Tiara", "Circlet", "Headband", "Elf Hat", "Mustache" });
+        public static List<string> purchasableMisc = new List<string>(new string[] { "Belt", "Cape", "Spaulders", "Breastplate", "Armor", "Necklace", "Collar", "Ruff", "Spikes", "Dagger", "Equipment", "Vest", "Sweater Vest", "Skirt", "Tabard", "Loincloth", "Poncho" });
+
+        public static Dictionary<string, float> hatPrices = new Dictionary<string, float> {
+            { "Bandana", 10 },
+            { "Coif", 10 },
+            { "Helmet", 80 },
+            { "Hood", 10 },
+            { "Jester", 100 },
+            { "Noble", 80 },
+            { "Cap", 10 },
+            { "Viking", 50 },
+            { "Tricorn", 50 },
+            { "Spartan", 80 },
+            { "Fedora", 100 },
+            { "Bowler", 100 },
+            { "Tophat", 100 },
+            { "Boater", 80 },
+            { "Shades", 50 },
+            { "Bucket", 80 },
+            { "Cone", 10 },
+            { "Sunhat", 80 },
+            { "Tiara", 100 },
+            { "Circlet", 100 },
+            { "Headband", 10 },
+            { "Elf Hat", 80 },
+            { "Mustache", 50 }
+        };
+
+        public static Dictionary<string, float> miscPrices = new Dictionary<string, float> {
+            { "Belt", 10 },
+            { "Cape", 100 },
+            { "Spaulders", 50 },
+            { "Breastplate", 80 },
+            { "Armor", 100 },
+            { "Necklace", 100 },
+            { "Collar", 80 },
+            { "Ruff", 80 },
+            { "Spikes", 50 },
+            { "Dagger", 50 },
+            { "Equipment", 100 },
+            { "Vest", 80 },
+            { "Sweater Vest", 80 },
+            { "Skirt", 50 },
+            { "Tabard", 100 },
+            { "Loincloth", 50 },
+            { "Poncho", 80 }
+        };
     }
 
     public static class Files

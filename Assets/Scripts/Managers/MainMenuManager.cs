@@ -13,18 +13,26 @@ public class MainMenuManager : MonoBehaviour {
     public GameObject mainMenu;
     public Button mainMenuStartOption;
     public Transform mainMenuCameraPosition;
+
     public GameObject playMenu;
     public PlayMenuManager playMenuManager;
     public Button playMenuStartOption;
     public Transform playMenuCameraPosition;
+
     public GameObject customizationMenu;
     public CustomizationMenuManager customizationMenuManager;
     public Button customizationMenuStartOption;
     public Transform customizationMenuCameraPosition;
+
     public GameObject settingsMenu;
     public SettingsMenuManager settingsMenuManager;
     public Button settingsMenuStartOption;
     public Transform settingsMenuCameraPosition;
+
+    public GameObject shopMenu;
+    public ShopMenuManager shopMenuManager;
+    public Button shopMenuStartOption;
+    public Transform shopMenuCameraPosition;
 
     public float moveThresh;
     public float moveDelayMS;
@@ -60,15 +68,18 @@ public class MainMenuManager : MonoBehaviour {
         playMenuManager = this.GetComponent<PlayMenuManager>();
         customizationMenuManager = this.GetComponent<CustomizationMenuManager>();
         settingsMenuManager = this.GetComponent<SettingsMenuManager>();
+        shopMenuManager = this.GetComponent<ShopMenuManager>();
 
         UIManager ui = FindObjectOfType<UIManager>();
         Time.timeScale = 0;
         ui.paused = true;
 
         menuCamera = FindObjectOfType<Camera>();
+
         DisableAllMenus();
         mainMenu.SetActive(true);
         mainMenuStartOption.Select();
+        SendCameraToTransform(mainMenuCameraPosition);
     }
 	
 	// Update is called once per frame
@@ -96,6 +107,7 @@ public class MainMenuManager : MonoBehaviour {
         settingsMenu.SetActive(false);
         playMenu.SetActive(false);
         customizationMenu.SetActive(false);
+        shopMenu.SetActive(false);
     }
 
     public void PlayMenuButtonPressed()
@@ -111,10 +123,18 @@ public class MainMenuManager : MonoBehaviour {
     {
         DisableAllMenus();
         customizationMenu.SetActive(true);
-        //customizationMenuStartOption.Select();
         SendCameraToTransform(customizationMenuCameraPosition);
         customizationMenuManager.SetCustomizationPresets();
         gsm.SpawnMenuPlayers();
+    }
+
+    public void ShopButtonPressed()
+    {
+        DisableAllMenus();
+        shopMenu.SetActive(true);
+        shopMenuStartOption.Select();
+        SendCameraToTransform(shopMenuCameraPosition);
+        shopMenuManager.SetGoldValue();
     }
 
     public void SettingsButtonPressed()

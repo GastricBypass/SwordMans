@@ -156,7 +156,10 @@ public class UIManager : MonoBehaviour {
         {
             roundBubbles[i].gameObject.SetActive(true);
 
-            roundBubbles[i].color = GameConstants.PlayerColors.ParseFromName(gsm.playerColors[i]);
+            if (gsm.wins[i] != 0) 
+            {
+                roundBubbles[i].color = GameConstants.PlayerColors.ParseFromName(gsm.playerColors[gsm.wins[i] - 1]);
+            }
 
             i++;
         }
@@ -167,23 +170,6 @@ public class UIManager : MonoBehaviour {
             i++;
         }
     }
-
-    //public Color DetermineColor(string c)
-    //{
-    //    if (c == "Red") 
-    //        return GameConstants.PlayerColors.red;
-    //    if (c == "Blue")
-    //        return GameConstants.PlayerColors.blue;
-    //    if (c == "Green")
-    //        return GameConstants.PlayerColors.green;
-    //    if (c == "Yellow")
-    //        return GameConstants.PlayerColors.yellow;
-    //    if (c == "Purple")
-    //        return GameConstants.PlayerColors.purple;
-    //    if (c == "Orange")
-    //        return GameConstants.PlayerColors.orange;
-    //    else return Color.gray;
-    //}
 
     public virtual void StartPressed()
     {
@@ -253,38 +239,8 @@ public class UIManager : MonoBehaviour {
 
         Image fill = healthBar.transform.Find("Fill Area/Fill").GetComponent<Image>();
         if (fill == null) return;
-        if (color == "Red")
-        {
-            fill.color = GameConstants.PlayerColors.red;
-            fill.color = new Color(fill.color.r, fill.color.g + 0.2f, fill.color.b + 0.2f);
-        }
-        else if (color == "Blue")
-        {
-            fill.color = GameConstants.PlayerColors.blue;
-            fill.color = new Color(fill.color.r + 0.25f, fill.color.g + 0.25f, fill.color.b);
 
-        }
-        else if (color == "Green")
-        {
-            fill.color = GameConstants.PlayerColors.green;
-        }
-        else if (color == "Yellow")
-        {
-            fill.color = GameConstants.PlayerColors.yellow;
-            fill.color = new Color(fill.color.r / 1.25f, fill.color.g / 1.25f, fill.color.b);
-        }
-        else if (color == "Orange")
-        {
-            fill.color = GameConstants.PlayerColors.orange;
-        }
-        else if (color == "Purple")
-        {
-            fill.color = GameConstants.PlayerColors.purple;
-        }
-        else
-        {
-            fill.color = Color.gray;
-        }
+        fill.color = GameConstants.UIColors.ParseFromName(color);
     }
 
     public virtual bool CheckWinStatus()
@@ -382,7 +338,7 @@ public class UIManager : MonoBehaviour {
         }
     }
 
-    public void UnlockItem(string itemName)
+    public void UnlockItem(string itemName, string goldValue = "")
     {
         Sprite newImage = (Sprite)Resources.Load("ItemImages/" + itemName, typeof(Sprite));
 
@@ -390,7 +346,7 @@ public class UIManager : MonoBehaviour {
         {
             unlockedItemImage.sprite = newImage;
         }
-        unlockedItemText.text = itemName;
+        unlockedItemText.text = goldValue + itemName;
 
         AudioClip clip = (AudioClip)Resources.Load("Sounds/unlockItem", typeof(AudioClip));
         audioSource.clip = clip;

@@ -117,24 +117,24 @@ public class AIEnemy : Sword {
 
     GameObject FindTarget()
     {
-        GameObject toReturn = null;
-
         BodyPart[] possibleTargets = FindObjectsOfType<BodyPart>();
+        List<BodyPart> possibleViableTargets = new List<BodyPart>();
 
-        // TODO: Make this more efficient
+        // TODO: Make this more efficient, just made it worse
         for (int i = 0; i < possibleTargets.Length; i++)
         {
             if (possibleTargets[i].owner.playerNumber != this.owner.playerNumber)
             {
                 if ((possibleTargets[i].gameObject.transform.position - this.transform.position).magnitude < aggroDistance && possibleTargets[i].owner.health > 0) 
                 {
-                    toReturn = possibleTargets[i].gameObject;
-                    break;
+                    possibleViableTargets.Add(possibleTargets[i]);
                 }
             }
         }
 
-        return toReturn;
+        int index = Random.Range(0, possibleViableTargets.Count);
+
+        return possibleViableTargets[index].gameObject;
     }
 
     public IEnumerator WaitToFindTarget(float time)

@@ -17,8 +17,8 @@ public class BodyPart : MonoBehaviour {
 		if (owner.ui.useInBounds && OutOfBounds())
         {
             owner.TakeDamage(1000f);
-            Destroy(owner.gameObject);
-            //StartCoroutine(DestroyAfterTime(owner.gameObject, 0f));
+            //Destroy(owner.gameObject);
+            StartCoroutine(DestroyAfterTime(owner.gameObject, 0.1f));
         }
 	}
 

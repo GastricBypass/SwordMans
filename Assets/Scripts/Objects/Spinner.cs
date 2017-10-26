@@ -13,7 +13,7 @@ public class Spinner : IEntity
 	}
 	
 	// Update is called once per frame
-	void Update () {
+	void FixedUpdate () {
         if (active)
         {
             if (forceBased)
@@ -28,7 +28,7 @@ public class Spinner : IEntity
 
             else
             {
-                this.transform.rotation = Quaternion.Euler(this.transform.rotation.eulerAngles + spinTorque);
+                this.transform.rotation = Quaternion.Euler(this.transform.rotation.eulerAngles + spinTorque * Time.timeScale);
             }
         }
 	}
