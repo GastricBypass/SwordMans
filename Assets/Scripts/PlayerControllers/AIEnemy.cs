@@ -131,10 +131,16 @@ public class AIEnemy : Sword {
                 }
             }
         }
+        if (possibleViableTargets.Count > 0)
+        {
+            int index = Random.Range(0, possibleViableTargets.Count);
 
-        int index = Random.Range(0, possibleViableTargets.Count);
-
-        return possibleViableTargets[index].gameObject;
+            return possibleViableTargets[index].gameObject;
+        }
+        else
+        {
+            return null;
+        }
     }
 
     public IEnumerator WaitToFindTarget(float time)

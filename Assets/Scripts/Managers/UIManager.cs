@@ -44,10 +44,10 @@ public class UIManager : MonoBehaviour {
     {
         audioSource = gameObject.AddComponent<AudioSource>();
 
-        pauseMenu.SetActive(false);
         RectTransform backdrop = pauseMenu.transform.Find("Backdrop").GetComponent<RectTransform>();
         backdrop.sizeDelta = new Vector2(Screen.width * 2, Screen.height * 2);
 
+        pauseMenu.SetActive(false);
         endGamePlayerWinText.gameObject.SetActive(false);
         endGameCountdownTimer.gameObject.SetActive(false);
 
@@ -69,7 +69,6 @@ public class UIManager : MonoBehaviour {
         {
             if (playerSpawns[i] == null)
             {
-                Debug.Log("player " + i + " spawn found");
                 GameObject spawn = GameObject.Find("Player Spawn (" + (i + 1) + ")");
                 playerSpawns[i] = spawn.transform;
             }

@@ -107,6 +107,7 @@ public class MainMenuManager : MonoBehaviour {
         settingsMenu.SetActive(false);
         playMenu.SetActive(false);
         customizationMenu.SetActive(false);
+        customizationMenuManager.ResetPlayerSelectors();
         shopMenu.SetActive(false);
     }
 

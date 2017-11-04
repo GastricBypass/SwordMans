@@ -22,16 +22,8 @@ public class CampaignUIManager : UIManager
     {
         audioSource = gameObject.AddComponent<AudioSource>();
 
-        gsm = FindObjectOfType<GameSettingsManager>();
-
-        for (int i = 0; i < gsm.playerSpawns.Count; i++)
-        {
-            if (playerSpawns[i] == null)
-            {
-                GameObject.Find("PlayerSpawn" + i);
-            }
-            gsm.playerSpawns[i] = playerSpawns[i];
-        }
+        RectTransform backdrop = pauseMenu.transform.Find("Backdrop").GetComponent<RectTransform>();
+        backdrop.sizeDelta = new Vector2(Screen.width * 2, Screen.height * 2);
 
         pauseMenu.SetActive(false);
         endGameCountdownTimer.gameObject.SetActive(false);
@@ -49,11 +41,18 @@ public class CampaignUIManager : UIManager
         damageTexts[4].gameObject.SetActive(false);
 
         unlockedItem.SetActive(false);
+        
+        gsm = FindObjectOfType<GameSettingsManager>();
 
-        //gsm.player1Spawn = player1Spawn;
-        //gsm.player2Spawn = player2Spawn;
-        //gsm.player3Spawn = player3Spawn;
-        //gsm.player4Spawn = player4Spawn;
+        for (int i = 0; i < gsm.playerSpawns.Count; i++)
+        {
+            if (playerSpawns[i] == null)
+            {
+                GameObject spawn = GameObject.Find("Player Spawn (" + (i + 1) + ")");
+                playerSpawns[i] = spawn.transform;
+            }
+            gsm.playerSpawns[i] = playerSpawns[i];
+        }
 
         gsm.numberOfAIPlayers = 0;
 

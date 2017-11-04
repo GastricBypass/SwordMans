@@ -29,8 +29,9 @@ public class CustomizationMenuManager : MonoBehaviour {
     public float selectMoveWaitTime = 0.2f;
     public List<Image> playerSelectedImages;
     public List<Button> playerSelectedStartingOptions;
+    public List<Button> startingSelectButtons;
     private List<Button> playersSelected = new List<Button>(new Button[4]);
-    public List<bool> playerSelectsCanMove = new List<bool>(new bool[] { true, true, true, true });
+    private List<bool> playerSelectsCanMove = new List<bool>(new bool[] { true, true, true, true });
 
     // Use this for initialization
     void Start ()
@@ -42,6 +43,7 @@ public class CustomizationMenuManager : MonoBehaviour {
             playersSelected[i] = playerSelectedStartingOptions[i];
         }
 
+        ResetPlayerSelectors();
         SetAllIconColors();
     }
 
@@ -58,6 +60,14 @@ public class CustomizationMenuManager : MonoBehaviour {
             hats = manager.gsm.data.hats;
             misc = manager.gsm.data.misc;
             SetCustomizationPresets();
+        }
+    }
+
+    public void ResetPlayerSelectors()
+    {
+        for (int i = 0; i < 4; i++)
+        {
+            SelectForPlayer(playerSelectedStartingOptions[i], i + 1);
         }
     }
 
@@ -319,15 +329,15 @@ public class CustomizationMenuManager : MonoBehaviour {
 
         if (toSelect != null)
         {
-            playersSelected[playerNumber - 1] = (Button)toSelect;
-            ShowSelectForPlayer((Button)toSelect, playerNumber);
+            SelectForPlayer((Button)toSelect, playerNumber);
 
             StartCoroutine(WaitUntilPlayerSelectCanMove(playerNumber));
         }
     }
 
-    private void ShowSelectForPlayer(Button toSelect, int playerNumber)
+    private void SelectForPlayer(Button toSelect, int playerNumber)
     {
+        playersSelected[playerNumber - 1] = toSelect;
         playerSelectedImages[playerNumber - 1].transform.position = toSelect.transform.position;
     }
 
