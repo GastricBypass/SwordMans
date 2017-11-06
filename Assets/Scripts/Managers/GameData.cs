@@ -103,6 +103,11 @@ public class GameData : MonoBehaviour
         Save();
     }
     
+    public bool HasItem(string itemName)
+    {
+        return misc.Contains(itemName) || hats.Contains(itemName);
+    }
+
     public void Insert(List<string> list, string item)
     {
         for (int i = 0; i < list.Count; i++)

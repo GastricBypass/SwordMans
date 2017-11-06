@@ -64,6 +64,7 @@ public class UIManager : MonoBehaviour {
         unlockedItem.SetActive(false);
 
         gsm = FindObjectOfType<GameSettingsManager>();
+        deadPlayers = new bool[gsm.numberOfPlayers + gsm.numberOfAIPlayers];
 
         for (int i = 0; i < gsm.playerSpawns.Count; i++)
         {
@@ -74,8 +75,6 @@ public class UIManager : MonoBehaviour {
             }
             gsm.playerSpawns[i] = playerSpawns[i];
         }
-
-        deadPlayers = new bool[gsm.numberOfPlayers + gsm.numberOfAIPlayers];
 
         DisplayRoundBubbles();
 

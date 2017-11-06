@@ -36,12 +36,18 @@ public class Unlocker : IEntity {
     {
         for (int i = 0; i < hatsToUnlock.Count; i++)
         {
-            gsm.data.UnlockHat(hatsToUnlock[i]);
+            if (!gsm.data.HasItem(hatsToUnlock[i])) // The unlocker shouldn't unlock things that have already been unlocked
+            {
+                gsm.data.UnlockHat(hatsToUnlock[i]);
+            }
         }
 
         for (int i = 0; i < miscToUnlock.Count; i++)
         {
-            gsm.data.UnlockMisc(miscToUnlock[i]);
+            if (!gsm.data.HasItem(hatsToUnlock[i]))
+            {
+                gsm.data.UnlockMisc(miscToUnlock[i]);
+            }
         }
 
         for (int i = 0; i < versusStagesToUnlock.Count; i++)

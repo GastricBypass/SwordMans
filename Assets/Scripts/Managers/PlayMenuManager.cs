@@ -47,24 +47,24 @@ public class PlayMenuManager : MonoBehaviour {
         versusMenu.SetActive(false);
         coopMenu.SetActive(false);
         howToPlayMenu.SetActive(false);
-
-        numPlayers = manager.gsm.numberOfPlayers;
-        numAIPlayers = manager.gsm.numberOfAIPlayers;
-        numberOfPlayers.text = manager.gsm.numberOfPlayers.ToString();
-        numberOfAIPlayers.text = manager.gsm.numberOfAIPlayers.ToString();
-        coopNumberOfPlayers.text = manager.gsm.numberOfPlayers.ToString();
 	}
 
     public IEnumerator RepeatedlyTryToSetStages(float time)
     {
         yield return new WaitForSecondsRealtime(time);
 
-        if (manager.gsm.data == null)
+        if (manager.gsm == null || manager.gsm.data == null)
         {
             StartCoroutine(RepeatedlyTryToSetStages(time));
         }
         else
         {
+            numPlayers = manager.gsm.numberOfPlayers;
+            numAIPlayers = manager.gsm.numberOfAIPlayers;
+            numberOfPlayers.text = manager.gsm.numberOfPlayers.ToString();
+            numberOfAIPlayers.text = manager.gsm.numberOfAIPlayers.ToString();
+            coopNumberOfPlayers.text = manager.gsm.numberOfPlayers.ToString();
+
             stages = manager.gsm.data.versusStages;
             coopStages = manager.gsm.data.coopStages;
             SetStagePresets();
