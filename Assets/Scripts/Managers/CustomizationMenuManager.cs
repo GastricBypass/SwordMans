@@ -88,39 +88,19 @@ public class CustomizationMenuManager : MonoBehaviour {
     {
         if (manager.customizationMenu.activeSelf)
         {
-            // This could be better... Maybe just iterate through players.
-            if (Mathf.Abs(Input.GetAxis("1Horizontal")) > 0.1 || Mathf.Abs(Input.GetAxis("1Vertical")) > 0.1)
+            for (int i = 0; i < 4; i++)
             {
-                MovePlayerSelection(Input.GetAxis("1Horizontal"), Input.GetAxis("1Vertical"), 1);
-            }
-            if (Mathf.Abs(Input.GetAxis("2Horizontal")) > 0.1 || Mathf.Abs(Input.GetAxis("2Vertical")) > 0.1)
-            {
-                MovePlayerSelection(Input.GetAxis("2Horizontal"), Input.GetAxis("2Vertical"), 2);
-            }
-            if (Mathf.Abs(Input.GetAxis("3Horizontal")) > 0.1 || Mathf.Abs(Input.GetAxis("3Vertical")) > 0.1)
-            {
-                MovePlayerSelection(Input.GetAxis("3Horizontal"), Input.GetAxis("3Vertical"), 3);
-            }
-            if (Mathf.Abs(Input.GetAxis("4Horizontal")) > 0.1 || Mathf.Abs(Input.GetAxis("4Vertical")) > 0.1)
-            {
-                MovePlayerSelection(Input.GetAxis("4Horizontal"), Input.GetAxis("4Vertical"), 4);
-            }
+                int playerNum = i + 1;
 
-            if (Input.GetButtonDown("1Rise"))
-            {
-                SubmitForPlayerSelected(1);
-            }
-            if (Input.GetButtonDown("2Rise"))
-            {
-                SubmitForPlayerSelected(2);
-            }
-            if (Input.GetButtonDown("3Rise"))
-            {
-                SubmitForPlayerSelected(3);
-            }
-            if (Input.GetButtonDown("4Rise"))
-            {
-                SubmitForPlayerSelected(4);
+                if (Mathf.Abs(Input.GetAxis(playerNum + "Horizontal")) > 0.1 || Mathf.Abs(Input.GetAxis(playerNum + "Vertical")) > 0.1)
+                {
+                    MovePlayerSelection(Input.GetAxis(playerNum + "Horizontal"), Input.GetAxis(playerNum + "Vertical"), playerNum);
+                }
+
+                if (Input.GetButtonDown(playerNum + "Rise"))
+                {
+                    SubmitForPlayerSelected(playerNum);
+                }
             }
         }
     }
