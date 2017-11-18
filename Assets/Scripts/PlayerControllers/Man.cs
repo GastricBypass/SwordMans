@@ -1,8 +1,9 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Networking;
 
-public class Man : MonoBehaviour {
+public class Man : NetworkBehaviour {
 
     public UIManager ui;
 
@@ -35,6 +36,12 @@ public class Man : MonoBehaviour {
         SetWeapon(weapon);
         SetMisc(misc);
         SetHat(hat);
+
+        if (playerNumber == 0) // This will break all the npcs
+        {
+            Debug.Log("Player " + (Network.connections.Length + 1) + " entered the game.");
+            playerNumber = Network.connections.Length + 1;
+        }
     }
 
     void SetColor(string c)
