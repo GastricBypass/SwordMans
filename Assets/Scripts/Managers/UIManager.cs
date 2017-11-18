@@ -265,9 +265,9 @@ public class UIManager : MonoBehaviour {
 
         if (numDead >= gsm.numberOfPlayers + gsm.numberOfAIPlayers - 1)
         {
-            //if (numDead == 0)  // Removing the gsm.numberOfPlayers + gsm.numberOfAIPlayers == 1 conditional at the beginning of this method allows you to continue to the next round when you die.
-            //{                  // However, it will also allow you to get drops. In the interest of not being exploitable. The game freezes when you die while exploring the versus stages solo.
-            //    return false;
+            //if (numDead == 0)  // Removing the gsm.numberOfPlayers + gsm.numberOfAIPlayers == 1 conditional at the beginning of this method and adding this commented part allows you to 
+            //{                  // continue to the next round when you die while playing versus solo. However, it will also allow you to get drops. In the interest of not being exploitable,
+            //    return false;  // the game freezes when you die while exploring the versus stages solo.
             //}
 
             winningPlayerNumber = alivePlayer;
