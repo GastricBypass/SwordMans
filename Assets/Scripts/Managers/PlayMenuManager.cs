@@ -105,6 +105,11 @@ public class PlayMenuManager : MonoBehaviour {
         }
 	}
 
+    public void PlayOnline()
+    {
+        manager.gsm.SwitchToOnlinePlay();
+    }
+
     public void VersusButtonPressed()
     {
         playOptionsMenu.SetActive(false);

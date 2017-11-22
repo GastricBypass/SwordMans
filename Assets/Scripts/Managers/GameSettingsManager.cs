@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.Networking;
 
 public class GameSettingsManager : MonoBehaviour {
 
@@ -107,6 +108,24 @@ public class GameSettingsManager : MonoBehaviour {
     {
         
 	}
+
+    public void SwitchToOnlinePlay()
+    {
+        // other stuff
+        
+        SceneManager.LoadScene("Online Lobby");
+    }
+
+    public void SwitchToLocalPlay()
+    {
+        NetworkManager networkManager = FindObjectOfType<NetworkManager>();
+        if (networkManager != null)
+        {
+            Destroy(networkManager);
+        }
+
+        SceneManager.LoadScene("Main Menu");
+    }
 
     public void SetStages(List<string> newStages)
     {

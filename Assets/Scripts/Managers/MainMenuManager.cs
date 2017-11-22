@@ -5,43 +5,20 @@ using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 using UnityEngine.EventSystems;
 
-public class MainMenuManager : MonoBehaviour {
+public class IMainMenuManager : MonoBehaviour
+{
 
     public StandaloneInputModule control;
     public GameSettingsManager gsm;
-
-    public GameObject mainMenu;
-    public Button mainMenuStartOption;
-    public Transform mainMenuCameraPosition;
-
-    public GameObject playMenu;
-    public PlayMenuManager playMenuManager;
-    public Button playMenuStartOption;
-    public Transform playMenuCameraPosition;
 
     public GameObject customizationMenu;
     public CustomizationMenuManager customizationMenuManager;
     public Button customizationMenuStartOption;
     public Transform customizationMenuCameraPosition;
 
-    public GameObject settingsMenu;
-    public SettingsMenuManager settingsMenuManager;
-    public Button settingsMenuStartOption;
-    public Transform settingsMenuCameraPosition;
+    protected Camera menuCamera;
 
-    public GameObject shopMenu;
-    public ShopMenuManager shopMenuManager;
-    public Button shopMenuStartOption;
-    public Transform shopMenuCameraPosition;
-
-    public float moveThresh;
-    public float moveDelayMS;
-    public bool shouldRestoreDefaults = true;
-
-    private Camera menuCamera;
-
-	// Use this for initialization
-	void Start ()
+    public virtual void Start()
     {
         GameSettingsManager[] gsms = FindObjectsOfType<GameSettingsManager>();
 
@@ -64,6 +41,67 @@ public class MainMenuManager : MonoBehaviour {
             gsm = gsms[0];
             gsm.active = true;
         }
+    }
+
+    public virtual void Update()
+    {
+        if (Input.GetButton("Cancel"))
+        {
+            BackButtonPressed();
+        }
+        if (Input.GetButton("Start"))
+        {
+            BackButtonPressed();
+        }
+    }
+
+    public void SendCameraToTransform(Transform newTransform)
+    {
+        menuCamera.transform.position = newTransform.position;
+        menuCamera.transform.rotation = newTransform.rotation;
+    }
+
+    public virtual void BackButtonPressed()
+    {
+        // no action
+    }
+
+    public void ExitButtonPressed()
+    {
+        Application.Quit();
+    }
+}
+
+public class MainMenuManager : IMainMenuManager
+{
+    public GameObject mainMenu;
+    public Button mainMenuStartOption;
+    public Transform mainMenuCameraPosition;
+
+    public GameObject playMenu;
+    public PlayMenuManager playMenuManager;
+    public Button playMenuStartOption;
+    public Transform playMenuCameraPosition;
+
+    public GameObject settingsMenu;
+    public SettingsMenuManager settingsMenuManager;
+    public Button settingsMenuStartOption;
+    public Transform settingsMenuCameraPosition;
+
+    public GameObject shopMenu;
+    public ShopMenuManager shopMenuManager;
+    public Button shopMenuStartOption;
+    public Transform shopMenuCameraPosition;
+
+    public float moveThresh;
+    public float moveDelayMS;
+    public bool shouldRestoreDefaults = true;
+
+
+	// Use this for initialization
+	public override void Start ()
+    {
+        base.Start();
 
         playMenuManager = this.GetComponent<PlayMenuManager>();
         customizationMenuManager = this.GetComponent<CustomizationMenuManager>();
@@ -81,25 +119,6 @@ public class MainMenuManager : MonoBehaviour {
         mainMenuStartOption.Select();
         SendCameraToTransform(mainMenuCameraPosition);
     }
-	
-	// Update is called once per frame
-	void Update () {
-
-        if (Input.GetButton("Cancel"))
-        {
-            BackButtonPressed();
-        }
-        if (Input.GetButton("Start"))
-        {
-            BackButtonPressed();
-        }
-    }
-
-    public void SendCameraToTransform(Transform newTransform)
-    {
-        menuCamera.transform.position = newTransform.position;
-        menuCamera.transform.rotation = newTransform.rotation;
-    } 
 
     public void DisableAllMenus()
     {
@@ -146,12 +165,7 @@ public class MainMenuManager : MonoBehaviour {
         SendCameraToTransform(settingsMenuCameraPosition);
     }
 
-    public void ExitButtonPressed()
-    {
-        Application.Quit();
-    }
-
-    public void BackButtonPressed()
+    public override void BackButtonPressed()
     {
         DisableAllMenus();
         mainMenu.SetActive(true);

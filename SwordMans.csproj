@@ -93,6 +93,7 @@
     <Compile Include="Assets\Scripts\Managers\MainMenuManager.cs" />
     <Compile Include="Assets\Scripts\Managers\Material.cs" />
     <Compile Include="Assets\Scripts\Managers\MusicManager.cs" />
+    <Compile Include="Assets\Scripts\Managers\OnlineLobbyManager.cs" />
     <Compile Include="Assets\Scripts\Managers\PlayMenuManager.cs" />
     <Compile Include="Assets\Scripts\Managers\PurchaseButtonData.cs" />
     <Compile Include="Assets\Scripts\Managers\SaveManager.cs" />

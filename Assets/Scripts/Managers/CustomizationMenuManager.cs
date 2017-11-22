@@ -6,7 +6,7 @@ using UnityEngine.SceneManagement;
 
 public class CustomizationMenuManager : MonoBehaviour {
 
-    public MainMenuManager manager;
+    public IMainMenuManager manager;
 
     public List<string> colors;
     public List<string> weapons;
