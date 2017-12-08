@@ -37,15 +37,17 @@ public class Man : NetworkBehaviour {
         SetMisc(misc);
         SetHat(hat);
 
-        if (playerNumber == 0) // This will break all the npcs
-        {
-            // also probs don't need this
-            Debug.Log("Player " + (Network.connections.Length + 1) + " entered the game.");
-            playerNumber = Network.connections.Length + 1; // to set the player number as players enter the game.
-        }
+        // TODO: temporarily disabled for non-online play
+
+        //if (playerNumber == 0) // This will break all the npcs
+        //{
+        //    // also probs don't need this
+        //    Debug.Log("Player " + (Network.connections.Length + 1) + " entered the game.");
+        //    playerNumber = Network.connections.Length + 1; // to set the player number as players enter the game.
+        //}
 
         //this.GetComponent<NetworkIdentity>().AssignClientAuthority(connectionToServer);
-        CmdSetAuthority();
+        //CmdSetAuthority(); 
     }
 
     [Command]
@@ -56,57 +58,35 @@ public class Man : NetworkBehaviour {
 
     void SetColor(string c)
     {
-        Color toSet = Color.gray;
-        if (c == "Red")
-        {
-            toSet = GameConstants.PlayerColors.red;
-        }
-        if (c == "Blue")
-        {
-            toSet = GameConstants.PlayerColors.blue;
-        }
-        if (c == "Green")
-        {
-            toSet = GameConstants.PlayerColors.green;
-        }
-        if (c == "Yellow")
-        {
-            toSet = GameConstants.PlayerColors.yellow;
-        }
-        if (c == "Orange")
-        {
-            toSet = GameConstants.PlayerColors.orange;
-        }
-        if (c == "Purple")
-        {
-            toSet = GameConstants.PlayerColors.purple;
-        }
+        Color toSet = GameConstants.PlayerColors.ParseFromName(c);
 
         transform.Find("Body/Body Spine").GetComponent<MeshRenderer>().material.color = toSet;
         transform.Find("Body/Body Pelvis").GetComponent<MeshRenderer>().material.color = toSet;
         transform.Find("Body/Body Pelvis/Fill").GetComponent<MeshRenderer>().material.color = toSet;
 
-        for (int i = 0; i < transform.Find("Body/Body Head/").childCount; i++)
+        Transform head = transform.Find("Body/Body Head/");
+        for (int i = 0; i < head.childCount; i++)
         {
-            if (transform.Find("Body/Body Head/").GetChild(i).GetComponent<SkinnedMeshRenderer>() != null)
+            if (head.GetChild(i).GetComponent<SkinnedMeshRenderer>() != null)
             {
-                transform.Find("Body/Body Head/").GetChild(i).GetComponent<SkinnedMeshRenderer>().material.color = toSet;
+                head.GetChild(i).GetComponent<SkinnedMeshRenderer>().material.color = toSet;
             }
             else
             {
-                transform.Find("Body/Body Head/").GetChild(i).GetComponent<MeshRenderer>().material.color = toSet;
+                head.GetChild(i).GetComponent<MeshRenderer>().material.color = toSet;
             }
         }
 
-        for (int i = 0; i < transform.Find("Body/Body Spine/Items/").childCount; i++)
+        Transform spine = transform.Find("Body/Body Spine/Items/");
+        for (int i = 0; i < spine.childCount; i++)
         {
-            if (transform.Find("Body/Body Spine/Items/").GetChild(i).GetComponent<SkinnedMeshRenderer>() != null)
+            if (spine.GetChild(i).GetComponent<SkinnedMeshRenderer>() != null)
             {
-                transform.Find("Body/Body Spine/Items/").GetChild(i).GetComponent<SkinnedMeshRenderer>().material.color = toSet;
+                spine.GetChild(i).GetComponent<SkinnedMeshRenderer>().material.color = toSet;
             }
             else
             {
-                transform.Find("Body/Body Spine/Items/").GetChild(i).GetComponent<MeshRenderer>().material.color = toSet;
+                spine.GetChild(i).GetComponent<MeshRenderer>().material.color = toSet;
             }
         }
     }
@@ -134,23 +114,7 @@ public class Man : NetworkBehaviour {
 
     void SetSkin(string s)
     {
-        Color toSet = Color.gray;
-        if (s == "Light")
-        {
-            toSet = GameConstants.SkinColors.light;
-        }
-        if (s == "Medium")
-        {
-            toSet = GameConstants.SkinColors.medium;
-        }
-        if (s == "Dark")
-        {
-            toSet = GameConstants.SkinColors.dark;
-        }
-        if (s == "Green")
-        {
-            toSet = GameConstants.SkinColors.green;
-        }
+        Color toSet = GameConstants.SkinColors.ParseFromName(s);
 
         Transform thisBody = transform.Find("Body");
         for (int i = 0; i < thisBody.childCount; i++)
