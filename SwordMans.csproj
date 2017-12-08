@@ -119,6 +119,7 @@
     <Compile Include="Assets\Scripts\Objects\Springboard.cs" />
     <Compile Include="Assets\Scripts\Objects\StayFuckingStill.cs" />
     <Compile Include="Assets\Scripts\Objects\StickyObject.cs" />
+    <Compile Include="Assets\Scripts\Objects\TextureScaler.cs" />
     <Compile Include="Assets\Scripts\Objects\Toggler.cs" />
     <Compile Include="Assets\Scripts\Objects\Unlocker.cs" />
     <Compile Include="Assets\Scripts\Objects\ViscousArea.cs" />
