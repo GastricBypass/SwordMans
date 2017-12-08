@@ -23,7 +23,7 @@ public class Oscillator : IEntity
     private float avgY;
     private float avgZ;
 
-    private System.DateTime levelStartTime;
+    //private System.DateTime levelStartTime;
 
     // Use this for initialization
     void Start ()
@@ -45,7 +45,7 @@ public class Oscillator : IEntity
             difZ = -difZ;
         }
 
-        levelStartTime = System.DateTime.Now;
+        //levelStartTime = System.DateTime.Now;
     }
 	
 	// Update is called once per frame

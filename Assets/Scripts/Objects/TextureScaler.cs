@@ -20,7 +20,7 @@ public class TextureScaler : MonoBehaviour
     {
         if (texture == null)
         {
-            texture = this.GetComponent<Renderer>().material.mainTexture;
+            texture = this.GetComponent<Renderer>().sharedMaterial.mainTexture;
         }
 
         this.prevScale = gameObject.transform.lossyScale;
@@ -69,7 +69,7 @@ public class TextureScaler : MonoBehaviour
 
         }
 
-        this.gameObject.GetComponent<Renderer>().material.mainTextureScale = newTextureScale;
+        this.gameObject.GetComponent<Renderer>().sharedMaterial.mainTextureScale = newTextureScale;
 
     }
 }

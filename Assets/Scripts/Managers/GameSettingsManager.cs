@@ -339,7 +339,6 @@ public class GameSettingsManager : MonoBehaviour {
 
         public void MapFromData()
         {
-            Debug.Log("Mapping settings from data");
             colorizeHealthBars = data.colorizeHealthBars;
             showHealthValues = data.showHealthValues;
 

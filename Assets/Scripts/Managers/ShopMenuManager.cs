@@ -155,14 +155,14 @@ public class ShopMenuManager : MonoBehaviour
                 AddItem(itemName, itemPrice, newItemListingRow);
             }
 
-            newItemListingRow.transform.parent = itemSelector.transform;
+            newItemListingRow.transform.SetParent(itemSelector.transform);
         }
     }
 
     public void AddItem(string itemName, float itemPrice, Image newItemListingRow)
     {
         Button newItemListing = Instantiate(itemListingPrefab);
-        newItemListing.transform.parent = newItemListingRow.transform;
+        newItemListing.transform.SetParent(newItemListingRow.transform);
 
         PurchaseButtonData data = newItemListing.GetComponent<PurchaseButtonData>();
         if (data != null)
