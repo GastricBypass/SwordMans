@@ -39,9 +39,19 @@ public class Man : NetworkBehaviour {
 
         if (playerNumber == 0) // This will break all the npcs
         {
+            // also probs don't need this
             Debug.Log("Player " + (Network.connections.Length + 1) + " entered the game.");
-            playerNumber = Network.connections.Length + 1;
+            playerNumber = Network.connections.Length + 1; // to set the player number as players enter the game.
         }
+
+        //this.GetComponent<NetworkIdentity>().AssignClientAuthority(connectionToServer);
+        CmdSetAuthority();
+    }
+
+    [Command]
+    void CmdSetAuthority()
+    {
+        GetComponent<NetworkIdentity>().AssignClientAuthority(connectionToServer);
     }
 
     void SetColor(string c)

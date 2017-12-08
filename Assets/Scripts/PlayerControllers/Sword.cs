@@ -2,8 +2,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Sword : MonoBehaviour {
-
+public class Sword : MonoBehaviour
+{
     public UIManager ui;
     public Man owner;
 
@@ -36,8 +36,8 @@ public class Sword : MonoBehaviour {
     protected bool boosting = false;
     protected bool shouldRegenBoost = true;
 
-    protected virtual void Start() {
-
+    protected virtual void Start()
+    {
         rigbod = this.GetComponent<Rigidbody>();
         ui = FindObjectOfType<UIManager>();
         playerNumber = owner.playerNumber;

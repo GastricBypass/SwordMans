@@ -174,7 +174,7 @@ public class GameSettingsManager : MonoBehaviour {
             {
                 player = Instantiate(AIPlayerPrefab) as Man;
             }
-            
+
             player.transform.position = playerSpawns[i].position;
             player.transform.rotation = playerSpawns[i].rotation;
 
@@ -184,6 +184,11 @@ public class GameSettingsManager : MonoBehaviour {
             player.hat = playerHats[i];
             player.misc = playerMisc[i];
             player.skin = playerSkins[i];
+
+            if (NetworkServer.active)
+            {
+                NetworkServer.Spawn(player.gameObject);
+            }
         }
     }
 
