@@ -82,6 +82,7 @@
     <Compile Include="Assets\Scripts\Enemy AIs\EnemyMan.cs" />
     <Compile Include="Assets\Scripts\Enemy AIs\RandomForceAdder.cs" />
     <Compile Include="Assets\Scripts\Enemy AIs\Spider.cs" />
+    <Compile Include="Assets\Scripts\Managers\ButtonSound.cs" />
     <Compile Include="Assets\Scripts\Managers\CameraFollow.cs" />
     <Compile Include="Assets\Scripts\Managers\CampaignUIManager.cs" />
     <Compile Include="Assets\Scripts\Managers\CustomizationMenuManager.cs" />
@@ -101,6 +102,7 @@
     <Compile Include="Assets\Scripts\Managers\ShopMenuManager.cs" />
     <Compile Include="Assets\Scripts\Managers\StageMusic.cs" />
     <Compile Include="Assets\Scripts\Managers\UIManager.cs" />
+    <Compile Include="Assets\Scripts\Objects\BearTrap.cs" />
     <Compile Include="Assets\Scripts\Objects\BoostPowerup.cs" />
     <Compile Include="Assets\Scripts\Objects\DamageAreaPowerup.cs" />
     <Compile Include="Assets\Scripts\Objects\DamageBoostPowerup.cs" />
@@ -109,12 +111,15 @@
     <Compile Include="Assets\Scripts\Objects\DamagingObject.cs" />
     <Compile Include="Assets\Scripts\Objects\DefenseBoostPowerup.cs" />
     <Compile Include="Assets\Scripts\Objects\IEntity.cs" />
+    <Compile Include="Assets\Scripts\Objects\ITrap.cs" />
     <Compile Include="Assets\Scripts\Objects\ItemSpawner.cs" />
     <Compile Include="Assets\Scripts\Objects\KeepUpright.cs" />
     <Compile Include="Assets\Scripts\Objects\NextLevelArea.cs" />
     <Compile Include="Assets\Scripts\Objects\Oscillator.cs" />
+    <Compile Include="Assets\Scripts\Objects\PathFollower.cs" />
     <Compile Include="Assets\Scripts\Objects\Pickup.cs" />
     <Compile Include="Assets\Scripts\Objects\PushingArea.cs" />
+    <Compile Include="Assets\Scripts\Objects\RotationalOscillator.cs" />
     <Compile Include="Assets\Scripts\Objects\Spinner.cs" />
     <Compile Include="Assets\Scripts\Objects\Springboard.cs" />
     <Compile Include="Assets\Scripts\Objects\StayFuckingStill.cs" />

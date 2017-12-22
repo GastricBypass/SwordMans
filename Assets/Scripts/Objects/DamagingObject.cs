@@ -11,7 +11,10 @@ public class DamagingObject : IEntity {
         if (active)
         {
             BodyPart recipient = collision.collider.GetComponent<BodyPart>();
-            recipient.owner.TakeDamage(damage);
+            if (recipient != null)
+            {
+                recipient.owner.TakeDamage(damage);
+            }
         }
     }
 }

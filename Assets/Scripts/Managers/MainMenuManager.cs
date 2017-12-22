@@ -16,6 +16,10 @@ public class IMainMenuManager : MonoBehaviour
     public Button customizationMenuStartOption;
     public Transform customizationMenuCameraPosition;
 
+    public AudioClip clickSound;
+    public AudioClip selectSound;
+    protected AudioSource audioSource;
+
     protected Camera menuCamera;
 
     public virtual void Start()
@@ -41,6 +45,9 @@ public class IMainMenuManager : MonoBehaviour
             gsm = gsms[0];
             gsm.active = true;
         }
+
+        audioSource = this.gameObject.AddComponent<AudioSource>();
+        audioSource.playOnAwake = false;
     }
 
     public virtual void Update()
@@ -70,6 +77,30 @@ public class IMainMenuManager : MonoBehaviour
     {
         Application.Quit();
     }
+
+    public void PlayClickSound()
+    {
+        if (gsm == null)
+        {
+            return;
+        }
+
+        //audioSource.clip = clickSound;
+        audioSource.volume = gsm.settings.effectsVolume;
+        audioSource.PlayOneShot(clickSound);
+    }
+
+    public void PlaySelectSound()
+    {
+        if (gsm == null)
+        {
+            return;
+        }
+
+        //audioSource.clip = selectSound;
+        audioSource.volume = gsm.settings.effectsVolume;
+        audioSource.PlayOneShot(selectSound);
+    }
 }
 
 public class MainMenuManager : IMainMenuManager
@@ -90,13 +121,14 @@ public class MainMenuManager : IMainMenuManager
 
     public GameObject shopMenu;
     public ShopMenuManager shopMenuManager;
-    public Button shopMenuStartOption;
+    public Scrollbar shopMenuStartOption;
     public Transform shopMenuCameraPosition;
+
+    public Button backButton;
 
     public float moveThresh;
     public float moveDelayMS;
     public bool shouldRestoreDefaults = true;
-
 
 	// Use this for initialization
 	public override void Start ()
@@ -116,6 +148,7 @@ public class MainMenuManager : IMainMenuManager
 
         DisableAllMenus();
         mainMenu.SetActive(true);
+        backButton.gameObject.SetActive(false);
         mainMenuStartOption.Select();
         SendCameraToTransform(mainMenuCameraPosition);
     }
@@ -128,6 +161,7 @@ public class MainMenuManager : IMainMenuManager
         customizationMenu.SetActive(false);
         customizationMenuManager.ResetPlayerSelectors();
         shopMenu.SetActive(false);
+        backButton.gameObject.SetActive(true);
     }
 
     public void PlayMenuButtonPressed()
@@ -167,9 +201,16 @@ public class MainMenuManager : IMainMenuManager
 
     public override void BackButtonPressed()
     {
+        if (mainMenu.activeSelf)
+        {
+            return;
+        }
+
+        PlayClickSound();
         DisableAllMenus();
         mainMenu.SetActive(true);
         shouldRestoreDefaults = true;
+        backButton.gameObject.SetActive(false);
         mainMenuStartOption.Select();
         SendCameraToTransform(mainMenuCameraPosition);
     }

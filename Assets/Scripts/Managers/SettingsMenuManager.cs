@@ -10,6 +10,7 @@ public class SettingsMenuManager : MonoBehaviour {
 
     public List<Image> tabs;
     public List<GameObject> tabsOptions;
+    public List<Button> tabButtons;
     private int tabIndex = 0;
     private Color selectedColor = new Color(8f / 255f, 20f / 255f, 35f / 255f);
     private Color unselectedColor = new Color(50f / 255f, 65f / 255f, 80f / 255f);
@@ -116,9 +117,11 @@ public class SettingsMenuManager : MonoBehaviour {
 
     public void GoToTab(int tabNumber)
     {
+        manager.PlayClickSound();
         hideAllTabs();
         tabs[tabNumber].color = selectedColor;
         tabsOptions[tabNumber].SetActive(true);
+        tabButtons[tabNumber].Select();
         tabIndex = tabNumber;
     }
 

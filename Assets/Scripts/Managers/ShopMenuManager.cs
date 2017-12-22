@@ -179,11 +179,11 @@ public class ShopMenuManager : MonoBehaviour
 
         newItemListing.transform.Find("Text").GetComponent<Text>().text = itemPrice + "g";
         newItemListing.onClick.AddListener(delegate { DisplayPurchaseConfirmation(itemName, itemPrice, newItemListing); });
+        newItemListing.onClick.AddListener(delegate { manager.PlayClickSound(); });
 
         if (manager.gsm.data.hats.Contains(itemName) || manager.gsm.data.misc.Contains(itemName))
         {
             newItemListing.transform.Find("Text").GetComponent<Text>().text = "owned";
-            //newItemListing.interactable = false;
             newItemListing.GetComponent<Image>().color = new Color(.1f, .1f, .1f, .1f);
         }
     }
@@ -196,13 +196,16 @@ public class ShopMenuManager : MonoBehaviour
         }
 
         confirmButton = Instantiate(confirmButtonPrefab, itemListing.transform);
+        bool itemOwned = itemListing.transform.Find("Text").GetComponent<Text>().text == "owned";
 
-        if (manager.gsm.data.gold >= itemPrice)
+        confirmButton.onClick.AddListener(delegate { manager.PlayClickSound(); });
+
+        if (!itemOwned && manager.gsm.data.gold >= itemPrice)
         {
             confirmButton.transform.Find("Text").GetComponent<Text>().text = "Purchase " + itemName + " for " + itemPrice + " gold?";
             confirmButton.onClick.AddListener(delegate { PurchaseItem(itemName, itemPrice, itemListing); });
         }
-        else if (itemListing.transform.Find("Text").GetComponent<Text>().text == "owned")
+        else if (itemOwned)
         {
             confirmButton.transform.Find("Text").GetComponent<Text>().text = "You cannot buy this item again";
             confirmButton.onClick.AddListener(delegate { CancelPurchase(itemListing); });
@@ -237,7 +240,7 @@ public class ShopMenuManager : MonoBehaviour
 
         itemListing.GetComponent<Image>().color = new Color(.1f, .1f, .1f, .1f);
         itemListing.interactable = false;
-        itemListing.transform.Find("Text").GetComponent<Text>().text = "purchased";
+        itemListing.transform.Find("Text").GetComponent<Text>().text = "owned";
         itemListing.Select();
 
         SetGoldValue();

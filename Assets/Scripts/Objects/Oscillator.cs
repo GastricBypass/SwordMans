@@ -15,13 +15,13 @@ public class Oscillator : IEntity
 
     public bool positiveFirst = true;
 
-    private float difX;
-    private float difY;
-    private float difZ;
+    protected float difX;
+    protected float difY;
+    protected float difZ;
 
-    private float avgX;
-    private float avgY;
-    private float avgZ;
+    protected float avgX;
+    protected float avgY;
+    protected float avgZ;
 
     //private System.DateTime levelStartTime;
 
