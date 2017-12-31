@@ -100,6 +100,7 @@
     <Compile Include="Assets\Scripts\Managers\SaveManager.cs" />
     <Compile Include="Assets\Scripts\Managers\SettingsMenuManager.cs" />
     <Compile Include="Assets\Scripts\Managers\ShopMenuManager.cs" />
+    <Compile Include="Assets\Scripts\Managers\SkirmishUIManager.cs" />
     <Compile Include="Assets\Scripts\Managers\StageMusic.cs" />
     <Compile Include="Assets\Scripts\Managers\UIManager.cs" />
     <Compile Include="Assets\Scripts\Objects\BearTrap.cs" />

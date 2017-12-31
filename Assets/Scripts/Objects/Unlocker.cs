@@ -27,18 +27,23 @@ public class Unlocker : IEntity {
 
         if (player != null)
         {
-            UnlockAllItems();
-            Destroy(this.gameObject);
+            if (UnlockAllItems()) // Anything was unlocked by calling this
+            {
+                Destroy(this.gameObject);
+            }
         }
     }
 
-    private void UnlockAllItems()
+    private bool UnlockAllItems()
     {
+        bool unlockedAnything = false;
+
         for (int i = 0; i < hatsToUnlock.Count; i++)
         {
             if (!gsm.data.HasItem(hatsToUnlock[i])) // The unlocker shouldn't unlock things that have already been unlocked
             {
                 gsm.data.UnlockHat(hatsToUnlock[i]);
+                unlockedAnything = true;
             }
         }
 
@@ -47,17 +52,22 @@ public class Unlocker : IEntity {
             if (!gsm.data.HasItem(hatsToUnlock[i]))
             {
                 gsm.data.UnlockMisc(miscToUnlock[i]);
+                unlockedAnything = true;
             }
         }
 
         for (int i = 0; i < versusStagesToUnlock.Count; i++)
         {
             gsm.data.UnlockVersusStage(versusStagesToUnlock[i]);
+            unlockedAnything = true;
         }
 
         for (int i = 0; i < coopStagesToUnlock.Count; i++)
         {
             gsm.data.UnlockCoopStage(coopStagesToUnlock[i]);
+            unlockedAnything = true;
         }
+
+        return unlockedAnything;
     }
 }

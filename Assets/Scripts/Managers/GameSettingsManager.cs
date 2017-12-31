@@ -97,6 +97,9 @@ public class GameSettingsManager : MonoBehaviour {
             data.coopStages = GameConstants.Unlocks.startingCoopStages;
             data.coopStages.Sort();
 
+            data.skirmishStages = GameConstants.Unlocks.startingSkirmishStages;
+            data.skirmishStages.Sort();
+
             data.Save();
         }
 
@@ -232,6 +235,11 @@ public class GameSettingsManager : MonoBehaviour {
         }
         activeStageIndex = index;
         LoadStage(stages[index]);
+    }
+
+    public void LoadCurrentStage()
+    {
+        LoadStage(currentStage);
     }
 
     public void NextRound()

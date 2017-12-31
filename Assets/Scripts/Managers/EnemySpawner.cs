@@ -2,35 +2,44 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class EnemySpawner : MonoBehaviour {
+public class EnemySpawner : IEntity {
 
-    public Man enemyPrefab;
+    public EnemyMan enemyPrefab;
+    
+    public int numEnemiesToSpawn;
+    public float spawnInterval;
 
-    public int maxEnemies;
-    public int numEnemies;
-    public float spawnIntervalMS;
-
-    private System.DateTime lastSpawn;
+    public bool readyToSpawn = true;
 
 	// Use this for initialization
 	void Start ()
     {
-        lastSpawn = System.DateTime.Now;
-	}
+        readyToSpawn = true;
+    }
 	
 	// Update is called once per frame
 	void Update ()
     {
-        if (numEnemies < maxEnemies && (System.DateTime.Now - lastSpawn).TotalMilliseconds > spawnIntervalMS)
+        if (active && numEnemiesToSpawn > 0 && readyToSpawn)
         {
             SpawnEnemy();
         }
-	}
+    }
 
-    void SpawnEnemy()
+    public void SpawnEnemy()
     {
-        //Man newEnemy = Instantiate(enemyPrefab, this.transform) as Man; // throwing warning. Needs to be uncommented for functionality
-        lastSpawn = System.DateTime.Now;
-        numEnemies++;
+        readyToSpawn = false;
+
+        StartCoroutine(WaitToReadySpawn());
+
+        EnemyMan newEnemy = Instantiate(enemyPrefab, this.transform) as EnemyMan;
+        numEnemiesToSpawn--;
+    }
+
+    public IEnumerator WaitToReadySpawn()
+    {
+        yield return new WaitForSeconds(spawnInterval);
+
+        readyToSpawn = true;
     }
 }

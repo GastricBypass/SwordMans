@@ -20,48 +20,26 @@ public class CampaignUIManager : UIManager
 	// Use this for initialization
 	public override void Start ()
     {
-        audioSource = gameObject.AddComponent<AudioSource>();
+        CommonStart();
 
-        RectTransform backdrop = pauseMenu.transform.Find("Backdrop").GetComponent<RectTransform>();
-        backdrop.sizeDelta = new Vector2(Screen.width * 2, Screen.height * 2);
-
-        pauseMenu.SetActive(false);
-        endGameCountdownTimer.gameObject.SetActive(false);
-
-        hurtDisplays[0].gameObject.SetActive(false);
-        hurtDisplays[1].gameObject.SetActive(false);
-        hurtDisplays[2].gameObject.SetActive(false);
-        hurtDisplays[3].gameObject.SetActive(false);
         hurtDisplays[4].gameObject.SetActive(false);
-
-        damageTexts[0].gameObject.SetActive(false);
-        damageTexts[1].gameObject.SetActive(false);
-        damageTexts[2].gameObject.SetActive(false);
-        damageTexts[3].gameObject.SetActive(false);
         damageTexts[4].gameObject.SetActive(false);
-
-        unlockedItem.SetActive(false);
-        
-        gsm = FindObjectOfType<GameSettingsManager>();
-
-        for (int i = 0; i < gsm.playerSpawns.Count; i++)
-        {
-            if (playerSpawns[i] == null)
-            {
-                GameObject spawn = GameObject.Find("Player Spawn (" + (i + 1) + ")");
-                playerSpawns[i] = spawn.transform;
-            }
-            gsm.playerSpawns[i] = playerSpawns[i];
-        }
 
         gsm.numberOfAIPlayers = 0;
 
-        deadPlayers = new bool[gsm.numberOfPlayers];
         gsm.SpawnPlayers();
 
         if (!introLevel)
         {
             SetHealthBars();
+        }
+        else
+        {
+            for (int i = 0; i< healthMeters.Length; i++)
+            {
+                healthMeters[i].gameObject.SetActive(false);
+                boostMeters[i].gameObject.SetActive(false);
+            }
         }
 
         bossHealthBar.gameObject.SetActive(bossLevel);
@@ -137,10 +115,10 @@ public class CampaignUIManager : UIManager
     {
         gameOver = true;
 
-        if (gsm.roundNumber == gsm.settings.roundsPerStage)
-        {
-            gsm.music.FadeOut(3);
-        }
+        //if (gsm.roundNumber == gsm.settings.roundsPerStage)
+        //{
+        //    gsm.music.FadeOut(3);
+        //}
 
         endGameCountdownTimer.gameObject.SetActive(true);
         endGameCountdownTimer.text = "3";

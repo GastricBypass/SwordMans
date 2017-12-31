@@ -5,8 +5,8 @@ using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 using UnityEngine.EventSystems;
 
-public class UIManager : MonoBehaviour {
-
+public class UIManager : MonoBehaviour
+{
     public GameSettingsManager gsm;
     public bool useInBounds = true;
 
@@ -42,13 +42,27 @@ public class UIManager : MonoBehaviour {
     // Use this for initialization
     public virtual void Start()
     {
+        CommonStart();
+
+        gsm.SpawnPlayers();
+
+        endGamePlayerWinText.gameObject.SetActive(false);
+
+        DisplayRoundBubbles();
+
+        SetHealthBars();
+
+        StartCoroutine(DisplayRoundNumber());
+    }
+
+    public void CommonStart()
+    {
         audioSource = gameObject.AddComponent<AudioSource>();
 
         RectTransform backdrop = pauseMenu.transform.Find("Backdrop").GetComponent<RectTransform>();
         backdrop.sizeDelta = new Vector2(Screen.width * 2, Screen.height * 2);
 
         pauseMenu.SetActive(false);
-        endGamePlayerWinText.gameObject.SetActive(false);
         endGameCountdownTimer.gameObject.SetActive(false);
 
         hurtDisplays[0].gameObject.SetActive(false);
@@ -64,7 +78,6 @@ public class UIManager : MonoBehaviour {
         unlockedItem.SetActive(false);
 
         gsm = FindObjectOfType<GameSettingsManager>();
-        deadPlayers = new bool[gsm.numberOfPlayers + gsm.numberOfAIPlayers];
 
         for (int i = 0; i < gsm.playerSpawns.Count; i++)
         {
@@ -76,17 +89,11 @@ public class UIManager : MonoBehaviour {
             gsm.playerSpawns[i] = playerSpawns[i];
         }
 
-        DisplayRoundBubbles();
-
-        gsm.SpawnPlayers();
-
-        SetHealthBars();
-
-        StartCoroutine(DisplayRoundNumber());
+        deadPlayers = new bool[gsm.numberOfPlayers];
     }
-	
-	// Update is called once per frame
-	public void Update ()
+
+    // Update is called once per frame
+    public void Update ()
     {
         if (gsm.currentStage != "Main Menu")
         {
@@ -202,6 +209,12 @@ public class UIManager : MonoBehaviour {
         Time.timeScale = 1;
     }
 
+    public void RestartLevelPressed()
+    {
+        gsm.LoadCurrentStage();
+        Time.timeScale = 1;
+    }
+
     public void SetHealthBars()
     {
         int i = 0;
@@ -229,7 +242,6 @@ public class UIManager : MonoBehaviour {
 
     public void SetHealthBarColor(Slider healthBar, string color)
     {
-        // Add faded colors to the game constants
         if (!gsm.settings.colorizeHealthBars)
         {
             return;
