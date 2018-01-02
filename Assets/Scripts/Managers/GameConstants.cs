@@ -77,6 +77,22 @@ public static class GameConstants {
             {
                 color = green;
             }
+            else if (lowerCaseName == "random")
+            {
+                int randomNumber = Random.Range(0, 3);
+                if (randomNumber == 0)
+                {
+                    color = light;
+                }
+                else if (randomNumber == 1)
+                {
+                    color = medium;
+                }
+                else if (randomNumber == 2)
+                {
+                    color = dark;
+                }
+            }
 
             return color;
         }

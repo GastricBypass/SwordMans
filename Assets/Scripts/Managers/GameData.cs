@@ -107,6 +107,11 @@ public class GameData : MonoBehaviour
 
     public void AddGold(float amount)
     {
+        if (amount <= 0)
+        {
+            return;
+        }
+
         gold += amount;
         FindObjectOfType<UIManager>().UnlockItem("gold coins", amount.ToString() + " ");
 

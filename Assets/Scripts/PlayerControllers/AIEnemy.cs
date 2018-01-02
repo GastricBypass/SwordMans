@@ -150,4 +150,14 @@ public class AIEnemy : Sword {
         target = FindTarget();
         waiting = false;
     }
+
+    public void OnDestroy()
+    {
+        SkirmishUIManager skirmishUI = FindObjectOfType<SkirmishUIManager>();
+
+        if (skirmishUI != null)
+        {
+            skirmishUI.EnemyDied();
+        }
+    }
 }

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Networking;
 
-public class Man : NetworkBehaviour {
+public class Man : MonoBehaviour {
 
     public UIManager ui;
 
@@ -50,11 +50,11 @@ public class Man : NetworkBehaviour {
         //CmdSetAuthority(); 
     }
 
-    [Command]
-    void CmdSetAuthority()
-    {
-        GetComponent<NetworkIdentity>().AssignClientAuthority(connectionToServer);
-    }
+    //[Command]
+    //void CmdSetAuthority()
+    //{
+    //    GetComponent<NetworkIdentity>().AssignClientAuthority(connectionToServer);
+    //}
 
     void SetColor(string c)
     {
