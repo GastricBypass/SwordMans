@@ -51,7 +51,7 @@ public class GameData : MonoBehaviour
             float price = 0;
             GameConstants.Unlocks.hatPrices.TryGetValue(hatName, out price);
 
-            AddGold(price / 10);
+            AddGold(price / 5);
         }
 
         else if (GameConstants.Unlocks.allHats.Contains(hatName))
@@ -68,7 +68,7 @@ public class GameData : MonoBehaviour
             float price = 0;
             GameConstants.Unlocks.miscPrices.TryGetValue(miscName, out price);
 
-            AddGold(price / 10);
+            AddGold(price / 5);
         }
 
         else if (GameConstants.Unlocks.allMisc.Contains(miscName))
