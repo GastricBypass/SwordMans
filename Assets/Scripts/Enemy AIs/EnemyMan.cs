@@ -22,6 +22,12 @@ public class EnemyMan : Man {
             hitTime = System.DateTime.Now;
             ui = FindObjectOfType<UIManager>();
         }
+
+        if (isBoss)
+        {
+            maxHealth = maxHealth + (maxHealth * ui.gsm.numberOfPlayers / 2f);
+            health = maxHealth;
+        }
     }
 	
 	// Update is called once per frame

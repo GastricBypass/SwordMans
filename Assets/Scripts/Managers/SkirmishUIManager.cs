@@ -7,20 +7,31 @@ using UnityEngine.EventSystems;
 
 public class SkirmishUIManager : UIManager
 {
-    public List<EnemyMan> possibleEnemyPrefabs;
-    public List<EnemySpawner> enemySpawners;
-    public Text enemiesRemainingText;
-    public Text waveNumberText;
-
     public GameObject gameOverScreen;
+    public Slider bossHealthBar;
+    public Text bossHealthValue;
+
     public Text gameOverReport;
 
     public Button retryButton;
+
+    public int roundsPerBossWave = 5;
+
+    public List<EnemyMan> possibleEnemyPrefabs;
+    public List<EnemyMan> possibleBossPrefabs;
+    public List<EnemySpawner> enemySpawners;
+    public List<EnemySpawner> bossSpawners;
+    public Text enemiesRemainingText;
+    public Text waveNumberText;
+
+    public List<LimitedItemSpawner> heartSpawners;
 
     private int waveNumber = 0;
     private int enemiesRemaining = 0;
     private int totalEnemiesKilled = 0;
     private int totalGoldEarned = 0;
+
+    private float bossMaxHealth;
 
     public override void Start()
     {
@@ -45,6 +56,58 @@ public class SkirmishUIManager : UIManager
         waveNumber++;
         waveNumberText.text = "Wave " + waveNumber + ":";
 
+        if (waveNumber % roundsPerBossWave == 0)
+        {
+            StartBossWave();
+        }
+        else
+        {
+            StartNormalWave();
+        }
+
+        StartCoroutine(WaitToStartNextRound());
+    }
+
+    public void StartBossWave()
+    {
+        foreach (var spawner in bossSpawners)
+        {
+            spawner.active = false;
+        }
+
+        int numSpawners = bossSpawners.Count;
+        int numPlayers = gsm.numberOfPlayers;
+
+        int numBosses = (int)Mathf.Ceil((waveNumber * numPlayers) / 20f);
+
+        enemiesRemaining = numBosses;
+        enemiesRemainingText.text = "Enemies Remaining: " + enemiesRemaining;
+
+        int prefabIndex = Random.Range(0, possibleBossPrefabs.Count);
+        foreach (var spawner in bossSpawners)
+        {
+            spawner.numEnemiesToSpawn = numBosses / numSpawners;
+            spawner.enemyPrefab = possibleBossPrefabs[prefabIndex];
+            spawner.healthOverride = possibleBossPrefabs[prefabIndex].health + (possibleBossPrefabs[prefabIndex].health * numPlayers / 2f); // Should be unnecessary with boss EnemyMan changes
+
+            // TODO: Not properly setting the value on the health bar.
+            bossMaxHealth = spawner.healthOverride;
+
+            bossHealthBar.gameObject.SetActive(true);
+            bossHealthBar.maxValue = spawner.healthOverride;
+            bossHealthBar.value = spawner.healthOverride;
+        }
+
+        for (int i = 0; i < numBosses % numSpawners; i++)
+        {
+            bossSpawners[i].numEnemiesToSpawn += 1;
+        }
+    }
+
+    public void StartNormalWave()
+    {
+        bossHealthBar.gameObject.SetActive(false);
+
         foreach (var spawner in enemySpawners)
         {
             spawner.active = false;
@@ -65,9 +128,19 @@ public class SkirmishUIManager : UIManager
             spawner.enemyPrefab = possibleEnemyPrefabs[prefabIndex];
         }
 
-        enemySpawners[0].numEnemiesToSpawn += numEnemies % numSpawners; // Give the remaining enemies to the first spawner
+        for (int i = 0; i < numEnemies % numSpawners; i++)
+        {
+            enemySpawners[i].numEnemiesToSpawn += 1;
+        }
 
-        StartCoroutine(WaitToStartNextRound());
+        if (waveNumber % roundsPerBossWave == 1)
+        {
+            for (int i = 0; i < numPlayers; i++)
+            {
+                heartSpawners[i].numItemsToSpawn += 1;
+                
+            }
+        }
     }
 
     public void EnemyDied()
@@ -97,6 +170,10 @@ public class SkirmishUIManager : UIManager
         endGameCountdownTimer.gameObject.SetActive(false);
 
         foreach (var spawner in enemySpawners)
+        {
+            spawner.active = true;
+        }
+        foreach (var spawner in bossSpawners)
         {
             spawner.active = true;
         }
@@ -144,6 +221,26 @@ public class SkirmishUIManager : UIManager
         endGameCountdownTimer.gameObject.SetActive(false);
 
         DisplayGameOverOptions();
+    }
+
+    public override void ChangeHealth(float percent, int playerNumber)
+    {
+        base.ChangeHealth(percent, playerNumber);
+        if (waveNumber % roundsPerBossWave == 0 && playerNumber == 0)
+        {
+            bossHealthBar.value = percent * bossMaxHealth;
+            bossHealthValue.text = (Mathf.Ceil(bossHealthBar.value) + " / " + bossMaxHealth);
+        }
+    }
+
+    public override void ShowHurtImage(int playerNumber, float damage)
+    {
+        base.ShowHurtImage(playerNumber, damage);
+        if (waveNumber % roundsPerBossWave == 5 && playerNumber == 0)
+        {
+            StartCoroutine(ShowHurtImageForSeconds(hurtDisplays[4], damage, 0.2f));
+            StartCoroutine(ShowHurtTextForSeconds(damageTexts[4], damage, 0.5f));
+        }
     }
 
     public void DisplayGameOverOptions()

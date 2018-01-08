@@ -89,7 +89,7 @@ public class UIManager : MonoBehaviour
             gsm.playerSpawns[i] = playerSpawns[i];
         }
 
-        deadPlayers = new bool[gsm.numberOfPlayers];
+        deadPlayers = new bool[gsm.numberOfPlayers + gsm.numberOfAIPlayers];
     }
 
     // Update is called once per frame
@@ -114,7 +114,7 @@ public class UIManager : MonoBehaviour
         if (playerNumber > 0 && playerNumber <= 4)
         {
             healthMeters[playerNumber - 1].value = percent * GameConstants.Players.playerMaxHealth;
-            healthValues[playerNumber - 1].text = ((int)(healthMeters[playerNumber - 1].value + 0.9f) + " / " + GameConstants.Players.playerMaxHealth);
+            healthValues[playerNumber - 1].text = (Mathf.Ceil(healthMeters[playerNumber - 1].value) + " / " + GameConstants.Players.playerMaxHealth);
         }
     }
 

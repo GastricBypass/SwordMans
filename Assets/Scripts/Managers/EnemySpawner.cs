@@ -7,6 +7,7 @@ public class EnemySpawner : IEntity {
     public EnemyMan enemyPrefab;
 
     public float aggroDistanceOverride = 0;
+    public float healthOverride = 0;
     
     public int numEnemiesToSpawn;
     public float spawnInterval;
@@ -45,6 +46,12 @@ public class EnemySpawner : IEntity {
             {
                 weapon.aggroDistance = aggroDistanceOverride;
             }
+        }
+
+        if (healthOverride != 0)
+        {
+            newEnemy.health = healthOverride;
+            newEnemy.maxHealth = healthOverride;
         }
         numEnemiesToSpawn--;
     }

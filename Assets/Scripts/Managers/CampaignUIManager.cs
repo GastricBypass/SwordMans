@@ -51,7 +51,7 @@ public class CampaignUIManager : UIManager
         if (bossLevel && playerNumber == 0)
         {
             bossHealthBar.value = percent * bossMaxHealth;
-            bossHealthValue.text = ((int)(bossHealthBar.value + 0.9f) + " / " + bossMaxHealth);
+            bossHealthValue.text = (Mathf.Ceil(bossHealthBar.value) + " / " + bossMaxHealth);
         }
     }
 
