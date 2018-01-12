@@ -89,13 +89,13 @@ public class SkirmishUIManager : UIManager
             spawner.numEnemiesToSpawn = numBosses / numSpawners;
             spawner.enemyPrefab = possibleBossPrefabs[prefabIndex];
             spawner.healthOverride = possibleBossPrefabs[prefabIndex].health + (possibleBossPrefabs[prefabIndex].health * numPlayers / 2f); // Should be unnecessary with boss EnemyMan changes
-
-            // TODO: Not properly setting the value on the health bar.
+            
             bossMaxHealth = spawner.healthOverride;
 
             bossHealthBar.gameObject.SetActive(true);
             bossHealthBar.maxValue = spawner.healthOverride;
             bossHealthBar.value = spawner.healthOverride;
+            ChangeHealth(1, 0);
         }
 
         for (int i = 0; i < numBosses % numSpawners; i++)
