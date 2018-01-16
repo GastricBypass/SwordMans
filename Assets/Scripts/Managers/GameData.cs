@@ -15,7 +15,7 @@ public class GameData : MonoBehaviour
     public List<string> misc;
     public List<string> versusStages;
     public List<string> coopStages;
-    public List<string> skirmishStages;
+    public List<string> arenaStages;
 
     public List<string> shopItems;
 
@@ -96,11 +96,11 @@ public class GameData : MonoBehaviour
         }
     }
 
-    public void UnlockSkirmishStage(string stageName)
+    public void UnlockArenaStage(string stageName)
     {
-        if (!skirmishStages.Contains(stageName) && GameConstants.Unlocks.allSkirmishStages.Contains(stageName))
+        if (!arenaStages.Contains(stageName) && GameConstants.Unlocks.allArenaStages.Contains(stageName))
         {
-            Insert(skirmishStages, stageName);
+            Insert(arenaStages, stageName);
             Save();
         }
     }

@@ -82,6 +82,7 @@
     <Compile Include="Assets\Scripts\Enemy AIs\EnemyMan.cs" />
     <Compile Include="Assets\Scripts\Enemy AIs\RandomForceAdder.cs" />
     <Compile Include="Assets\Scripts\Enemy AIs\Spider.cs" />
+    <Compile Include="Assets\Scripts\Managers\ArenaUIManager.cs" />
     <Compile Include="Assets\Scripts\Managers\ButtonSound.cs" />
     <Compile Include="Assets\Scripts\Managers\CameraFollow.cs" />
     <Compile Include="Assets\Scripts\Managers\CampaignUIManager.cs" />
@@ -100,7 +101,6 @@
     <Compile Include="Assets\Scripts\Managers\SaveManager.cs" />
     <Compile Include="Assets\Scripts\Managers\SettingsMenuManager.cs" />
     <Compile Include="Assets\Scripts\Managers\ShopMenuManager.cs" />
-    <Compile Include="Assets\Scripts\Managers\SkirmishUIManager.cs" />
     <Compile Include="Assets\Scripts\Managers\StageMusic.cs" />
     <Compile Include="Assets\Scripts\Managers\UIManager.cs" />
     <Compile Include="Assets\Scripts\Objects\BearTrap.cs" />

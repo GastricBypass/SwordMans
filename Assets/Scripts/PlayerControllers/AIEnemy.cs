@@ -153,11 +153,11 @@ public class AIEnemy : Sword {
 
     public void OnDestroy()
     {
-        SkirmishUIManager skirmishUI = FindObjectOfType<SkirmishUIManager>();
+        ArenaUIManager arenaUI = FindObjectOfType<ArenaUIManager>();
 
-        if (skirmishUI != null)
+        if (arenaUI != null)
         {
-            skirmishUI.EnemyDied();
+            arenaUI.EnemyDied();
         }
     }
 }

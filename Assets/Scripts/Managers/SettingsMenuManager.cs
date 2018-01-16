@@ -39,7 +39,7 @@ public class SettingsMenuManager : MonoBehaviour {
     public InputField miscUnlockText;
     public InputField versusStageUnlockText;
     public InputField coopStageUnlockText;
-    public InputField skirmishStageUnlockText;
+    public InputField arenaStageUnlockText;
 
     // Use this for initialization
     void Start ()
@@ -224,10 +224,10 @@ public class SettingsMenuManager : MonoBehaviour {
         coopStageUnlockText.text = "";
     }
 
-    public void UnlockSkirmishStageByName()
+    public void UnlockArenaStageByName()
     {
-        manager.gsm.data.UnlockSkirmishStage(skirmishStageUnlockText.text);
-        skirmishStageUnlockText.text = "";
+        manager.gsm.data.UnlockArenaStage(arenaStageUnlockText.text);
+        arenaStageUnlockText.text = "";
     }
 
     public void UnlockAllItemsAndStages()
@@ -252,9 +252,9 @@ public class SettingsMenuManager : MonoBehaviour {
             manager.gsm.data.UnlockCoopStage(coopStage);
         }
 
-        foreach (string skirmishStage in GameConstants.Unlocks.allSkirmishStages)
+        foreach (string arenaStage in GameConstants.Unlocks.allArenaStages)
         {
-            manager.gsm.data.UnlockSkirmishStage(skirmishStage);
+            manager.gsm.data.UnlockArenaStage(arenaStage);
         }
     }
 }

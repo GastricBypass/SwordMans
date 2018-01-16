@@ -97,8 +97,8 @@ public class GameSettingsManager : MonoBehaviour {
             data.coopStages = GameConstants.Unlocks.startingCoopStages;
             data.coopStages.Sort();
 
-            data.skirmishStages = GameConstants.Unlocks.startingSkirmishStages;
-            data.skirmishStages.Sort();
+            data.arenaStages = GameConstants.Unlocks.startingArenaStages;
+            data.arenaStages.Sort();
 
             data.Save();
         }

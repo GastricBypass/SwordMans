@@ -85,7 +85,7 @@ public class SaveManager : MonoBehaviour
         private List<string> unlockedMisc;
         private List<string> unlockedVersusStages;
         private List<string> unlockedCoopStages;
-        private List<string> unlockedSkirmishStages;
+        private List<string> unlockedArenaStages;
         private List<string> currentShopItems;
 
         private DateTime lastPlayDate;
@@ -102,7 +102,7 @@ public class SaveManager : MonoBehaviour
             unlockedMisc = data.misc;
             unlockedVersusStages = data.versusStages;
             unlockedCoopStages = data.coopStages;
-            unlockedSkirmishStages = data.skirmishStages;
+            unlockedArenaStages = data.arenaStages;
             
             currentShopItems = data.shopItems;
 
@@ -123,7 +123,7 @@ public class SaveManager : MonoBehaviour
             data.misc = unlockedMisc;
             data.versusStages = unlockedVersusStages;
             data.coopStages = unlockedCoopStages;
-            data.skirmishStages = unlockedSkirmishStages;
+            data.arenaStages = unlockedArenaStages;
 
             if (lastPlayDate.Date == DateTime.Now.Date) // Resets shop if you stop playing and then come back on a different day
             {

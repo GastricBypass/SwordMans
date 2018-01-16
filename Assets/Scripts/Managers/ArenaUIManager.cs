@@ -5,7 +5,7 @@ using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 using UnityEngine.EventSystems;
 
-public class SkirmishUIManager : UIManager
+public class ArenaUIManager : UIManager
 {
     public GameObject gameOverScreen;
     public Slider bossHealthBar;

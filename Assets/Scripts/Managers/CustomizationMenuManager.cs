@@ -14,11 +14,11 @@ public class CustomizationMenuManager : MonoBehaviour {
     public List<string> misc;
     public List<string> skins;
 
-    private int[] colorIndeces = new int[] { 0, 1, 2, 3 };
-    private int[] weaponIndeces = new int[] { 0, 0, 0, 0 };
-    private int[] hatIndeces = new int[] { 0, 0, 0, 0 };
-    private int[] miscIndeces = new int[] { 0, 0, 0, 0 };
-    private int[] skinIndeces = new int[] { 0, 0, 0, 0 };
+    private List<int> colorIndeces = new List<int> { 0, 1, 2, 3 };
+    private List<int> weaponIndeces = new List<int> { 0, 0, 0, 0 };
+    private List<int> hatIndeces = new List<int> { 0, 0, 0, 0 };
+    private List<int> miscIndeces = new List<int> { 0, 0, 0, 0 };
+    private List<int> skinIndeces = new List<int> { 0, 0, 0, 0 };
 
     public List<Text> selectedColors;
     public List<Text> selectedWeapons;
@@ -76,10 +76,19 @@ public class CustomizationMenuManager : MonoBehaviour {
         for (int i = 0; i < 4; i++)
         {
             selectedColors[i].text = manager.gsm.playerColors[i];
+            colorIndeces[i] = colors.IndexOf(manager.gsm.playerColors[i]);
+
             selectedWeapons[i].text = manager.gsm.playerWeapons[i];
+            weaponIndeces[i] = weapons.IndexOf(manager.gsm.playerWeapons[i]);
+
             selectedHats[i].text = manager.gsm.playerHats[i];
+            hatIndeces[i] = hats.IndexOf(manager.gsm.playerHats[i]);
+
             selectedMisc[i].text = manager.gsm.playerMisc[i];
+            miscIndeces[i] = misc.IndexOf(manager.gsm.playerMisc[i]);
+
             selectedSkins[i].text = manager.gsm.playerSkins[i];
+            skinIndeces[i] = skins.IndexOf(manager.gsm.playerSkins[i]);
         }
     }
 

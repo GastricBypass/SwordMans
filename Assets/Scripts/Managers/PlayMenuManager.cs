@@ -32,8 +32,8 @@ public class PlayMenuManager : MonoBehaviour {
     public Text coopSelectedStage;
     public Text coopNumberOfPlayers;
 
-    public List<string> skirmishStages;
-    public Text skirmishSelectedStage;
+    public List<string> arenaStages;
+    public Text arenaSelectedStage;
     
     public Text selectedCoopGameMode;
     private int activeCoopGameModeIndex = 0;
@@ -43,7 +43,7 @@ public class PlayMenuManager : MonoBehaviour {
     private int numAIPlayers = 0;
 
     private int coopActiveStageIndex;
-    private int skirmishActiveStageIndex;
+    private int arenaActiveStageIndex;
 
     // Use this for initialization
     void Start ()
@@ -73,7 +73,7 @@ public class PlayMenuManager : MonoBehaviour {
 
             stages = manager.gsm.data.versusStages;
             coopStages = manager.gsm.data.coopStages;
-            skirmishStages = manager.gsm.data.skirmishStages;
+            arenaStages = manager.gsm.data.arenaStages;
             SetStagePresets();
         }
     }
@@ -90,10 +90,10 @@ public class PlayMenuManager : MonoBehaviour {
             coopActiveStageIndex = manager.gsm.activeStageIndex;
             coopSelectedStage.text = coopStages[coopActiveStageIndex];
         }
-        else if (GsmStagesEqual(skirmishStages))
+        else if (GsmStagesEqual(arenaStages))
         {
-            skirmishActiveStageIndex = manager.gsm.activeStageIndex;
-            skirmishSelectedStage.text = skirmishStages[skirmishActiveStageIndex];
+            arenaActiveStageIndex = manager.gsm.activeStageIndex;
+            arenaSelectedStage.text = arenaStages[arenaActiveStageIndex];
         }
         else
         {
@@ -144,10 +144,10 @@ public class PlayMenuManager : MonoBehaviour {
         coopMenuStartOption.Select();
         versus = false;
 
-        if (!GsmStagesEqual(skirmishStages))
+        if (!GsmStagesEqual(arenaStages))
         {
             manager.gsm.activeStageIndex = 0;
-            manager.gsm.SetStages(skirmishStages);
+            manager.gsm.SetStages(arenaStages);
         }
     }
 
@@ -175,9 +175,9 @@ public class PlayMenuManager : MonoBehaviour {
         }
         else
         {
-            if (GameConstants.Unlocks.allCoopGameModes[activeCoopGameModeIndex] == "Skirmish")
+            if (GameConstants.Unlocks.allCoopGameModes[activeCoopGameModeIndex] == "Arena")
             {
-                nextStage = skirmishSelectedStage.text;
+                nextStage = arenaSelectedStage.text;
             }
             else if (GameConstants.Unlocks.allCoopGameModes[activeCoopGameModeIndex] == "Campaign")
             { 
@@ -199,12 +199,12 @@ public class PlayMenuManager : MonoBehaviour {
 
         selectedCoopGameMode.text = GameConstants.Unlocks.allCoopGameModes[activeCoopGameModeIndex];
 
-        if (GameConstants.Unlocks.allCoopGameModes[activeCoopGameModeIndex] == "Skirmish")
+        if (GameConstants.Unlocks.allCoopGameModes[activeCoopGameModeIndex] == "Arena")
         {
-            manager.gsm.activeStageIndex = skirmishActiveStageIndex;
-            manager.gsm.SetStages(skirmishStages);
+            manager.gsm.activeStageIndex = arenaActiveStageIndex;
+            manager.gsm.SetStages(arenaStages);
 
-            skirmishSelectedStage.gameObject.SetActive(true);
+            arenaSelectedStage.gameObject.SetActive(true);
             coopSelectedStage.gameObject.SetActive(false);
         }
         else if (GameConstants.Unlocks.allCoopGameModes[activeCoopGameModeIndex] == "Campaign")
@@ -212,7 +212,7 @@ public class PlayMenuManager : MonoBehaviour {
             manager.gsm.activeStageIndex = coopActiveStageIndex;
             manager.gsm.SetStages(coopStages);
 
-            skirmishSelectedStage.gameObject.SetActive(false);
+            arenaSelectedStage.gameObject.SetActive(false);
             coopSelectedStage.gameObject.SetActive(true);
         }
     }
@@ -228,12 +228,12 @@ public class PlayMenuManager : MonoBehaviour {
 
         selectedCoopGameMode.text = GameConstants.Unlocks.allCoopGameModes[activeCoopGameModeIndex];
 
-        if (GameConstants.Unlocks.allCoopGameModes[activeCoopGameModeIndex] == "Skirmish")
+        if (GameConstants.Unlocks.allCoopGameModes[activeCoopGameModeIndex] == "Arena")
         {
-            manager.gsm.activeStageIndex = skirmishActiveStageIndex;
-            manager.gsm.SetStages(skirmishStages);
+            manager.gsm.activeStageIndex = arenaActiveStageIndex;
+            manager.gsm.SetStages(arenaStages);
 
-            skirmishSelectedStage.gameObject.SetActive(true);
+            arenaSelectedStage.gameObject.SetActive(true);
             coopSelectedStage.gameObject.SetActive(false);
         }
         else if (GameConstants.Unlocks.allCoopGameModes[activeCoopGameModeIndex] == "Campaign")
@@ -241,7 +241,7 @@ public class PlayMenuManager : MonoBehaviour {
             manager.gsm.activeStageIndex = coopActiveStageIndex;
             manager.gsm.SetStages(coopStages);
 
-            skirmishSelectedStage.gameObject.SetActive(false);
+            arenaSelectedStage.gameObject.SetActive(false);
             coopSelectedStage.gameObject.SetActive(true);
         }
     }
@@ -262,16 +262,16 @@ public class PlayMenuManager : MonoBehaviour {
 
         else
         {
-            if (GameConstants.Unlocks.allCoopGameModes[activeCoopGameModeIndex] == "Skirmish")
+            if (GameConstants.Unlocks.allCoopGameModes[activeCoopGameModeIndex] == "Arena")
             {
-                skirmishActiveStageIndex--;
-                if (skirmishActiveStageIndex < 0)
+                arenaActiveStageIndex--;
+                if (arenaActiveStageIndex < 0)
                 {
-                    skirmishActiveStageIndex = skirmishStages.Count - 1;
+                    arenaActiveStageIndex = arenaStages.Count - 1;
                 }
 
-                skirmishSelectedStage.text = skirmishStages[skirmishActiveStageIndex];
-                manager.gsm.activeStageIndex = skirmishActiveStageIndex;
+                arenaSelectedStage.text = arenaStages[arenaActiveStageIndex];
+                manager.gsm.activeStageIndex = arenaActiveStageIndex;
             }
             else if (GameConstants.Unlocks.allCoopGameModes[activeCoopGameModeIndex] == "Campaign")
             {
@@ -302,16 +302,16 @@ public class PlayMenuManager : MonoBehaviour {
 
         else
         {
-            if (GameConstants.Unlocks.allCoopGameModes[activeCoopGameModeIndex] == "Skirmish")
+            if (GameConstants.Unlocks.allCoopGameModes[activeCoopGameModeIndex] == "Arena")
             {
-                skirmishActiveStageIndex++;
-                if (skirmishActiveStageIndex > skirmishStages.Count - 1)
+                arenaActiveStageIndex++;
+                if (arenaActiveStageIndex > arenaStages.Count - 1)
                 {
-                    skirmishActiveStageIndex = 0;
+                    arenaActiveStageIndex = 0;
                 }
 
-                skirmishSelectedStage.text = skirmishStages[skirmishActiveStageIndex];
-                manager.gsm.activeStageIndex = skirmishActiveStageIndex;
+                arenaSelectedStage.text = arenaStages[arenaActiveStageIndex];
+                manager.gsm.activeStageIndex = arenaActiveStageIndex;
             }
             else if (GameConstants.Unlocks.allCoopGameModes[activeCoopGameModeIndex] == "Campaign")
             {
