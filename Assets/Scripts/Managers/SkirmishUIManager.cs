@@ -17,7 +17,8 @@ public class SkirmishUIManager : UIManager
 
     public int roundsPerBossWave = 5;
 
-    public List<EnemyMan> possibleEnemyPrefabs;
+    public List<EnemyMan> possibleEasyEnemyPrefabs;
+    public List<EnemyMan> possibleHardEnemyPrefabs;
     public List<EnemyMan> possibleBossPrefabs;
     public List<EnemySpawner> enemySpawners;
     public List<EnemySpawner> bossSpawners;
@@ -36,6 +37,8 @@ public class SkirmishUIManager : UIManager
     public override void Start()
     {
         CommonStart();
+
+        gsm.numberOfAIPlayers = 0;
 
         gameOverScreen.SetActive(false);
 
@@ -120,6 +123,8 @@ public class SkirmishUIManager : UIManager
 
         enemiesRemaining = numEnemies;
         enemiesRemainingText.text = "Enemies Remaining: " + enemiesRemaining;
+        
+        List<EnemyMan> possibleEnemyPrefabs = ChooseEnemyDifficulty();
 
         int prefabIndex = Random.Range(0, possibleEnemyPrefabs.Count);
         foreach (var spawner in enemySpawners)
@@ -236,7 +241,7 @@ public class SkirmishUIManager : UIManager
     public override void ShowHurtImage(int playerNumber, float damage)
     {
         base.ShowHurtImage(playerNumber, damage);
-        if (waveNumber % roundsPerBossWave == 5 && playerNumber == 0)
+        if (waveNumber % roundsPerBossWave == 0 && (playerNumber == 0 || playerNumber > 4))
         {
             StartCoroutine(ShowHurtImageForSeconds(hurtDisplays[4], damage, 0.2f));
             StartCoroutine(ShowHurtTextForSeconds(damageTexts[4], damage, 0.5f));
@@ -251,4 +256,19 @@ public class SkirmishUIManager : UIManager
         gameOverScreen.SetActive(true);
         retryButton.Select();
     }
+
+    private List<EnemyMan> ChooseEnemyDifficulty()
+    {
+        List<EnemyMan> enemies = possibleEasyEnemyPrefabs;
+
+        float waveFactor = waveNumber / 5f;
+        float chanceOfHardEnemies = Random.Range(0f, 1f) * waveFactor;
+
+        if (chanceOfHardEnemies > 0.5)
+        {
+            enemies = possibleHardEnemyPrefabs;
+        }
+
+        return enemies;
+    } 
 }

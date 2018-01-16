@@ -107,10 +107,10 @@ public class SaveManager : MonoBehaviour
             currentShopItems = data.shopItems;
 
             // This whole mess was to reset the shop at midnight, but I think just storing the lastPlayDate on the data should do it.
-            if (data.lastPlayDate.Date != DateTime.UtcNow.Date) // reset shop items at midnight utc. This should only take effect after reloading the game
+            if (data.lastPlayDate.Date != DateTime.Now.Date) // reset shop items at midnight local time. This should only take effect after reloading the game
             {
-                //data.shopItems = new List<string>(); // To reset shop immediately at midnight utc, otherwise it resets afterwards
-                data.lastPlayDate = DateTime.UtcNow;
+                //data.shopItems = new List<string>(); // To reset shop immediately at midnight local time, otherwise it resets afterwards
+                data.lastPlayDate = DateTime.Now;
             }
 
             lastPlayDate = data.lastPlayDate; // Will be the time you started playing, not the time you stopped.
@@ -125,7 +125,7 @@ public class SaveManager : MonoBehaviour
             data.coopStages = unlockedCoopStages;
             data.skirmishStages = unlockedSkirmishStages;
 
-            if (lastPlayDate.Date == DateTime.UtcNow.Date) // Resets shop if you stop playing and then come back on a different day
+            if (lastPlayDate.Date == DateTime.Now.Date) // Resets shop if you stop playing and then come back on a different day
             {
                 data.shopItems = currentShopItems;
             }

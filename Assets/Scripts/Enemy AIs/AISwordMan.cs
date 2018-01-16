@@ -89,7 +89,13 @@ public class AISwordMan : AIEnemy {
     protected IEnumerator AggressionSwitch(float switchTime)
     {
         ChangeAggression();
-        aggressive = Random.Range(0f, 1f) < aggressionFactor;
+        bool isNowAggressive = Random.Range(0f, 1f) < aggressionFactor;
+        if (isNowAggressive && isNowAggressive != aggressive)
+        {
+            target = FindTarget();
+        }
+
+        aggressive = isNowAggressive;
         yield return new WaitForSeconds(switchTime);
         StartCoroutine(AggressionSwitch(Random.Range(aggressionSwitchRange.x, aggressionSwitchRange.y)));
     }

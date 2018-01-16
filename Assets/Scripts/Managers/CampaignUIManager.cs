@@ -58,7 +58,7 @@ public class CampaignUIManager : UIManager
     public override void ShowHurtImage(int playerNumber, float damage)
     {
         base.ShowHurtImage(playerNumber, damage);
-        if (bossLevel && playerNumber == 0)
+        if (bossLevel && (playerNumber == 0 || playerNumber > 4))
         {
             StartCoroutine(ShowHurtImageForSeconds(hurtDisplays[4], damage, 0.2f));
             StartCoroutine(ShowHurtTextForSeconds(damageTexts[4], damage, 0.5f));

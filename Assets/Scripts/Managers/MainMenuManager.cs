@@ -133,6 +133,8 @@ public class MainMenuManager : IMainMenuManager
 	// Use this for initialization
 	public override void Start ()
     {
+        Time.timeScale = 0;
+
         base.Start();
 
         playMenuManager = this.GetComponent<PlayMenuManager>();
@@ -141,7 +143,6 @@ public class MainMenuManager : IMainMenuManager
         shopMenuManager = this.GetComponent<ShopMenuManager>();
 
         UIManager ui = FindObjectOfType<UIManager>();
-        Time.timeScale = 0;
         ui.paused = true;
 
         menuCamera = FindObjectOfType<Camera>();

@@ -60,6 +60,11 @@ public class CameraFollow : MonoBehaviour
 
         for (int i = 0; i < targets.Count; i++)
         {
+            if (targets[i] == null)
+            {
+                continue;
+            }
+
             avgPos += targets[i].transform.position;
 
             for (int j = 0; j < targets.Count; j++)

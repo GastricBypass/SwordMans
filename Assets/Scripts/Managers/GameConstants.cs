@@ -168,14 +168,14 @@ public static class GameConstants {
         public static List<string> startingHats = new List<string>(new string[] { "None", "Bandana", "Coif", "Helmet", "Hood", "Jester", "Noble" });
         public static List<string> startingMisc = new List<string>(new string[] { "None", "Belt", "Cape", "Spaulders" });
 
-        public static List<string> startingVersusStages = new List<string>(new string[] { "Arena", "Castle", "Tavern", "Cabin", "Tower", "Ship", "Throne Room", "Pond", "Highlands", "Icebergs", "Bridge", "Market", "Volcano", "Colosseum", "Dungeon", "Mill", "Mansion" });
+        public static List<string> startingVersusStages = new List<string>(new string[] { "Joust", "Castle", "Tavern", "Cabin", "Tower", "Ship", "Throne Room", "Pond", "Highlands", "Icebergs", "Bridge", "Market", "Volcano", "Colosseum", "Dungeon", "Mill", "Mansion" });
         public static List<string> startingCoopStages = new List<string>(new string[] { "Ch 1" });
         public static List<string> startingSkirmishStages = new List<string>(new string[] { "Stadium" });
 
         public static List<string> allHats = new List<string>(new string[] { "None", "Bandana", "Coif", "Helmet", "Hood", "Jester", "Noble", "Cap", "Crown", "Viking", "Space", "Tricorn", "Spartan", "Fedora", "Bowler", "Tophat", "Boater", "Shades", "Bucket", "Cone", "Sunhat", "Tiara", "Circlet", "Headband", "Elf Hat", "Mustache" });
         public static List<string> allMisc = new List<string>(new string[] { "None", "Belt", "Cape", "Spaulders", "Breastplate", "Armor", "Necklace", "Collar", "Ruff", "Spikes", "Dagger", "Equipment", "Vest", "Sweater Vest", "Skirt", "Tabard", "Loincloth", "Poncho" });
 
-        public static List<string> allVersusStages = new List<string>(new string[] { "Arena", "Castle", "Tavern", "Cabin", "Tower", "Ship", "Space Station", "Throne Room", "Pond", "Highlands", "Icebergs", "Bridge", "Market", "Volcano", "Colosseum", "Dungeon", "Mill", "Mansion" });
+        public static List<string> allVersusStages = new List<string>(new string[] { "Joust", "Castle", "Tavern", "Cabin", "Tower", "Ship", "Space Station", "Throne Room", "Pond", "Highlands", "Icebergs", "Bridge", "Market", "Volcano", "Colosseum", "Dungeon", "Mill", "Mansion" });
         public static List<string> allCoopStages = new List<string>(new string[] { "Ch 1", "Ch 1 Part 1", "Ch 1 Part 2", "Ch 1 Part 3"});
         public static List<string> allSkirmishStages = new List<string>(new string[] { "Stadium" });
 

@@ -115,7 +115,7 @@ public class AIEnemy : Sword {
         base.Block();
     }
 
-    GameObject FindTarget()
+    protected GameObject FindTarget()
     {
         BodyPart[] possibleTargets = FindObjectsOfType<BodyPart>();
         List<BodyPart> possibleViableTargets = new List<BodyPart>();
