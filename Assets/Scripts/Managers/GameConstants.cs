@@ -165,26 +165,27 @@ public static class GameConstants {
 
     public static class Unlocks
     {
-        public static List<string> startingHats = new List<string>(new string[] { "None", "Bandana", "Coif", "Helmet", "Hood", "Jester", "Noble" });
-        public static List<string> startingMisc = new List<string>(new string[] { "None", "Belt", "Cape", "Spaulders" });
+        public static List<string> startingHats = new List<string>(new string[] { "None", "Bandana", "Coif", "Hood", "Headband" });
+        public static List<string> startingMisc = new List<string>(new string[] { "None", "Belt",  });
 
         public static List<string> startingVersusStages = new List<string>(new string[] { "Joust", "Castle", "Tavern", "Cabin", "Tower", "Ship", "Throne Room", "Pond", "Highlands", "Icebergs", "Bridge", "Market", "Volcano", "Colosseum", "Dungeon", "Mill", "Mansion" });
         public static List<string> startingCoopStages = new List<string>(new string[] { "Ch 1" });
         public static List<string> startingArenaStages = new List<string>(new string[] { "Stadium" });
 
-        public static List<string> allHats = new List<string>(new string[] { "None", "Bandana", "Coif", "Helmet", "Hood", "Jester", "Noble", "Cap", "Crown", "Viking", "Space", "Tricorn", "Spartan", "Fedora", "Bowler", "Tophat", "Boater", "Shades", "Bucket", "Cone", "Sunhat", "Tiara", "Circlet", "Headband", "Elf Hat", "Mustache" });
+        public static List<string> allHats = new List<string>(new string[] { "None", "Bandana", "Coif", "Helmet", "Hood", "Jester", "Noble", "Cap", "Crown", "Viking", "Space", "Tricorn", "Spartan", "Fedora", "Bowler", "Tophat", "Boater", "Shades", "Bucket", "Cone", "Sunhat", "Tiara", "Circlet", "Headband", "Elf Hat", "Mustache", "Wizard" });
         public static List<string> allMisc = new List<string>(new string[] { "None", "Belt", "Cape", "Spaulders", "Breastplate", "Armor", "Necklace", "Collar", "Ruff", "Spikes", "Dagger", "Equipment", "Vest", "Sweater Vest", "Skirt", "Tabard", "Loincloth", "Poncho" });
 
         public static List<string> allVersusStages = new List<string>(new string[] { "Joust", "Castle", "Tavern", "Cabin", "Tower", "Ship", "Space Station", "Throne Room", "Pond", "Highlands", "Icebergs", "Bridge", "Market", "Volcano", "Colosseum", "Dungeon", "Mill", "Mansion" });
-        public static List<string> allCoopStages = new List<string>(new string[] { "Ch 1", "Ch 1 Part 1", "Ch 1 Part 2", "Ch 1 Part 3"});
+        public static List<string> allCoopStages = new List<string>(new string[] { "Ch 1", "Ch 1 Part 1", "Ch 1 Part 2", "Ch 1 Part 3" });
         public static List<string> allArenaStages = new List<string>(new string[] { "Stadium" });
 
         public static List<string> allCoopGameModes = new List<string>(new string[] { "Arena", "Campaign" });
 
-        public static List<string> purchasableHats = new List<string>(new string[] { "Bandana", "Coif", "Helmet", "Hood", "Jester", "Noble", "Cap", "Viking", "Tricorn", "Spartan", "Fedora", "Bowler", "Tophat", "Boater", "Shades", "Bucket", "Cone", "Sunhat", "Tiara", "Circlet", "Headband", "Elf Hat", "Mustache" });
+        public static List<string> purchasableHats = new List<string>(new string[] { "Bandana", "Coif", "Helmet", "Hood", "Jester", "Noble", "Cap", "Viking", "Tricorn", "Spartan", "Fedora", "Bowler", "Tophat", "Boater", "Shades", "Bucket", "Cone", "Sunhat", "Tiara", "Circlet", "Headband", "Elf Hat", "Mustache", "Wizard" });
         public static List<string> purchasableMisc = new List<string>(new string[] { "Belt", "Cape", "Spaulders", "Breastplate", "Armor", "Necklace", "Collar", "Ruff", "Spikes", "Dagger", "Equipment", "Vest", "Sweater Vest", "Skirt", "Tabard", "Loincloth", "Poncho" });
 
-        public static Dictionary<string, float> hatPrices = new Dictionary<string, float> {
+        public static Dictionary<string, float> hatPrices = new Dictionary<string, float>
+        {
             { "Bandana", 10 },
             { "Coif", 10 },
             { "Helmet", 80 },
@@ -207,10 +208,12 @@ public static class GameConstants {
             { "Circlet", 100 },
             { "Headband", 10 },
             { "Elf Hat", 80 },
-            { "Mustache", 50 }
+            { "Mustache", 50 },
+            { "Wizard", 100 }
         };
 
-        public static Dictionary<string, float> miscPrices = new Dictionary<string, float> {
+        public static Dictionary<string, float> miscPrices = new Dictionary<string, float>
+        {
             { "Belt", 10 },
             { "Cape", 100 },
             { "Spaulders", 50 },
@@ -230,6 +233,81 @@ public static class GameConstants {
             { "Poncho", 80 }
         };
     }
+
+    public static class Resolutions
+    {
+        public static Dictionary<string, ResolutionInformation> resolutions = new Dictionary<string, ResolutionInformation>
+        {
+            { "620 x 480", new ResolutionInformation(640, 480) },
+            { "800 x 600", new ResolutionInformation(800, 600) },
+            { "1024 x 768", new ResolutionInformation(1024, 768) },
+            { "1152 x 864", new ResolutionInformation(1152, 864) },
+            { "1280 x 720", new ResolutionInformation(1280, 720) },
+            { "1280 x 960", new ResolutionInformation(1280, 960) },
+            { "1280 x 1024", new ResolutionInformation(1280, 1024) },
+            { "1366 x 768", new ResolutionInformation(1366, 768) },
+            { "1400 x 1050", new ResolutionInformation(1400, 1050) },
+            { "1600 x 900", new ResolutionInformation(1600, 900) },
+            { "1600 x 1024", new ResolutionInformation(1600, 1024) },
+            { "1920 x 1080", new ResolutionInformation(1920, 1080) },
+        };
+
+        public class ResolutionInformation
+        {
+            int width;
+            int height;
+
+            public ResolutionInformation(int width, int height)
+            {
+                this.width = width;
+                this.height = height;
+            }
+        }
+    }
+
+    public static class GraphicsQualityNames
+    {
+        public static string fastest = "Bad";
+        public static string fast = "Passable";
+        public static string simple = "Okay";
+        public static string good = "Good";
+        public static string beautiful = "Better";
+        public static string fantastic = "Best";
+
+        public static string ParseFromOriginalGraphicsQualities(string quality)
+        {
+            string toReturn = quality;
+            string lowercaseQuality = quality.ToLower();
+
+            if (lowercaseQuality == "fastest")
+            {
+                toReturn = fastest;
+            }
+            else if (lowercaseQuality == "fast")
+            {
+                toReturn = fast;
+            }
+            else if (lowercaseQuality == "simple")
+            {
+                toReturn = simple;
+            }
+            else if (lowercaseQuality == "good")
+            {
+                toReturn = good;
+            }
+            else if (lowercaseQuality == "beautiful")
+            {
+                toReturn = beautiful;
+            }
+            else if (lowercaseQuality == "fantastic")
+            {
+                toReturn = fantastic;
+            }
+
+            return toReturn;
+        }
+    }
+
 
     public static class Files
     {

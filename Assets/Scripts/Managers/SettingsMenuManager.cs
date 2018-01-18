@@ -12,8 +12,8 @@ public class SettingsMenuManager : MonoBehaviour {
     public List<GameObject> tabsOptions;
     public List<Button> tabButtons;
     private int tabIndex = 0;
-    private Color selectedColor = new Color(8f / 255f, 20f / 255f, 35f / 255f);
-    private Color unselectedColor = new Color(50f / 255f, 65f / 255f, 80f / 255f);
+    private Color selectedColor = new Color(8f / 255f, 20f / 255f, 35f / 255f, 180f / 255f);
+    private Color unselectedColor = new Color(50f / 255f, 65f / 255f, 80f / 255f, 180f / 255f);
 
     public Button toggleColorizeHealthBars;
     private GameObject colorizeHealthBarsSelected;
@@ -26,6 +26,15 @@ public class SettingsMenuManager : MonoBehaviour {
 
     public Button toggleRandomStageSelect;
     private GameObject randomStageSelectSelected;
+    
+    public Button toggleWindowed;
+    private GameObject toggleWindowedSelected;
+
+    public Slider resolutionSlider;
+    public Text resolution;
+
+    public Slider graphicsQualitySlider;
+    public Text graphicsQuality;
 
     public Button toggleMusicOn;
     private GameObject musicOnSelected;
@@ -48,6 +57,7 @@ public class SettingsMenuManager : MonoBehaviour {
         showHealthValuesSelected = toggleShowHealthValues.transform.Find("Selected").gameObject;
         randomStageSelectSelected = toggleRandomStageSelect.transform.Find("Selected").gameObject;
         musicOnSelected = toggleMusicOn.transform.Find("Selected").gameObject;
+        toggleWindowedSelected = toggleWindowed.transform.Find("Selected").gameObject;
 
         StartCoroutine(RepeatedlyTryToSetSettings(0.1f));
 
@@ -75,6 +85,17 @@ public class SettingsMenuManager : MonoBehaviour {
             effectsVolumeSlider.value = (int)(manager.gsm.settings.effectsVolume * 100);
             musicVolume.text = musicVolumeSlider.value.ToString();
             effectsVolume.text = effectsVolumeSlider.value.ToString();
+
+            toggleWindowedSelected.SetActive(manager.gsm.settings.windowed);
+
+            graphicsQualitySlider.maxValue = QualitySettings.names.Length - 1;
+            graphicsQualitySlider.value = manager.gsm.settings.graphicsQuality;
+            graphicsQuality.text = GameConstants.GraphicsQualityNames.ParseFromOriginalGraphicsQualities(QualitySettings.names[manager.gsm.settings.graphicsQuality]); // change names of qualities in editor. This is silly
+
+            resolutionSlider.maxValue = Screen.resolutions.Length - 1;
+            resolutionSlider.value = manager.gsm.settings.resolution;
+            //Screen.SetResolution(Screen.resolutions[manager.gsm.settings.resolution].width, Screen.resolutions[manager.gsm.settings.resolution].height, !manager.gsm.settings.windowed);
+            resolution.text = Screen.resolutions[manager.gsm.settings.resolution].width + " x " + Screen.resolutions[manager.gsm.settings.resolution].height;
         }
     }
 
@@ -175,6 +196,37 @@ public class SettingsMenuManager : MonoBehaviour {
     {
         manager.gsm.settings.SetRandomStageSelect(!manager.gsm.settings.randomStageSelect);
         randomStageSelectSelected.SetActive(!randomStageSelectSelected.activeSelf);
+    }
+
+    public void ToggleWindowed()
+    {
+        manager.gsm.settings.SetWindowed(!manager.gsm.settings.windowed);
+        toggleWindowedSelected.SetActive(!toggleWindowedSelected.activeSelf);
+    }
+
+    public void SetResolution()
+    {
+        int resolutionIndex = (int)resolutionSlider.value;
+
+        manager.gsm.settings.SetResolution(resolutionIndex);
+        resolution.text = Screen.resolutions[resolutionIndex].width + " x " + Screen.resolutions[resolutionIndex].height;
+    }
+
+    public void SetGraphicsQuality()
+    {
+        int qualityIndex = (int)graphicsQualitySlider.value;
+
+        manager.gsm.settings.SetGraphicsQuality(qualityIndex);
+        graphicsQuality.text = GameConstants.GraphicsQualityNames.ParseFromOriginalGraphicsQualities(QualitySettings.names[qualityIndex]); // shouldn't need this. Change in editor names
+    }
+
+    public void ApplyGraphicsChanges()
+    {
+        int resolutionIndex = (int)resolutionSlider.value;
+        int qualityIndex = (int)graphicsQualitySlider.value;
+
+        Screen.SetResolution(Screen.resolutions[resolutionIndex].width, Screen.resolutions[resolutionIndex].height, !manager.gsm.settings.windowed);
+        QualitySettings.SetQualityLevel(qualityIndex);
     }
 
     public void ToggleMusicOn()

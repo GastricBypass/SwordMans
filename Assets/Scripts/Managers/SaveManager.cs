@@ -145,6 +145,10 @@ public class SaveManager : MonoBehaviour
         public int roundsPerStage;
         public bool randomStageSelect;
 
+        public bool windowed;
+        public int resolution;
+        public int graphicsQuality;
+
         public bool musicOn;
         public float musicVolume;
         public float effectsVolume;
@@ -162,6 +166,10 @@ public class SaveManager : MonoBehaviour
             roundsPerStage = data.roundsPerStage;
             randomStageSelect = data.randomStageSelect;
 
+            windowed = data.windowed;
+            resolution = data.resolution;
+            graphicsQuality = data.graphicsQuality;
+
             musicOn = data.musicOn;
             musicVolume = data.musicVolume;
             effectsVolume = data.effectsVolume;
@@ -174,6 +182,10 @@ public class SaveManager : MonoBehaviour
 
             data.roundsPerStage = roundsPerStage;
             data.randomStageSelect = randomStageSelect;
+
+            data.windowed = windowed;
+            data.resolution = resolution;
+            data.graphicsQuality = graphicsQuality;
 
             data.musicOn = musicOn;
             data.musicVolume = musicVolume;

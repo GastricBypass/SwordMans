@@ -28,6 +28,10 @@ public class GameData : MonoBehaviour
     public int roundsPerStage;
     public bool randomStageSelect;
 
+    public bool windowed;
+    public int resolution;
+    public int graphicsQuality;
+
     public bool musicOn;
     public float musicVolume;
     public float effectsVolume;

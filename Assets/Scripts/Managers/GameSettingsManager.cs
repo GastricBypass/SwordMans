@@ -56,6 +56,8 @@ public class GameSettingsManager : MonoBehaviour {
             Destroy(this.gameObject);
         }
 
+        //settings.graphicsQuality = QualitySettings.names.Length - 1; // Can't set this as a default value in settings...
+
         if (music == null)
         {
             music = this.GetComponent<MusicManager>();
@@ -322,6 +324,10 @@ public class GameSettingsManager : MonoBehaviour {
         public int roundsPerStage = 3;
         public bool randomStageSelect = false;
 
+        public bool windowed = false;
+        public int resolution;
+        public int graphicsQuality;
+
         public bool musicOn = true;
         public float musicVolume = 0.6f;
         public float effectsVolume = 1f;
@@ -353,6 +359,10 @@ public class GameSettingsManager : MonoBehaviour {
             roundsPerStage = data.roundsPerStage;
             randomStageSelect = data.randomStageSelect;
 
+            windowed = data.windowed;
+            resolution = data.resolution;
+            graphicsQuality = data.graphicsQuality;
+
             musicOn = data.musicOn;
             musicVolume = data.musicVolume;
             effectsVolume = data.effectsVolume;
@@ -366,6 +376,12 @@ public class GameSettingsManager : MonoBehaviour {
 
             data.roundsPerStage = roundsPerStage;
             data.randomStageSelect = randomStageSelect;
+
+            data.windowed = windowed;
+            data.resolution = new List<Resolution>(Screen.resolutions).IndexOf(Screen.currentResolution);
+            data.graphicsQuality = QualitySettings.names.Length - 1;
+            resolution = data.resolution;
+            graphicsQuality = data.graphicsQuality;
 
             data.musicOn = musicOn;
             data.musicVolume = musicVolume;
@@ -402,6 +418,30 @@ public class GameSettingsManager : MonoBehaviour {
         {
             randomStageSelect = value;
             data.randomStageSelect = value;
+
+            data.Save();
+        }
+
+        public void SetWindowed(bool value)
+        {
+            windowed = value;
+            data.windowed = value;
+
+            data.Save();
+        }
+
+        public void SetResolution(int value)
+        {
+            resolution = value;
+            data.resolution = value;
+
+            data.Save();
+        }
+
+        public void SetGraphicsQuality(int value)
+        {
+            graphicsQuality = value;
+            data.graphicsQuality = value;
 
             data.Save();
         }
