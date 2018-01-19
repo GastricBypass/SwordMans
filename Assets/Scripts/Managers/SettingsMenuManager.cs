@@ -90,12 +90,13 @@ public class SettingsMenuManager : MonoBehaviour {
 
             graphicsQualitySlider.maxValue = QualitySettings.names.Length - 1;
             graphicsQualitySlider.value = manager.gsm.settings.graphicsQuality;
-            graphicsQuality.text = GameConstants.GraphicsQualityNames.ParseFromOriginalGraphicsQualities(QualitySettings.names[manager.gsm.settings.graphicsQuality]); // change names of qualities in editor. This is silly
+            graphicsQuality.text = QualitySettings.names[manager.gsm.settings.graphicsQuality];
 
             resolutionSlider.maxValue = Screen.resolutions.Length - 1;
             resolutionSlider.value = manager.gsm.settings.resolution;
-            //Screen.SetResolution(Screen.resolutions[manager.gsm.settings.resolution].width, Screen.resolutions[manager.gsm.settings.resolution].height, !manager.gsm.settings.windowed);
             resolution.text = Screen.resolutions[manager.gsm.settings.resolution].width + " x " + Screen.resolutions[manager.gsm.settings.resolution].height;
+
+            ApplyGraphicsChanges();
         }
     }
 
@@ -217,7 +218,7 @@ public class SettingsMenuManager : MonoBehaviour {
         int qualityIndex = (int)graphicsQualitySlider.value;
 
         manager.gsm.settings.SetGraphicsQuality(qualityIndex);
-        graphicsQuality.text = GameConstants.GraphicsQualityNames.ParseFromOriginalGraphicsQualities(QualitySettings.names[qualityIndex]); // shouldn't need this. Change in editor names
+        graphicsQuality.text = QualitySettings.names[qualityIndex];
     }
 
     public void ApplyGraphicsChanges()
