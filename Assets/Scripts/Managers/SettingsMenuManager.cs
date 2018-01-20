@@ -21,6 +21,9 @@ public class SettingsMenuManager : MonoBehaviour {
     public Button toggleShowHealthValues;
     private GameObject showHealthValuesSelected;
 
+    public Button toggleShowBlood;
+    private GameObject showBloodSelected;
+
     public int maxNumberOfRounds;
     public Text numberOfRounds;
 
@@ -55,6 +58,7 @@ public class SettingsMenuManager : MonoBehaviour {
     {
         colorizeHealthBarsSelected = toggleColorizeHealthBars.transform.Find("Selected").gameObject;
         showHealthValuesSelected = toggleShowHealthValues.transform.Find("Selected").gameObject;
+        showBloodSelected = toggleShowBlood.transform.Find("Selected").gameObject;
         randomStageSelectSelected = toggleRandomStageSelect.transform.Find("Selected").gameObject;
         musicOnSelected = toggleMusicOn.transform.Find("Selected").gameObject;
         toggleWindowedSelected = toggleWindowed.transform.Find("Selected").gameObject;
@@ -76,6 +80,7 @@ public class SettingsMenuManager : MonoBehaviour {
         {
             colorizeHealthBarsSelected.SetActive(manager.gsm.settings.colorizeHealthBars);
             showHealthValuesSelected.SetActive(manager.gsm.settings.showHealthValues);
+            showBloodSelected.SetActive(manager.gsm.settings.showBlood);
             numberOfRounds.text = manager.gsm.settings.roundsPerStage.ToString();
             randomStageSelectSelected.SetActive(manager.gsm.settings.randomStageSelect);
 
@@ -167,6 +172,12 @@ public class SettingsMenuManager : MonoBehaviour {
     {
         manager.gsm.settings.SetShowHealthValues(!manager.gsm.settings.showHealthValues);
         showHealthValuesSelected.SetActive(!showHealthValuesSelected.activeSelf);
+    }
+
+    public void ToggleShowBlood()
+    {
+        manager.gsm.settings.SetShowBlood(!manager.gsm.settings.showBlood);
+        showBloodSelected.SetActive(!showBloodSelected.activeSelf);
     }
 
     public void ForwardNumRounds()

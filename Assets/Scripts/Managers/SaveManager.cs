@@ -141,6 +141,7 @@ public class SaveManager : MonoBehaviour
     {
         public bool colorizeHealthBars;
         public bool showHealthValues;
+        public bool showBlood;
 
         public int roundsPerStage;
         public bool randomStageSelect;
@@ -162,6 +163,7 @@ public class SaveManager : MonoBehaviour
         {
             colorizeHealthBars = data.colorizeHealthBars;
             showHealthValues = data.showHealthValues;
+            showBlood = data.showBlood;
 
             roundsPerStage = data.roundsPerStage;
             randomStageSelect = data.randomStageSelect;
@@ -179,6 +181,7 @@ public class SaveManager : MonoBehaviour
         {
             data.colorizeHealthBars = colorizeHealthBars;
             data.showHealthValues = showHealthValues;
+            data.showBlood = showBlood;
 
             data.roundsPerStage = roundsPerStage;
             data.randomStageSelect = randomStageSelect;

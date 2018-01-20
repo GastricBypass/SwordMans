@@ -25,9 +25,17 @@ public class EnemyMan : Man {
 
         if (isBoss)
         {
-            maxHealth = maxHealth + (maxHealth * ui.gsm.numberOfPlayers / 2f);
-            health = maxHealth;
+            WaitToSetHealth(0.1f);
         }
+    }
+
+    public IEnumerator WaitToSetHealth(float seconds)
+    {
+        yield return new WaitForSeconds(seconds);
+
+        maxHealth = maxHealth + (maxHealth * ui.gsm.numberOfPlayers / 2f);
+        health = maxHealth;
+        ui.ChangeHealth(1, this.playerNumber);
     }
 	
 	// Update is called once per frame

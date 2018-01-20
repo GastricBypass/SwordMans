@@ -9,16 +9,31 @@ public class Material : MonoBehaviour {
     public bool soft;
     public bool glass;
 
+    public ParticleSystem bloodEffectPrefab; // only for things that can bleed
+    public bool canBleed;
+    private ParticleSystem bloodEffect;
+
     public float volumeMultiplier = 1;
     public float soundBreakMS = 200;
 
     private AudioSource audioSource;
+    private AudioSource bloodAudio;
     private bool canSound = true;
+
+    private GameSettingsManager gsm;
 
 	// Use this for initialization
 	void Start ()
     {
-        volumeMultiplier = volumeMultiplier * FindObjectOfType<GameSettingsManager>().settings.effectsVolume;
+        gsm = FindObjectOfType<GameSettingsManager>();
+
+        if (bloodEffectPrefab != null && gsm.settings.showBlood)
+        {
+            bloodEffect = Instantiate<ParticleSystem>(bloodEffectPrefab, this.transform);
+            bloodAudio = gameObject.AddComponent<AudioSource>();
+        }
+
+        volumeMultiplier = volumeMultiplier * gsm.settings.effectsVolume;
 
         audioSource = gameObject.AddComponent<AudioSource>();
         //Resources.LoadAll("Sounds"); // causes load time on levels to increase dramatically. Also there is still a delay on the first time a sound is loaded.
@@ -143,6 +158,20 @@ public class Material : MonoBehaviour {
         audioSource.clip = clip;
         audioSource.Play();
         StartCoroutine(ToggleCanSound());
+
+        if (gsm.settings.showBlood && canBleed && volume > 0.1)
+        {
+            bloodEffect.Stop();
+            ParticleSystem.MainModule main = bloodEffect.main;
+            main.duration = volume;
+
+            AudioClip bloodSound = (AudioClip)Resources.Load("Sounds/bloodSplat" + suffix, typeof(AudioClip));
+            bloodAudio.volume = volume * volumeMultiplier;
+            bloodAudio.clip = bloodSound;
+
+            bloodEffect.Play();
+            bloodAudio.Play();
+        }
     }
 
     public bool ShouldNotMakeSound(Collision collision)

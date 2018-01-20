@@ -24,6 +24,7 @@ public class GameData : MonoBehaviour
 
     public bool colorizeHealthBars;
     public bool showHealthValues;
+    public bool showBlood;
 
     public int roundsPerStage;
     public bool randomStageSelect;

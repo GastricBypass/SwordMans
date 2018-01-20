@@ -320,6 +320,7 @@ public class GameSettingsManager : MonoBehaviour {
     {
         public bool colorizeHealthBars = true;
         public bool showHealthValues = true;
+        public bool showBlood = true;
 
         public int roundsPerStage = 3;
         public bool randomStageSelect = false;
@@ -355,6 +356,7 @@ public class GameSettingsManager : MonoBehaviour {
         {
             colorizeHealthBars = data.colorizeHealthBars;
             showHealthValues = data.showHealthValues;
+            showBlood = data.showBlood;
 
             roundsPerStage = data.roundsPerStage;
             randomStageSelect = data.randomStageSelect;
@@ -373,6 +375,7 @@ public class GameSettingsManager : MonoBehaviour {
             Debug.Log("Updating data to default settings");
             data.colorizeHealthBars = colorizeHealthBars;
             data.showHealthValues = showHealthValues;
+            data.showBlood = showBlood;
 
             data.roundsPerStage = roundsPerStage;
             data.randomStageSelect = randomStageSelect;
@@ -402,6 +405,14 @@ public class GameSettingsManager : MonoBehaviour {
         {
             showHealthValues = value;
             data.showHealthValues = value;
+
+            data.Save();
+        }
+
+        public void SetShowBlood(bool value)
+        {
+            showBlood = value;
+            data.showBlood = value;
 
             data.Save();
         }

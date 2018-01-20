@@ -71,7 +71,7 @@ public class Man : MonoBehaviour {
             {
                 head.GetChild(i).GetComponent<SkinnedMeshRenderer>().material.color = toSet;
             }
-            else
+            else if (head.GetChild(i).GetComponent<MeshRenderer>() != null)
             {
                 head.GetChild(i).GetComponent<MeshRenderer>().material.color = toSet;
             }
@@ -84,7 +84,7 @@ public class Man : MonoBehaviour {
             {
                 spine.GetChild(i).GetComponent<SkinnedMeshRenderer>().material.color = toSet;
             }
-            else
+            else if (spine.GetChild(i).GetComponent<MeshRenderer>().material.color != null)
             {
                 spine.GetChild(i).GetComponent<MeshRenderer>().material.color = toSet;
             }
