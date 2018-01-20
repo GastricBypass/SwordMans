@@ -111,6 +111,7 @@
     <Compile Include="Assets\Scripts\Objects\DamagingArea.cs" />
     <Compile Include="Assets\Scripts\Objects\DamagingObject.cs" />
     <Compile Include="Assets\Scripts\Objects\DefenseBoostPowerup.cs" />
+    <Compile Include="Assets\Scripts\Objects\FireTrap.cs" />
     <Compile Include="Assets\Scripts\Objects\IEntity.cs" />
     <Compile Include="Assets\Scripts\Objects\ITrap.cs" />
     <Compile Include="Assets\Scripts\Objects\ItemSpawner.cs" />
