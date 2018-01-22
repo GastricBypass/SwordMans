@@ -14,11 +14,11 @@ public class BodyPart : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		if (owner.ui.useInBounds && OutOfBounds())
+		if (owner.ui != null && owner.ui.useInBounds && OutOfBounds())
         {
             owner.TakeDamage(1000f);
             //Destroy(owner.gameObject);
-            StartCoroutine(DestroyAfterTime(owner.gameObject, 0.1f));
+            StartCoroutine(DestroyAfterTime(owner.gameObject, 0.5f));
         }
 	}
 

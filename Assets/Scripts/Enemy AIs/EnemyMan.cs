@@ -25,7 +25,7 @@ public class EnemyMan : Man {
 
         if (isBoss)
         {
-            WaitToSetHealth(0.1f);
+            StartCoroutine(WaitToSetHealth(0.1f));
         }
     }
 

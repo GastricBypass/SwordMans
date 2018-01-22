@@ -45,12 +45,13 @@ public class CampaignUIManager : UIManager
         bossHealthBar.gameObject.SetActive(bossLevel);
         bossMaxHealth = bossMaxHealth + (bossMaxHealth * gsm.numberOfPlayers / 2f);
         bossHealthBar.maxValue = bossMaxHealth;
+        ChangeHealth(1, 0);
     }
 
     public override void ChangeHealth(float percent, int playerNumber)
     {
         base.ChangeHealth(percent, playerNumber);
-        if (bossLevel && playerNumber == 0)
+        if (bossLevel && (playerNumber == 0 || playerNumber > 4))
         {
             bossHealthBar.value = percent * bossMaxHealth;
             bossHealthValue.text = (Mathf.Ceil(bossHealthBar.value) + " / " + bossMaxHealth);

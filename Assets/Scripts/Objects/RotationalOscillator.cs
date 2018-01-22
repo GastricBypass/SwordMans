@@ -24,7 +24,23 @@ public class RotationalOscillator : Oscillator
             /*if (moveZ)*/
             z = difZ / 2 * Mathf.Sin(timeDifSeconds / (waveTimeMS / 1000)) + avgZ;
 
-            transform.rotation = Quaternion.Euler(new Vector3(x, y, z));
+            if (waitingToActivate)
+            {
+                //float stepSize = new Vector3(difX, difY, difZ).magnitude / (timeDifSeconds / (waveTimeMS / 1000));
+                if ((new Vector3(transform.rotation.x, transform.rotation.y, transform.rotation.z) - new Vector3(x, y, z)).magnitude < new Vector3(0.1f, 0.1f, 0.1f).magnitude)
+                {
+                    waitingToActivate = false;
+                }
+            }
+            else
+            {
+                transform.rotation = Quaternion.Euler(new Vector3(x, y, z));
+            }
         }
+    }
+
+    protected override void SetStartingPosition()
+    {
+        transform.rotation = Quaternion.Euler(new Vector3(avgX, avgY, avgZ));
     }
 }

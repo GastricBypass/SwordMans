@@ -23,6 +23,8 @@ public class Man : MonoBehaviour {
     public string misc;
     public string skin;
 
+    protected bool dead = false;
+
     protected System.DateTime hitTime;
 
 	// Use this for initialization
@@ -130,11 +132,6 @@ public class Man : MonoBehaviour {
             }
         }
     }
-	
-	// Update is called once per frame
-	void Update () {
-		
-	}
 
     public void TakeDamage(float damage, bool alwaysDealsDamage = false)
     {
@@ -150,6 +147,10 @@ public class Man : MonoBehaviour {
 
     public void ChangeHealth(float newHealth)
     {
+        if (dead)
+        {
+            return;
+        }
         health = newHealth;
         if (health <= 0)
         {
@@ -160,6 +161,7 @@ public class Man : MonoBehaviour {
             {
                 camera.Delete(this);
             }
+            dead = true;
             ExtraDeathEffects();
         }
         if (health > maxHealth)

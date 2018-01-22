@@ -23,6 +23,8 @@ public class Oscillator : IEntity
     protected float avgY;
     protected float avgZ;
 
+    protected bool waitingToActivate = false;
+
     //private System.DateTime levelStartTime;
 
     // Use this for initialization
@@ -32,7 +34,10 @@ public class Oscillator : IEntity
         avgY = (yRange.x + yRange.y) / 2;
         avgZ = (zRange.x + zRange.y) / 2;
 
-        transform.position = new Vector3(avgX, avgY, avgZ);
+        if (active)
+        {
+            SetStartingPosition();
+        }
 
         /*if (moveX)*/ difX = Mathf.Abs(xRange.x - xRange.y);
         /*if (moveY)*/ difY = Mathf.Abs(yRange.x - yRange.y);
@@ -46,6 +51,12 @@ public class Oscillator : IEntity
         }
 
         //levelStartTime = System.DateTime.Now;
+    }
+
+    public void Activate() // Waits until the oscillation is at a position close enough to the actual transform to start
+    {
+        waitingToActivate = true;
+        active = true;
     }
 	
 	// Update is called once per frame
@@ -64,7 +75,23 @@ public class Oscillator : IEntity
             /*if (moveY)*/ y = difY / 2 * Mathf.Sin(timeDifSeconds / (waveTimeMS / 1000)) + avgY;
             /*if (moveZ)*/ z = difZ / 2 * Mathf.Sin(timeDifSeconds / (waveTimeMS / 1000)) + avgZ;
 
-            transform.position = new Vector3(x, y, z);
+            if (waitingToActivate)
+            {
+                //float stepSize = new Vector3(difX, difY, difZ).magnitude / (timeDifSeconds / (waveTimeMS / 1000));
+                if ((transform.position - new Vector3(x, y, z)).magnitude < new Vector3(0.1f, 0.1f, 0.1f).magnitude)
+                {
+                    waitingToActivate = false;
+                }
+            }
+            else
+            {
+                transform.position = new Vector3(x, y, z);
+            }
         }
+    }
+
+    protected virtual void SetStartingPosition()
+    {
+        transform.position = new Vector3(avgX, avgY, avgZ);
     }
 }
