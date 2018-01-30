@@ -51,13 +51,14 @@ public class IMainMenuManager : MonoBehaviour
 
     public virtual void Update()
     {
-        if (Input.GetButton("Cancel"))
+        if (Input.GetButtonDown("Cancel"))
         {
             BackButtonPressed();
         }
-        if (Input.GetButton("Start"))
+        if (Input.GetButtonDown("Start"))
         {
-            BackButtonPressed();
+            PlayClickSound();
+            BackToMainMenu();
         }
     }
 
@@ -65,6 +66,11 @@ public class IMainMenuManager : MonoBehaviour
     {
         menuCamera.transform.position = newTransform.position;
         menuCamera.transform.rotation = newTransform.rotation;
+    }
+
+    public virtual void BackToMainMenu()
+    {
+        // no action
     }
 
     public virtual void BackButtonPressed()
@@ -168,6 +174,7 @@ public class MainMenuManager : IMainMenuManager
     {
         DisableAllMenus();
         playMenu.SetActive(true);
+        backButton.gameObject.SetActive(false);
 
         if (playMenuManager.versus)
         {
@@ -208,7 +215,7 @@ public class MainMenuManager : IMainMenuManager
         SendCameraToTransform(settingsMenuCameraPosition);
     }
 
-    public override void BackButtonPressed()
+    public override void BackToMainMenu()
     {
         if (mainMenu.activeSelf)
         {
@@ -222,5 +229,21 @@ public class MainMenuManager : IMainMenuManager
         backButton.gameObject.SetActive(false);
         mainMenuStartOption.Select();
         SendCameraToTransform(mainMenuCameraPosition);
+    }
+
+    public override void BackButtonPressed()
+    {
+        GameObject button = GameObject.Find("Back");
+        if (button == null)
+        {
+            return;
+        }
+
+        Button backButton = button.GetComponent<Button>();
+
+        if (backButton != null)
+        {
+            backButton.onClick.Invoke();
+        }
     }
 }

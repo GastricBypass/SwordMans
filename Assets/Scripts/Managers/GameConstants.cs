@@ -234,80 +234,79 @@ public static class GameConstants {
         };
     }
 
-    public static class Resolutions
-    {
-        public static Dictionary<string, ResolutionInformation> resolutions = new Dictionary<string, ResolutionInformation>
-        {
-            { "620 x 480", new ResolutionInformation(640, 480) },
-            { "800 x 600", new ResolutionInformation(800, 600) },
-            { "1024 x 768", new ResolutionInformation(1024, 768) },
-            { "1152 x 864", new ResolutionInformation(1152, 864) },
-            { "1280 x 720", new ResolutionInformation(1280, 720) },
-            { "1280 x 960", new ResolutionInformation(1280, 960) },
-            { "1280 x 1024", new ResolutionInformation(1280, 1024) },
-            { "1366 x 768", new ResolutionInformation(1366, 768) },
-            { "1400 x 1050", new ResolutionInformation(1400, 1050) },
-            { "1600 x 900", new ResolutionInformation(1600, 900) },
-            { "1600 x 1024", new ResolutionInformation(1600, 1024) },
-            { "1920 x 1080", new ResolutionInformation(1920, 1080) },
-        };
+    //public static class Resolutions
+    //{
+    //    public static Dictionary<string, ResolutionInformation> resolutions = new Dictionary<string, ResolutionInformation>
+    //    {
+    //        { "620 x 480", new ResolutionInformation(640, 480) },
+    //        { "800 x 600", new ResolutionInformation(800, 600) },
+    //        { "1024 x 768", new ResolutionInformation(1024, 768) },
+    //        { "1152 x 864", new ResolutionInformation(1152, 864) },
+    //        { "1280 x 720", new ResolutionInformation(1280, 720) },
+    //        { "1280 x 960", new ResolutionInformation(1280, 960) },
+    //        { "1280 x 1024", new ResolutionInformation(1280, 1024) },
+    //        { "1366 x 768", new ResolutionInformation(1366, 768) },
+    //        { "1400 x 1050", new ResolutionInformation(1400, 1050) },
+    //        { "1600 x 900", new ResolutionInformation(1600, 900) },
+    //        { "1600 x 1024", new ResolutionInformation(1600, 1024) },
+    //        { "1920 x 1080", new ResolutionInformation(1920, 1080) },
+    //    };
 
-        public class ResolutionInformation
-        {
-            int width;
-            int height;
+    //    public class ResolutionInformation
+    //    {
+    //        int width;
+    //        int height;
 
-            public ResolutionInformation(int width, int height)
-            {
-                this.width = width;
-                this.height = height;
-            }
-        }
-    }
+    //        public ResolutionInformation(int width, int height)
+    //        {
+    //            this.width = width;
+    //            this.height = height;
+    //        }
+    //    }
+    //}
 
-    public static class GraphicsQualityNames
-    {
-        public static string fastest = "Bad";
-        public static string fast = "Passable";
-        public static string simple = "Okay";
-        public static string good = "Good";
-        public static string beautiful = "Better";
-        public static string fantastic = "Best";
+    //public static class GraphicsQualityNames
+    //{
+    //    public static string fastest = "Bad";
+    //    public static string fast = "Passable";
+    //    public static string simple = "Okay";
+    //    public static string good = "Good";
+    //    public static string beautiful = "Better";
+    //    public static string fantastic = "Best";
 
-        public static string ParseFromOriginalGraphicsQualities(string quality)
-        {
-            string toReturn = quality;
-            string lowercaseQuality = quality.ToLower();
+    //    public static string ParseFromOriginalGraphicsQualities(string quality)
+    //    {
+    //        string toReturn = quality;
+    //        string lowercaseQuality = quality.ToLower();
 
-            if (lowercaseQuality == "fastest")
-            {
-                toReturn = fastest;
-            }
-            else if (lowercaseQuality == "fast")
-            {
-                toReturn = fast;
-            }
-            else if (lowercaseQuality == "simple")
-            {
-                toReturn = simple;
-            }
-            else if (lowercaseQuality == "good")
-            {
-                toReturn = good;
-            }
-            else if (lowercaseQuality == "beautiful")
-            {
-                toReturn = beautiful;
-            }
-            else if (lowercaseQuality == "fantastic")
-            {
-                toReturn = fantastic;
-            }
+    //        if (lowercaseQuality == "fastest")
+    //        {
+    //            toReturn = fastest;
+    //        }
+    //        else if (lowercaseQuality == "fast")
+    //        {
+    //            toReturn = fast;
+    //        }
+    //        else if (lowercaseQuality == "simple")
+    //        {
+    //            toReturn = simple;
+    //        }
+    //        else if (lowercaseQuality == "good")
+    //        {
+    //            toReturn = good;
+    //        }
+    //        else if (lowercaseQuality == "beautiful")
+    //        {
+    //            toReturn = beautiful;
+    //        }
+    //        else if (lowercaseQuality == "fantastic")
+    //        {
+    //            toReturn = fantastic;
+    //        }
 
-            return toReturn;
-        }
-    }
-
+    //        return toReturn;
+    //    }
+    //}
 
     public static class Files
     {

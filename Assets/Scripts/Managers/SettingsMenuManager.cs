@@ -105,8 +105,7 @@ public class SettingsMenuManager : MonoBehaviour {
             resolution.text = Screen.resolutions[manager.gsm.settings.resolution].width + " x " + Screen.resolutions[manager.gsm.settings.resolution].height;
 
             ApplyGraphicsChanges();
-
-
+            
             manager.audioSource.mute = false;
         }
     }

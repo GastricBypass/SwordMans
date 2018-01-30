@@ -15,7 +15,7 @@ public class OnlineLobbyManager : IMainMenuManager
         gsm.SpawnMenuPlayers();
     }
 
-    public override void BackButtonPressed()
+    public override void BackToMainMenu()
     {
         gsm.SwitchToLocalPlay();
     }
