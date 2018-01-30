@@ -18,7 +18,7 @@ public class IMainMenuManager : MonoBehaviour
 
     public AudioClip clickSound;
     public AudioClip selectSound;
-    protected AudioSource audioSource;
+    public AudioSource audioSource;
 
     protected Camera menuCamera;
 
@@ -47,7 +47,6 @@ public class IMainMenuManager : MonoBehaviour
         }
 
         audioSource = this.gameObject.AddComponent<AudioSource>();
-        audioSource.playOnAwake = false;
     }
 
     public virtual void Update()
@@ -169,7 +168,16 @@ public class MainMenuManager : IMainMenuManager
     {
         DisableAllMenus();
         playMenu.SetActive(true);
-        playMenuStartOption.Select();
+
+        if (playMenuManager.versus)
+        {
+            playMenuManager.versusButton.Select();
+        }
+        else
+        {
+            playMenuManager.coopButton.Select();
+        }
+
         SendCameraToTransform(playMenuCameraPosition);
         playMenuManager.SetStagePresets();
     }
@@ -207,7 +215,7 @@ public class MainMenuManager : IMainMenuManager
             return;
         }
 
-        PlayClickSound();
+        //PlayClickSound();
         DisableAllMenus();
         mainMenu.SetActive(true);
         shouldRestoreDefaults = true;

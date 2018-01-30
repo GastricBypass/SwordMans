@@ -78,6 +78,8 @@ public class SettingsMenuManager : MonoBehaviour {
         }
         else
         {
+            manager.audioSource.mute = true; // Changing sliders triggers the onChange for the sliders which makes it make the select sound when the game starts.
+
             colorizeHealthBarsSelected.SetActive(manager.gsm.settings.colorizeHealthBars);
             showHealthValuesSelected.SetActive(manager.gsm.settings.showHealthValues);
             showBloodSelected.SetActive(manager.gsm.settings.showBlood);
@@ -86,11 +88,12 @@ public class SettingsMenuManager : MonoBehaviour {
 
             musicOnSelected.SetActive(manager.gsm.settings.musicOn);
             manager.gsm.SetMusicOn(manager.gsm.settings.musicOn);
-            musicVolumeSlider.value = (int)(manager.gsm.settings.musicVolume * 100);
+            
+            musicVolumeSlider.value = (int)(manager.gsm.settings.musicVolume * 100); 
             effectsVolumeSlider.value = (int)(manager.gsm.settings.effectsVolume * 100);
             musicVolume.text = musicVolumeSlider.value.ToString();
             effectsVolume.text = effectsVolumeSlider.value.ToString();
-
+            
             toggleWindowedSelected.SetActive(manager.gsm.settings.windowed);
 
             graphicsQualitySlider.maxValue = QualitySettings.names.Length - 1;
@@ -102,6 +105,9 @@ public class SettingsMenuManager : MonoBehaviour {
             resolution.text = Screen.resolutions[manager.gsm.settings.resolution].width + " x " + Screen.resolutions[manager.gsm.settings.resolution].height;
 
             ApplyGraphicsChanges();
+
+
+            manager.audioSource.mute = false;
         }
     }
 

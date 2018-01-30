@@ -8,9 +8,11 @@ public class PlayMenuManager : MonoBehaviour {
 
     public MainMenuManager manager;
 
-    public bool versus;
+    public bool versus = true;
 
     public GameObject playOptionsMenu;
+    public Button versusSelect;
+    public Button coopSelect;
 
     public GameObject howToPlayMenu;
     public Button howToPlayMenuStartOption;
@@ -122,6 +124,22 @@ public class PlayMenuManager : MonoBehaviour {
         manager.gsm.SwitchToOnlinePlay();
     }
 
+    public void PlayOptionsPressed()
+    {
+        versusMenu.SetActive(false);
+        coopMenu.SetActive(false);
+        playOptionsMenu.SetActive(true);
+
+        if (versus)
+        {
+            versusButton.Select();
+        }
+        else
+        {
+            coopButton.Select();
+        }
+    }
+
     public void VersusButtonPressed()
     {
         playOptionsMenu.SetActive(false);
@@ -134,7 +152,6 @@ public class PlayMenuManager : MonoBehaviour {
             manager.gsm.activeStageIndex = 0;
             manager.gsm.SetStages(stages);
         }
-        
     }
 
     public void CoopButtonPressed()
