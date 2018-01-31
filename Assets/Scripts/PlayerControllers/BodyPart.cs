@@ -73,8 +73,11 @@ public class BodyPart : MonoBehaviour {
             DamageMultiplyingObject extraDamageObject = collision.collider.GetComponent<DamageMultiplyingObject>();
             if (extraDamageObject != null)
             {
-                damage = damage * extraDamageObject.damageMultiplier; 
-            
+                damage = damage * extraDamageObject.damageMultiplier;
+                if (extraDamageObject.immuneToDamage.Contains(this.owner))
+                {
+                    damage = 0;
+                }
             }
 
             owner.TakeDamage(damage * damageMultiplier);

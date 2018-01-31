@@ -159,9 +159,13 @@ public class Material : MonoBehaviour {
         audioSource.Play();
         StartCoroutine(ToggleCanSound());
 
-        if (gsm.settings.showBlood && canBleed && volume > 0.1)
+        if (canBleed &&gsm.settings.showBlood && volume > 0.1)
         {
-            bloodEffect.Stop();
+            if (bloodEffect.isPlaying)
+            {
+                return;
+            }
+            //bloodEffect.Stop(); // Might not need this
             ParticleSystem.MainModule main = bloodEffect.main;
             main.duration = volume;
 
