@@ -61,7 +61,19 @@ public class Sword : MonoBehaviour
 
             if (owner.health <= 0)
             {
-                Destroy(this.gameObject);
+                Joint[] joints = this.gameObject.GetComponents<Joint>();
+                foreach (Joint joint in joints)
+                {
+                    Destroy(joint);
+                }
+
+                Collider[] colliders = this.gameObject.GetComponents<Collider>();
+                foreach (Collider collider in colliders)
+                {
+                    collider.material = null;
+                }
+
+                Destroy(this);
             }
         }
     }
