@@ -78,13 +78,7 @@ public class Player : Sword {
 
         if (Input.GetKeyUp(KeyCode.Space) || Input.GetKeyUp(KeyCode.LeftControl))
         {
-            boosting = false;
-            if (boostDelayCoroutine != null)
-            {
-                StopCoroutine(boostDelayCoroutine);
-            }
-
-            boostDelayCoroutine = StartCoroutine(WaitPostBoostMS(boostRegenDelayMS));
+            EndBoost();
         }
 
         return moveVector;
@@ -113,13 +107,7 @@ public class Player : Sword {
 
         if (Input.GetButtonUp(playerNumber + "Rise") || Input.GetButtonUp(playerNumber + "Lower"))
         {
-            boosting = false;
-            if (boostDelayCoroutine != null)
-            {
-                StopCoroutine(boostDelayCoroutine);
-            }
-
-            boostDelayCoroutine = StartCoroutine(WaitPostBoostMS(boostRegenDelayMS));
+            EndBoost();
         }
 
         return moveVector;

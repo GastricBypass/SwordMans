@@ -80,15 +80,9 @@ public class AIEnemy : Sword {
                 boosting = true;
             }
 
-            if (!(boost > 0) && !(target.transform.position.y > rigbod.transform.position.y + 4) && !(target.transform.position.y < rigbod.transform.position.y - 4))
+            if (boosting && !(target.transform.position.y > rigbod.transform.position.y + 4) && !(target.transform.position.y < rigbod.transform.position.y - 4))
             {
-                boosting = false;
-                if (boostDelayCoroutine != null)
-                {
-                    StopCoroutine(boostDelayCoroutine);
-                }
-
-                boostDelayCoroutine = StartCoroutine(WaitPostBoostMS(boostRegenDelayMS));
+                EndBoost();
             }
 
             if (normalizedBoostVelocity)

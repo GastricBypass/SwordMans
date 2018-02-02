@@ -128,7 +128,7 @@ public class Sword : MonoBehaviour
             {
                 boosting = false;
                 boost = 0;
-                StartCoroutine(WaitPostBoostMS(boostRegenDelayMS));
+                EndBoost();
             }
         }
 
@@ -157,6 +157,17 @@ public class Sword : MonoBehaviour
     {
         boost = newBoost;
         ui.ChangeBoost(boost / maxBoost, owner.playerNumber);
+    }
+
+    protected void EndBoost()
+    {
+        boosting = false;
+        if (boostDelayCoroutine != null)
+        {
+            StopCoroutine(boostDelayCoroutine);
+        }
+
+        boostDelayCoroutine = StartCoroutine(WaitPostBoostMS(boostRegenDelayMS));
     }
 
     protected IEnumerator WaitPostAttackMS(float ms)
