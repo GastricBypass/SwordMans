@@ -45,25 +45,28 @@ public class AIEnemy : Sword {
 
         else if (target != null && (target.transform.position - this.transform.position).magnitude < aggroDistance)
         {
-            if (target.transform.position.x > rigbod.transform.position.x)
-            {
-                moveVector += new Vector3(moveSpeed, 0, 0);
-            }
+            //if (target.transform.position.x > rigbod.transform.position.x)
+            //{
+            //    moveVector += new Vector3(moveSpeed, 0, 0);
+            //}
 
-            if (target.transform.position.z > rigbod.transform.position.z)
-            {
-                moveVector += new Vector3(0, 0, moveSpeed);
-            }
+            //if (target.transform.position.z > rigbod.transform.position.z)
+            //{
+            //    moveVector += new Vector3(0, 0, moveSpeed);
+            //}
 
-            if (target.transform.position.x < rigbod.transform.position.x)
-            {
-                moveVector += new Vector3(-moveSpeed, 0, 0);
-            }
+            //if (target.transform.position.x < rigbod.transform.position.x)
+            //{
+            //    moveVector += new Vector3(-moveSpeed, 0, 0);
+            //}
 
-            if (target.transform.position.z < rigbod.transform.position.z)
-            {
-                moveVector += new Vector3(0, 0, -moveSpeed);
-            }
+            //if (target.transform.position.z < rigbod.transform.position.z)
+            //{
+            //    moveVector += new Vector3(0, 0, -moveSpeed);
+            //}
+
+            moveVector = new Vector3(target.transform.position.x, 0, target.transform.position.z) - new Vector3(this.transform.position.x, 0, this.transform.position.z);
+            moveVector = moveVector.normalized * moveSpeed;
 
             if (boost > 0 && target.transform.position.y > rigbod.transform.position.y + 4)
             {
@@ -77,13 +80,15 @@ public class AIEnemy : Sword {
                 boosting = true;
             }
 
-            if (!(boost > 0) && !(target.transform.position.y > rigbod.transform.position.y + 4) && !(target.transform.position.y < rigbod.transform.position.y - 4))
+            if (!(boost > 0) || !(target.transform.position.y > rigbod.transform.position.y + 4) || !(target.transform.position.y < rigbod.transform.position.y - 4))
             {
                 boosting = false;
-                if (shouldRegenBoost)
+                if (boostDelayCoroutine != null)
                 {
-                    StartCoroutine(WaitPostBoostMS(boostRegenDelayMS));
+                    StopCoroutine(boostDelayCoroutine);
                 }
+
+                boostDelayCoroutine = StartCoroutine(WaitPostBoostMS(boostRegenDelayMS));
             }
 
             if (normalizedBoostVelocity)

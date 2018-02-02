@@ -27,10 +27,12 @@ public class Player : Sword {
         if (Input.GetButtonUp(playerNumber + "Rise") || Input.GetButtonUp(playerNumber + "Lower"))
         {
             boosting = false;
-            if (shouldRegenBoost)
+            if (boostDelayCoroutine != null)
             {
-                StartCoroutine(WaitPostBoostMS(boostRegenDelayMS));
+                StopCoroutine(boostDelayCoroutine);
             }
+
+            boostDelayCoroutine = StartCoroutine(WaitPostBoostMS(boostRegenDelayMS));
         }
 
         if (normalizedBoostVelocity)

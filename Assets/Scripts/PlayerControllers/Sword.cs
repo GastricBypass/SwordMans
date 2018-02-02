@@ -35,6 +35,7 @@ public class Sword : MonoBehaviour
 
     protected bool boosting = false;
     protected bool shouldRegenBoost = true;
+    protected Coroutine boostDelayCoroutine;
 
     protected virtual void Start()
     {
