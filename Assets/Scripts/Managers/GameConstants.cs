@@ -165,14 +165,14 @@ public static class GameConstants {
 
     public static class Unlocks
     {
-        public static List<string> startingHats = new List<string>(new string[] { "None", "Bandana", "Coif", "Hood", "Headband" });
-        public static List<string> startingMisc = new List<string>(new string[] { "None", "Belt",  });
+        public static List<string> startingHats = new List<string>(new string[] { "None", "Bandana", "Headband", "Bun Black", "Messy Black", "Ponytail Black" });
+        public static List<string> startingMisc = new List<string>(new string[] { "None", "Belt" });
 
         public static List<string> startingVersusStages = new List<string>(new string[] { "Joust", "Castle", "Tavern", "Cabin", "Tower", "Ship", "Throne Room", "Pond", "Highlands", "Icebergs", "Bridge", "Market", "Volcano", "Colosseum", "Dungeon", "Mill", "Mansion" });
         public static List<string> startingCoopStages = new List<string>(new string[] { "Ch 1" });
         public static List<string> startingArenaStages = new List<string>(new string[] { "Stadium" });
 
-        public static List<string> allHats = new List<string>(new string[] { "None", "Bandana", "Coif", "Helmet", "Hood", "Jester", "Noble", "Cap", "Crown", "Viking", "Space", "Tricorn", "Spartan", "Fedora", "Bowler", "Tophat", "Boater", "Shades", "Bucket", "Cone", "Sunhat", "Tiara", "Circlet", "Headband", "Elf Hat", "Mustache", "Wizard", "Squid" });
+        public static List<string> allHats = new List<string>(new string[] { "None", "Bandana", "Coif", "Helmet", "Hood", "Jester", "Noble", "Cap", "Crown", "Viking", "Space", "Tricorn", "Spartan", "Fedora", "Bowler", "Tophat", "Boater", "Shades", "Bucket", "Cone", "Sunhat", "Tiara", "Circlet", "Headband", "Elf Hat", "Mustache", "Wizard", "Squid", "Pirate", "Bun Black", "Messy Black", "Ponytail Black", "Bun Blond", "Messy Blond", "Ponytail Blond", "Bun Brown", "Messy Brown", "Ponytail Brown", "Bun Red", "Messy Red", "Ponytail Red" });
         public static List<string> allMisc = new List<string>(new string[] { "None", "Belt", "Cape", "Spaulders", "Breastplate", "Armor", "Necklace", "Collar", "Ruff", "Spikes", "Dagger", "Equipment", "Vest", "Sweater Vest", "Skirt", "Tabard", "Loincloth", "Poncho" });
 
         public static List<string> allVersusStages = new List<string>(new string[] { "Joust", "Castle", "Tavern", "Cabin", "Tower", "Ship", "Space Station", "Throne Room", "Pond", "Highlands", "Icebergs", "Bridge", "Market", "Volcano", "Colosseum", "Dungeon", "Mill", "Mansion" });
@@ -181,7 +181,7 @@ public static class GameConstants {
 
         public static List<string> allCoopGameModes = new List<string>(new string[] { "Arena", "Campaign" });
 
-        public static List<string> purchasableHats = new List<string>(new string[] { "Bandana", "Coif", "Helmet", "Hood", "Jester", "Noble", "Cap", "Viking", "Tricorn", "Spartan", "Fedora", "Bowler", "Tophat", "Boater", "Shades", "Bucket", "Cone", "Sunhat", "Tiara", "Circlet", "Headband", "Elf Hat", "Mustache", "Wizard" });
+        public static List<string> purchasableHats = new List<string>(new string[] { "Bandana", "Coif", "Helmet", "Hood", "Jester", "Noble", "Cap", "Viking", "Tricorn", "Spartan", "Fedora", "Bowler", "Tophat", "Boater", "Shades", "Bucket", "Cone", "Sunhat", "Tiara", "Circlet", "Headband", "Elf Hat", "Mustache", "Wizard", "Bun Black", "Messy Black", "Ponytail Black", "Bun Blond", "Messy Blond", "Ponytail Blond", "Bun Brown", "Messy Brown", "Ponytail Brown", "Bun Red", "Messy Red", "Ponytail Red" });
         public static List<string> purchasableMisc = new List<string>(new string[] { "Belt", "Cape", "Spaulders", "Breastplate", "Armor", "Necklace", "Collar", "Ruff", "Spikes", "Dagger", "Equipment", "Vest", "Sweater Vest", "Skirt", "Tabard", "Loincloth", "Poncho" });
 
         public static Dictionary<string, float> hatPrices = new Dictionary<string, float>
@@ -209,7 +209,19 @@ public static class GameConstants {
             { "Headband", 10 },
             { "Elf Hat", 80 },
             { "Mustache", 50 },
-            { "Wizard", 100 }
+            { "Wizard", 100 },
+            { "Bun Black", 10 },
+            { "Messy Black", 10 },
+            { "Ponytail Black", 10 },
+            { "Bun Blond", 10 },
+            { "Messy Blond", 10 },
+            { "Ponytail Blond", 10 },
+            { "Bun Brown", 10 },
+            { "Messy Brown", 10 },
+            { "Ponytail Brown", 10 },
+            { "Bun Red", 10 },
+            { "Messy Red", 10 },
+            { "Ponytail Red", 10 }
         };
 
         public static Dictionary<string, float> miscPrices = new Dictionary<string, float>
