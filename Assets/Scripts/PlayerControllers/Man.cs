@@ -11,6 +11,7 @@ public class Man : MonoBehaviour {
 
     public bool isCameraTarget = true;
 
+    public bool usesKeyboardControls = false;
     public float maxHealth;
     public float health;
     public float invinceTimeMS;
