@@ -276,10 +276,12 @@ public class GameSettingsManager : MonoBehaviour {
         {
             activeStageIndex = stages.IndexOf(name);
             currentStage = stages[activeStageIndex];
+            Cursor.visible = false;
         }
         else
         {
             currentStage = "Main Menu";
+            Cursor.visible = true;
         }
         
         Debug.Log("Load stage: " + currentStage);
@@ -289,6 +291,13 @@ public class GameSettingsManager : MonoBehaviour {
         {
             music.SetSong(currentStage);
         }
+    }
+
+    public void LoadTutorial()
+    {
+        currentStage = "Tutorial";
+        SceneManager.LoadScene(currentStage, LoadSceneMode.Single);
+        music.SetSong(currentStage);
     }
 
     public void LoadMainMenu()

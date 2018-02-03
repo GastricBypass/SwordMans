@@ -25,6 +25,10 @@ public class PlayMenuManager : MonoBehaviour {
     public GameObject coopMenu;
     public Button coopMenuStartOption;
 
+    public GameObject tutorialMenu;
+    public Text tutorialNumberOfPlayers;
+    public Button tutorialPlay;
+
     public List<string> stages;
     public Text selectedStage;
     public Text numberOfPlayers;
@@ -114,6 +118,7 @@ public class PlayMenuManager : MonoBehaviour {
             versusMenu.SetActive(false);
             coopMenu.SetActive(false);
             howToPlayMenu.SetActive(false);
+            tutorialMenu.SetActive(false);
             playOptionsMenu.SetActive(true);
             manager.shouldRestoreDefaults = false;
         }
@@ -128,6 +133,7 @@ public class PlayMenuManager : MonoBehaviour {
     {
         versusMenu.SetActive(false);
         coopMenu.SetActive(false);
+        howToPlayMenu.SetActive(false);
         playOptionsMenu.SetActive(true);
 
         if (versus)
@@ -171,15 +177,29 @@ public class PlayMenuManager : MonoBehaviour {
     public void HowToPlayPressed()
     {
         playOptionsMenu.SetActive(false);
+        tutorialMenu.SetActive(false);
         howToPlayMenu.SetActive(true);
         howToPlayMenuStartOption.Select();
     }
 
     public void GotItButtonPressed()
     {
-        playOptionsMenu.SetActive(true);
         howToPlayMenu.SetActive(false);
+        playOptionsMenu.SetActive(true);
         manager.playMenuStartOption.Select();
+    }
+
+    public void DontGotItPressed()
+    {
+        howToPlayMenu.SetActive(false);
+        tutorialMenu.SetActive(true);
+        tutorialPlay.Select();
+    }
+
+    public void PlayTutorialPressed()
+    {
+        manager.gsm.LoadTutorial();
+        Time.timeScale = 1;
     }
     
     public void PlayButtonPressed()
@@ -361,6 +381,7 @@ public class PlayMenuManager : MonoBehaviour {
 
         numberOfPlayers.text = numPlayers.ToString();
         coopNumberOfPlayers.text = numPlayers.ToString();
+        tutorialNumberOfPlayers.text = numPlayers.ToString();
         manager.gsm.numberOfPlayers = numPlayers;
     }
 
@@ -381,6 +402,7 @@ public class PlayMenuManager : MonoBehaviour {
 
         numberOfPlayers.text = numPlayers.ToString();
         coopNumberOfPlayers.text = numPlayers.ToString();
+        tutorialNumberOfPlayers.text = numPlayers.ToString();
         manager.gsm.numberOfPlayers = numPlayers;
     }
 

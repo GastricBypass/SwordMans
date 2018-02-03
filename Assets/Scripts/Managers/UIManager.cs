@@ -181,14 +181,24 @@ public class UIManager : MonoBehaviour
         if (paused)
         {
             Time.timeScale = 1;
+            Cursor.visible = false;
         }
         else
         {
             Time.timeScale = 0;
+            Cursor.visible = true;
         }
 
         paused = !paused;
         pauseMenu.SetActive(paused);
+        if (paused)
+        {
+            Button resumeButton = pauseMenu.transform.Find("Resume Button").GetComponent<Button>();
+            if (resumeButton != null)
+            {
+                resumeButton.Select();
+            }
+        }
     }
 
     public void MainMenuPressed()
