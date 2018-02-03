@@ -62,7 +62,6 @@ public class Player : Sword {
         }
 
         moveVector = moveVector.normalized * moveSpeed;
-        Debug.Log(System.DateTime.Now + moveVector.ToString());
 
         if (boost > 0 && Input.GetKey(KeyCode.Space))
         {
@@ -144,7 +143,7 @@ public class Player : Sword {
 
     protected override void BlockInput()
     {
-        if (Input.GetButton(playerNumber + "Block") || (owner.usesKeyboardControls && Input.GetMouseButtonDown(1)))
+        if (Input.GetButton(playerNumber + "Block") || (owner.usesKeyboardControls && Input.GetMouseButton(1)))
         {
             blocking = true;
         }

@@ -15,7 +15,6 @@ public class PathFollower : IEntity
     public float rotateSpeed = 1;
 
     private Transform currentWaypoint;
-    private Quaternion targetRotation;
     private int waypointIndex = 0;
     
 	public void Start ()

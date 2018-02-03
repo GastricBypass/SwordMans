@@ -48,7 +48,7 @@ public class Sword : MonoBehaviour
     {
         if (!ui.paused)
         {
-            boosting = false;
+            //boosting = false; // Removed to fix AI boost bug. Shouldn't be needed, but we'll keep it around just in case.
 
             if (canAttack && (attackCost == 0 || boost > 0))
             {
@@ -126,7 +126,6 @@ public class Sword : MonoBehaviour
             
             if (boost <= 0)
             {
-                boosting = false;
                 boost = 0;
                 EndBoost();
             }
@@ -189,6 +188,7 @@ public class Sword : MonoBehaviour
         shouldRegenBoost = false;
         yield return new WaitForSeconds(ms / 1000f);
         shouldRegenBoost = true;
+        boostDelayCoroutine = null;
     }
 
     private void OnCollisionEnter(Collision collision)

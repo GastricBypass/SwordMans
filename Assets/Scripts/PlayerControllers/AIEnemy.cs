@@ -82,6 +82,7 @@ public class AIEnemy : Sword {
 
             if (boosting && !(target.transform.position.y > rigbod.transform.position.y + 4) && !(target.transform.position.y < rigbod.transform.position.y - 4))
             {
+                shouldRegenBoost = false; // Probably redundant, just trying things
                 EndBoost();
             }
 
