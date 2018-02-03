@@ -53,6 +53,9 @@ public class SettingsMenuManager : MonoBehaviour {
     public InputField coopStageUnlockText;
     public InputField arenaStageUnlockText;
 
+    public List<Image> weaponSelectButtons;
+    public List<GameObject> weaponDescriptions;
+
     // Use this for initialization
     void Start ()
     {
@@ -104,6 +107,8 @@ public class SettingsMenuManager : MonoBehaviour {
             resolutionSlider.value = manager.gsm.settings.resolution;
             resolution.text = Screen.resolutions[manager.gsm.settings.resolution].width + " x " + Screen.resolutions[manager.gsm.settings.resolution].height;
 
+            ShowWeaponDescription(0);
+
             ApplyGraphicsChanges();
             
             manager.audioSource.mute = false;
@@ -151,14 +156,14 @@ public class SettingsMenuManager : MonoBehaviour {
     public void GoToTab(int tabNumber)
     {
         manager.PlayClickSound();
-        hideAllTabs();
+        HideAllTabs();
         tabs[tabNumber].color = selectedColor;
         tabsOptions[tabNumber].SetActive(true);
         tabButtons[tabNumber].Select();
         tabIndex = tabNumber;
     }
 
-    private void hideAllTabs()
+    private void HideAllTabs()
     {
         for (int i = 0; i < tabs.Count; i++)
         {
@@ -324,6 +329,22 @@ public class SettingsMenuManager : MonoBehaviour {
         foreach (string arenaStage in GameConstants.Unlocks.allArenaStages)
         {
             manager.gsm.data.UnlockArenaStage(arenaStage);
+        }
+    }
+
+    public void ShowWeaponDescription(int index)
+    {
+        HideAllDescriptions();
+        weaponDescriptions[index].SetActive(true);
+        weaponSelectButtons[index].color = selectedColor; // kind of confusing, but this is the opposite color from the background.
+    }
+
+    private void HideAllDescriptions()
+    {
+        for (int i = 0; i < weaponDescriptions.Count; i++)
+        {
+            weaponDescriptions[i].SetActive(false);
+            weaponSelectButtons[i].color = unselectedColor; // kind of confusing, but this is the same color as the background.
         }
     }
 }
