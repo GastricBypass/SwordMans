@@ -62,7 +62,7 @@ public class CameraFollow : MonoBehaviour
         {
             if (targets[i] == null)
             {
-                continue;
+                continue; // should fix the null references when a man is destroyed
             }
 
             avgPos += targets[i].transform.position;

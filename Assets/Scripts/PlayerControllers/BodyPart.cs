@@ -24,64 +24,140 @@ public class BodyPart : MonoBehaviour {
 
     private void OnCollisionEnter(Collision collision)
     {
-        Rigidbody colliderBod = collision.collider.GetComponent<Rigidbody>();
-        Rigidbody thisBod = this.GetComponent<Rigidbody>();
+        //float damage = colliderBod.mass * Mathf.Pow((((thisBod.velocity * 0.2f) - colliderBod.velocity).magnitude), 2); // scaled individual velocity and collider's velocity squared times collider's mass
+        //float damage = Mathf.Pow(collision.relativeVelocity.magnitude, 2) * colliderBod.mass; // Kinetic Energy
+        //float damage = collision.relativeVelocity.magnitude * colliderBod.mass; // Momentum
+        //float damage = Vector3.Dot(collision.contacts[0].normal, collision.relativeVelocity) * colliderBod.mass; // something else
+        //float damage = colliderBod.mass * colliderBod.velocity.magnitude * (thisBod.velocity - colliderBod.velocity).magnitude; // Momentum of collider times velocity difference
+        //float damage = colliderBod.mass * colliderBod.velocity.magnitude * collision.relativeVelocity.magnitude; // Momentum of collider times velocity difference
+        float damage = collision.impulse.magnitude; // It can't be that simple, can it?
 
-        if (colliderBod != null)
+        damage = CalculateDamage(damage, collision.collider.transform);
+
+        owner.TakeDamage(damage * damageMultiplier);
+
+        //Rigidbody colliderBod = collision.collider.GetComponent<Rigidbody>();
+        //Rigidbody thisBod = this.GetComponent<Rigidbody>();
+
+        //if (colliderBod == null)
+        //{
+        //    Transform parent = collision.collider.transform.parent;
+        //    if (parent == null)
+        //    {
+        //        return;
+        //    }
+
+        //    colliderBod = parent.GetComponent<Rigidbody>();
+        //    if (colliderBod) ;
+        //}
+
+        //float damage = 0;
+        //if (thisBod != null)
+        //{
+        //    //damage = colliderBod.mass * Mathf.Pow((((thisBod.velocity * 0.2f) - colliderBod.velocity).magnitude), 2); // scaled individual velocity and collider's velocity squared times collider's mass
+        //    //damage = Mathf.Pow(collision.relativeVelocity.magnitude, 2) * colliderBod.mass; // Kinetic Energy
+        //    //damage = collision.relativeVelocity.magnitude * colliderBod.mass; // Momentum
+        //    //damage = Vector3.Dot(collision.contacts[0].normal, collision.relativeVelocity) * colliderBod.mass; // something else
+        //    //damage = colliderBod.mass * colliderBod.velocity.magnitude * (thisBod.velocity - colliderBod.velocity).magnitude; // Momentum of collider times velocity difference
+        //    //damage = colliderBod.mass * colliderBod.velocity.magnitude * collision.relativeVelocity.magnitude; // Momentum of collider times velocity difference
+        //    damage = collision.impulse.magnitude; // It can't be that simple, can it?
+        //    if (colliderBod.velocity.magnitude < 0.05)
+        //    {
+        //        damage = 0;
+        //    }
+        //}
+        //else
+        //{
+        //    damage = collision.impulse.magnitude;
+        //}
+
+        //// no damage if it is a body part with the same owner
+        //BodyPart bodyPart = collision.collider.GetComponent<BodyPart>();
+        //if (bodyPart != null)
+        //{
+        //    if (bodyPart.owner == this.owner)
+        //    {
+        //        damage = 0;
+        //    }
+        //}
+
+        //// no damage if it is hit with its own weapon
+        //Sword sword = collision.collider.GetComponent<Sword>();
+        //if (sword != null)
+        //{
+        //    if (sword.owner == this.owner)
+        //    {
+        //        damage = 0;
+        //    }
+        //}
+
+        //// extra damage from weapons or other damaging objects
+        //DamageMultiplyingObject extraDamageObject = collision.collider.GetComponent<DamageMultiplyingObject>();
+        //if (extraDamageObject != null)
+        //{
+        //    damage = damage * extraDamageObject.damageMultiplier;
+        //    if (extraDamageObject.immuneToDamage.Contains(this.owner))
+        //    {
+        //        damage = 0;
+        //    }
+        //}
+
+        //owner.TakeDamage(damage * damageMultiplier);
+    }
+
+    public float CalculateDamage(float damage, Transform colliderTransform)
+    {
+        Rigidbody colliderBod = colliderTransform.GetComponent<Rigidbody>();
+
+        if (colliderBod == null)
         {
-            float damage = 0;
-            if (thisBod != null)
+            Transform parent = colliderTransform.parent;
+            if (parent == null)
             {
-                //damage = colliderBod.mass * Mathf.Pow((((thisBod.velocity * 0.2f) - colliderBod.velocity).magnitude), 2); // scaled individual velocity and collider's velocity squared times collider's mass
-                //damage = Mathf.Pow(collision.relativeVelocity.magnitude, 2) * colliderBod.mass; // Kinetic Energy
-                //damage = collision.relativeVelocity.magnitude * colliderBod.mass; // Momentum
-                //damage = Vector3.Dot(collision.contacts[0].normal, collision.relativeVelocity) * colliderBod.mass; // something else
-                //damage = colliderBod.mass * colliderBod.velocity.magnitude * (thisBod.velocity - colliderBod.velocity).magnitude; // Momentum of collider times velocity difference
-                //damage = colliderBod.mass * colliderBod.velocity.magnitude * collision.relativeVelocity.magnitude; // Momentum of collider times velocity difference
-                damage = collision.impulse.magnitude; // It can't be that simple, can it?
-                if (colliderBod.velocity.magnitude < 0.05)
-                {
-                    damage = 0;
-                }
-            }
-            else
-            {
-                damage = collision.impulse.magnitude;
+                return 0;
             }
 
-            // no damage if it is a body part with the same owner
-            BodyPart bodyPart = collision.collider.GetComponent<BodyPart>();
-            if (bodyPart != null)
-            {
-                if (bodyPart.owner == this.owner)
-                {
-                    damage = 0;
-                }
-            }
-
-            // no damage if it is hit with its own weapon
-            Sword sword = collision.collider.GetComponent<Sword>();
-            if (sword != null)
-            {
-                if (sword.owner == this.owner)
-                {
-                    damage = 0;
-                }
-            }
-
-            // extra damage from weapons or other damaging objects
-            DamageMultiplyingObject extraDamageObject = collision.collider.GetComponent<DamageMultiplyingObject>();
-            if (extraDamageObject != null)
-            {
-                damage = damage * extraDamageObject.damageMultiplier;
-                if (extraDamageObject.immuneToDamage.Contains(this.owner))
-                {
-                    damage = 0;
-                }
-            }
-
-            owner.TakeDamage(damage * damageMultiplier);
+            return CalculateDamage(damage, parent); // This will go up the hierarchy until it finds a parent with a rigidbody.
+                                             // This will allow you to make more complex rigidbodies with colliders as children that will still deal damage.
         }
+        
+        if (colliderBod.velocity.magnitude < 0.05)
+        {
+            damage = 0;
+        }
+
+        // no damage if it is a body part with the same owner
+        BodyPart bodyPart = colliderTransform.GetComponent<BodyPart>();
+        if (bodyPart != null)
+        {
+            if (bodyPart.owner == this.owner)
+            {
+                damage = 0;
+            }
+        }
+
+        // no damage if it is hit with its own weapon
+        Sword sword = colliderTransform.GetComponent<Sword>();
+        if (sword != null)
+        {
+            if (sword.owner == this.owner)
+            {
+                damage = 0;
+            }
+        }
+
+        // extra damage from weapons or other damaging objects
+        DamageMultiplyingObject extraDamageObject = colliderTransform.GetComponent<DamageMultiplyingObject>();
+        if (extraDamageObject != null)
+        {
+            damage = damage * extraDamageObject.damageMultiplier;
+            if (extraDamageObject.immuneToDamage.Contains(this.owner))
+            {
+                damage = 0;
+            }
+        }
+
+        return damage;
     }
 
     public bool OutOfBounds()
