@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-public class RotationalOscillator : Oscillator
+public class ScalingOscillator : Oscillator
 {
     void FixedUpdate()
     {
@@ -19,20 +19,20 @@ public class RotationalOscillator : Oscillator
             if (waitingToActivate)
             {
                 //float stepSize = new Vector3(difX, difY, difZ).magnitude / (timeDifSeconds / (waveTimeMS / 1000));
-                if ((new Vector3(transform.rotation.x, transform.rotation.y, transform.rotation.z) - new Vector3(x, y, z)).magnitude < new Vector3(0.1f, 0.1f, 0.1f).magnitude)
+                if ((new Vector3(transform.localScale.x, transform.localScale.y, transform.localScale.z) - new Vector3(x, y, z)).magnitude < new Vector3(0.1f, 0.1f, 0.1f).magnitude)
                 {
                     waitingToActivate = false;
                 }
             }
             else
             {
-                transform.rotation = Quaternion.Euler(new Vector3(x, y, z));
+                transform.localScale = new Vector3(x, y, z);
             }
         }
     }
 
     protected override void SetStartingPosition()
     {
-        transform.rotation = Quaternion.Euler(new Vector3(avgX, avgY, avgZ));
+        transform.localScale = new Vector3(avgX, avgY, avgZ);
     }
 }

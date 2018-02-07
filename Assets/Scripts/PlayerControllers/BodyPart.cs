@@ -49,8 +49,8 @@ public class BodyPart : MonoBehaviour {
                 return 0;
             }
 
-            return CalculateDamage(damage, parent); // This will go up the hierarchy until it finds a parent with a rigidbody.
-                                                    // This will allow you to make more complex rigidbodies with colliders as children that will still deal damage.
+            return CalculateDamage(damage, parent); // This will go up the hierarchy until it finds a parent with a rigidbody
+                                                    // This will allow you to make more complex rigidbodies with colliders as children that will still deal damage
         }
         
         // no damage if it hits a very slow moving object (such as landing on a crate)

@@ -124,6 +124,7 @@
     <Compile Include="Assets\Scripts\Objects\Pickup.cs" />
     <Compile Include="Assets\Scripts\Objects\PushingArea.cs" />
     <Compile Include="Assets\Scripts\Objects\RotationalOscillator.cs" />
+    <Compile Include="Assets\Scripts\Objects\ScalingOscillator.cs" />
     <Compile Include="Assets\Scripts\Objects\Spinner.cs" />
     <Compile Include="Assets\Scripts\Objects\Springboard.cs" />
     <Compile Include="Assets\Scripts\Objects\StayFuckingStill.cs" />
