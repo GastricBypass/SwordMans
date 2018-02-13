@@ -120,6 +120,7 @@
     <Compile Include="Assets\Scripts\Objects\KeepUpright.cs" />
     <Compile Include="Assets\Scripts\Objects\LimitedItemSpawner.cs" />
     <Compile Include="Assets\Scripts\Objects\NextLevelArea.cs" />
+    <Compile Include="Assets\Scripts\Objects\NonFloatyObject.cs" />
     <Compile Include="Assets\Scripts\Objects\Oscillator.cs" />
     <Compile Include="Assets\Scripts\Objects\PathFollower.cs" />
     <Compile Include="Assets\Scripts\Objects\Pickup.cs" />
@@ -134,6 +135,7 @@
     <Compile Include="Assets\Scripts\Objects\Toggler.cs" />
     <Compile Include="Assets\Scripts\Objects\Unlocker.cs" />
     <Compile Include="Assets\Scripts\Objects\ViscousArea.cs" />
+    <Compile Include="Assets\Scripts\Objects\Water.cs" />
     <Compile Include="Assets\Scripts\PlayerControllers\AIEnemy.cs" />
     <Compile Include="Assets\Scripts\PlayerControllers\BodyPart.cs" />
     <Compile Include="Assets\Scripts\PlayerControllers\Man.cs" />
