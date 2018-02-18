@@ -151,7 +151,7 @@ public class Material : MonoBehaviour {
 
     public void PlaySound(string sound, float volume)
     {
-        int suffix = (int)Random.Range(1, 4);
+        int suffix = Random.Range(1, 4);
         AudioClip clip = (AudioClip)Resources.Load("Sounds/" + sound + suffix, typeof(AudioClip));
 
         audioSource.volume = volume * volumeMultiplier;
@@ -159,13 +159,13 @@ public class Material : MonoBehaviour {
         audioSource.Play();
         StartCoroutine(ToggleCanSound());
 
-        if (canBleed &&gsm.settings.showBlood && volume > 0.1)
+        if (canBleed && gsm.settings.showBlood && volume > 0.1)
         {
             if (bloodEffect.isPlaying)
             {
                 return;
             }
-            //bloodEffect.Stop(); // Might not need this
+
             ParticleSystem.MainModule main = bloodEffect.main;
             main.duration = volume;
 
