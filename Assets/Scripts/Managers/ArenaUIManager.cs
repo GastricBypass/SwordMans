@@ -251,6 +251,7 @@ public class ArenaUIManager : UIManager
     public void DisplayGameOverOptions()
     {
         Time.timeScale = 0;
+        gsm.SetCursor(true);
 
         gameOverReport.text = "Survived until wave " + waveNumber + "\n\nEnemies defeated: " + totalEnemiesKilled + "\nGold earned: " + totalGoldEarned;
         gameOverScreen.SetActive(true);

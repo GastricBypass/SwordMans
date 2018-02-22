@@ -132,6 +132,20 @@ public class GameSettingsManager : MonoBehaviour {
         SceneManager.LoadScene("Main Menu");
     }
 
+    public void SetCursor(bool active)
+    {
+        Cursor.visible = active;
+
+        if (active)
+        {
+            Cursor.lockState = CursorLockMode.None;
+        }
+        else
+        {
+            Cursor.lockState = CursorLockMode.Locked;
+        }
+    }
+
     public void SetStages(List<string> newStages)
     {
         stages = newStages;
@@ -276,12 +290,12 @@ public class GameSettingsManager : MonoBehaviour {
         {
             activeStageIndex = stages.IndexOf(name);
             currentStage = stages[activeStageIndex];
-            Cursor.visible = false;
+            SetCursor(false);
         }
         else
         {
             currentStage = "Main Menu";
-            Cursor.visible = true;
+            SetCursor(true);
         }
         
         Debug.Log("Load stage: " + currentStage);

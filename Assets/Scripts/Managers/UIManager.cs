@@ -181,12 +181,12 @@ public class UIManager : MonoBehaviour
         if (paused)
         {
             Time.timeScale = 1;
-            Cursor.visible = false;
+            gsm.SetCursor(false);
         }
         else
         {
             Time.timeScale = 0;
-            Cursor.visible = true;
+            gsm.SetCursor(true);
         }
 
         paused = !paused;
