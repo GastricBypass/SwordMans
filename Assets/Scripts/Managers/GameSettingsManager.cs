@@ -46,6 +46,7 @@ public class GameSettingsManager : MonoBehaviour {
     // Use this for initialization
     void Start ()
     {
+
         if (singletonGsm == null)
         {
             singletonGsm = this;

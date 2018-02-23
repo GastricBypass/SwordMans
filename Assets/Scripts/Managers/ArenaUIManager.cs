@@ -53,8 +53,11 @@ public class ArenaUIManager : UIManager
 
     public void StartNextWave()
     {
-        gsm.data.AddGold(waveNumber + gsm.numberOfPlayers - 1);
-        totalGoldEarned += waveNumber;
+        if (waveNumber > 0)
+        { 
+            gsm.data.AddGold(waveNumber + gsm.numberOfPlayers - 1);
+            totalGoldEarned += waveNumber + gsm.numberOfPlayers - 1;
+        }
 
         waveNumber++;
         waveNumberText.text = "Wave " + waveNumber + ":";
