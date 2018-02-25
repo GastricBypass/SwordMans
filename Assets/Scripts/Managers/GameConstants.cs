@@ -166,7 +166,7 @@ public static class GameConstants {
     public static class Unlocks
     {
         public static List<string> startingHats = new List<string>(new string[] { "None", "Bandana", "Headband", "Bun Black", "Messy Black", "Ponytail Black" });
-        public static List<string> startingMisc = new List<string>(new string[] { "None", "Belt", "Shirt", "Scarf", "Backpack" });
+        public static List<string> startingMisc = new List<string>(new string[] { "None", "Belt", "Shirt", "Scarf", "Backpack", "Loincloth" });
 
         public static List<string> startingVersusStages = new List<string>(new string[] { "Joust", "Castle", "Tavern", "Cabin", "Tower", "Ship", "Throne Room", "Pond", "Highlands", "Icebergs", "Bridge", "Market", "Volcano", "Colosseum", "Dungeon", "Mill", "Mansion" });
         public static List<string> startingCoopStages = new List<string>(new string[] { "Ch 1" });

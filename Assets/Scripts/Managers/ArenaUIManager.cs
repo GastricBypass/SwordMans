@@ -16,6 +16,7 @@ public class ArenaUIManager : UIManager
     public Button retryButton;
 
     public int roundsPerBossWave = 5;
+    public bool respawnAfterBoss = true;
 
     public List<EnemyMan> possibleEasyEnemyPrefabs;
     public List<EnemyMan> possibleHardEnemyPrefabs;
@@ -146,7 +147,21 @@ public class ArenaUIManager : UIManager
             for (int i = 0; i < numPlayers; i++)
             {
                 heartSpawners[i].numItemsToSpawn += 1;
-                
+            }
+
+            if (respawnAfterBoss)
+            {
+                List<int> deadPlayerNumbers = new List<int>();
+                for (int index = 0; index < deadPlayers.Length; index++)
+                {
+                    if (deadPlayers[index])
+                    {
+                        deadPlayerNumbers.Add(index + 1);
+                    }
+                }
+
+                gsm.RespawnPlayers(deadPlayerNumbers.ToArray());
+                deadPlayers = new bool[gsm.numberOfPlayers + gsm.numberOfAIPlayers]; // reset the dead players.
             }
         }
     }

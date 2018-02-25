@@ -99,6 +99,15 @@ public class CameraFollow : MonoBehaviour
         shouldFollow = true;
     }
 
+    public void Add(Man man)
+    {
+        Transform toAdd = man.transform.Find(targetBodyPart);
+        if (toAdd != null)
+        {
+            targets.Add(toAdd.gameObject);
+        }
+    }
+
     public void Delete(Man man)
     {
         Transform toRemove = man.transform.Find(targetBodyPart);

@@ -33,6 +33,22 @@ public class SaveManager : MonoBehaviour
             file.Close();
 
             data.hasSavedCosmetics = true;
+
+            // If the player is missing something that should be unlocked by default, unlock it.
+            foreach (string hat in GameConstants.Unlocks.startingHats)
+            {
+                if (!data.hats.Contains(hat))
+                {
+                    data.UnlockHat(hat);
+                }
+            }
+            foreach (string misc in GameConstants.Unlocks.startingMisc)
+            {
+                if (!data.misc.Contains(misc))
+                {
+                    data.UnlockMisc(misc);
+                }
+            }
         }
 
         else

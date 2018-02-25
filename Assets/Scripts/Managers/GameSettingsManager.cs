@@ -216,6 +216,41 @@ public class GameSettingsManager : MonoBehaviour {
         }
     }
 
+    public void RespawnPlayers(int[] playerNumbers)
+    {
+        CameraFollow camera = FindObjectOfType<CameraFollow>();
+        for (int i = 0; i < playerNumbers.Length; i++)
+        {
+            int playerNumberIndex = playerNumbers[i] - 1; // for index uses
+
+            Man player = Instantiate(playerPrefab) as Man;
+            if (playerNumberIndex == Input.GetJoystickNames().Length) // player with number = number of controllers + 1 will use keyboard controls
+            {
+                player.usesKeyboardControls = true;
+            }
+
+            player.transform.position = playerSpawns[playerNumberIndex].position;
+            player.transform.rotation = playerSpawns[playerNumberIndex].rotation;
+
+            player.playerNumber = playerNumbers[i];
+            player.color = playerColors[playerNumberIndex];
+            player.weapon = playerWeapons[playerNumberIndex];
+            player.hat = playerHats[playerNumberIndex];
+            player.misc = playerMisc[playerNumberIndex];
+            player.skin = playerSkins[playerNumberIndex];
+
+            if (NetworkServer.active)
+            {
+                NetworkServer.Spawn(player.gameObject);
+            }
+
+            if (camera != null)
+            {
+                camera.Add(player);
+            }
+        }
+    }
+
     public void LoadNextStage()
     {
         int index = 0;

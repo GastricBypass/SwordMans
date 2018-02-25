@@ -35,7 +35,7 @@ public class UIManager : MonoBehaviour
     public Image unlockedItemImage;
     public Text unlockedItemText;
 
-    protected bool[] deadPlayers;
+    protected bool[] deadPlayers; // deadPlayers[0] will be true if player1 is dead.
     protected AudioSource audioSource;
     private int winningPlayerNumber = 0;
 
@@ -350,15 +350,15 @@ public class UIManager : MonoBehaviour
     {
         if (Random.Range(0f, 1f) < gsm.chanceToUnlockItemsEachRound)
         {
-            int itemIndex = Random.Range(0, GameConstants.Unlocks.allHats.Count + GameConstants.Unlocks.allMisc.Count);
+            int itemIndex = Random.Range(0, GameConstants.Unlocks.purchasableHats.Count + GameConstants.Unlocks.purchasableMisc.Count);
 
-            if (itemIndex < GameConstants.Unlocks.allHats.Count)
+            if (itemIndex < GameConstants.Unlocks.purchasableHats.Count)
             {
-                gsm.data.UnlockHat(GameConstants.Unlocks.allHats[itemIndex]);
+                gsm.data.UnlockHat(GameConstants.Unlocks.purchasableHats[itemIndex]);
             }
             else
             {
-                gsm.data.UnlockMisc(GameConstants.Unlocks.allMisc[itemIndex - GameConstants.Unlocks.allHats.Count]);
+                gsm.data.UnlockMisc(GameConstants.Unlocks.purchasableMisc[itemIndex - GameConstants.Unlocks.purchasableMisc.Count]);
             }
         }
     }
