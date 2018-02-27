@@ -189,7 +189,7 @@ public static class GameConstants {
             { "Bandana", 10 },
             { "Coif", 10 },
             { "Helmet", 80 },
-            { "Hood", 10 },
+            { "Hood", 30 },
             { "Jester", 100 },
             { "Noble", 80 },
             { "Cap", 10 },
