@@ -37,6 +37,8 @@ public class GameData : MonoBehaviour
     public float musicVolume;
     public float effectsVolume;
 
+    public List<string> weaponsUsed;
+
     public void Save()
     {
         SaveManager.SaveCosmetics(GameConstants.Files.cosmeticsFileName, this);
@@ -120,9 +122,26 @@ public class GameData : MonoBehaviour
         gold += amount;
         FindObjectOfType<UIManager>().UnlockItem("gold coins", amount.ToString() + " ");
 
+        // Achievement: Hoarder
+        if (gold >= 200)
+        {
+            FindObjectOfType<GameSettingsManager>().steam.UnlockAchievement(GameConstants.AchievementId.HOARDER);
+        }
+
         Save();
     }
-    
+
+    public void AddWeaponUsed(string weapon)
+    {
+        if (!weaponsUsed.Contains(weapon))
+        {
+            weaponsUsed.Add(weapon);
+            Save();
+
+            FindObjectOfType<GameSettingsManager>().steam.AddWeaponsUsed(1);
+        }
+    }
+
     public bool HasItem(string itemName)
     {
         return misc.Contains(itemName) || hats.Contains(itemName);

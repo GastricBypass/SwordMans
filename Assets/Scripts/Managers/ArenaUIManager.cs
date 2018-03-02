@@ -144,6 +144,17 @@ public class ArenaUIManager : UIManager
 
         if (waveNumber % roundsPerBossWave == 1)
         {
+            if (waveNumber == 6)
+            {
+                // Achievement: Warrior
+                gsm.steam.UnlockAchievement(GameConstants.AchievementId.WARRIOR);
+            }
+            if (waveNumber == 11)
+            {
+                // Achievement: Gladiator
+                gsm.steam.UnlockAchievement(GameConstants.AchievementId.GLADIATOR);
+            }
+
             for (int i = 0; i < numPlayers; i++)
             {
                 heartSpawners[i].numItemsToSpawn += 1;

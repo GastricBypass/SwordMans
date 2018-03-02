@@ -46,6 +46,9 @@ public class BodyPart : MonoBehaviour {
             Transform parent = colliderTransform.parent;
             if (parent == null)
             {
+                // Achievement: Air Time
+                owner.boostUsedSinceLanding = 0; // Because at this point we know we have collided with a non-rigidbody.
+
                 return 0;
             }
 
@@ -56,6 +59,10 @@ public class BodyPart : MonoBehaviour {
         // no damage if it hits a very slow moving object (such as landing on a crate)
         if (colliderBod.velocity.magnitude < 0.05)
         {
+            // Achievement: Air Time
+            //owner.boostUsedSinceLanding = 0; // Also reset if the thing isn't moving, so you get reset from landing on a box or whatever.
+                                               // Got rid of this because it could potentially reset on your body if it's moving slowly.
+
             damage = 0;
         }
 

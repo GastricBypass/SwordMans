@@ -41,6 +41,8 @@ public class GameSettingsManager : MonoBehaviour {
 
     public GameData data;
 
+    public Steam steam;
+
     private GameSettingsManager singletonGsm;
 
     // Use this for initialization
@@ -68,6 +70,12 @@ public class GameSettingsManager : MonoBehaviour {
         {
             data = this.GetComponent<GameData>();
         }
+
+        if (steam == null)
+        {
+            steam = this.GetComponent<Steam>();
+        }
+
         SetupGameData();
 
         music.Play();
@@ -268,6 +276,19 @@ public class GameSettingsManager : MonoBehaviour {
                 index = 0;
             }
         }
+
+        if (numberOfPlayers == 4)
+        {
+            // Achievement: Friends Make Everything Better
+            steam.UnlockAchievement(GameConstants.AchievementId.FRIENDS_MAKE_EVERYTHING_BETTER);
+        }
+
+        for (int i = 0; i < playerWeapons.Count && i < numberOfPlayers; i++)
+        {
+            // Achievement: Well Rounded
+            data.AddWeaponUsed(playerWeapons[i]);
+        }
+
         activeStageIndex = index;
         LoadStage(stages[index]);
     }

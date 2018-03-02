@@ -256,4 +256,23 @@ public static class GameConstants {
         public static string cosmeticsFileName = "unlocks.dat";
         public static string settingsFileName = "settings.dat";
     }
+
+    public enum AchievementId : int
+    {
+        HEAVY_HITTER, // Done
+        I_SHOULDNT_BE_ALIVE, // Done
+        FREQUENT_FLYER, // Done
+        FREQUENT_FRAGGER, // Done
+        FREQUENT_FLEEER, // Done
+        WELL_ROUNDED, // Done
+        FRIENDS_MAKE_EVERYTHING_BETTER, // Done
+        WARRIOR, // Done
+        GLADIATOR, // Done
+        HOARDER, // Done
+        CONSUMER, // Done
+        AIR_TIME, // Done
+        NEW_KING, // Done
+        WE_HAVE_LIFTOFF, // Done
+        SCOURGE_OF_THE_SEWERS // Done
+    };
 }

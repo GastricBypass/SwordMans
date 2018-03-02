@@ -170,6 +170,8 @@ public class SaveManager : MonoBehaviour
         public float musicVolume;
         public float effectsVolume;
 
+        public List<string> weaponsUsed;
+
         public SwordMansSettingsData(GameData data)
         {
             Map(data);
@@ -191,6 +193,8 @@ public class SaveManager : MonoBehaviour
             musicOn = data.musicOn;
             musicVolume = data.musicVolume;
             effectsVolume = data.effectsVolume;
+
+            weaponsUsed = data.weaponsUsed;
         }
 
         public void UpdateGameData(GameData data)
@@ -209,6 +213,8 @@ public class SaveManager : MonoBehaviour
             data.musicOn = musicOn;
             data.musicVolume = musicVolume;
             data.effectsVolume = effectsVolume;
+
+            data.weaponsUsed = weaponsUsed;
         }
     }
 }

@@ -28,6 +28,9 @@ public class Pickup : MonoBehaviour {
         if (recipient != null)
         {
             recipient.owner.ChangeHealth(recipient.owner.health + healthGained);
+            // Stat: hp_recovered
+            FindObjectOfType<GameSettingsManager>().steam.AddHpRecovered(healthGained);
+
             ExtraEffects(recipient);
             if (destroyedOnPickup)
             {

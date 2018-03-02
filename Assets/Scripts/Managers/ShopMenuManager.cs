@@ -204,6 +204,9 @@ public class ShopMenuManager : MonoBehaviour
         {
             confirmButton.transform.Find("Text").GetComponent<Text>().text = "Purchase " + itemName + " for " + itemPrice + " gold?";
             confirmButton.onClick.AddListener(delegate { PurchaseItem(itemName, itemPrice, itemListing); });
+
+            // Achievement: Consumer
+            manager.gsm.steam.UnlockAchievement(GameConstants.AchievementId.CONSUMER);
         }
         else if (itemOwned)
         {

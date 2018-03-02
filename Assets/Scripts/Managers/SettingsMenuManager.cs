@@ -4,8 +4,8 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 
-public class SettingsMenuManager : MonoBehaviour {
-
+public class SettingsMenuManager : MonoBehaviour
+{
     public MainMenuManager manager;
 
     public List<Image> tabs;

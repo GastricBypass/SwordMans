@@ -123,6 +123,10 @@ public class Sword : MonoBehaviour
         if (boosting)
         {
             ChangeBoost(boost - boostDrainSpeed);
+            // Stat: boost_used
+            ui.gsm.steam.AddBoostUsed(boostDrainSpeed);
+            // Achievement: Air Time
+            owner.AddBoostUsed(boostDrainSpeed);
             
             if (boost <= 0)
             {

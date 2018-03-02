@@ -9,6 +9,8 @@ public class Unlocker : IEntity {
     public List<string> versusStagesToUnlock;
     public List<string> coopStagesToUnlock;
 
+    public bool destroyOnUnlock = true;
+
     private GameSettingsManager gsm;
     
 	void Start ()
@@ -27,7 +29,7 @@ public class Unlocker : IEntity {
 
         if (player != null)
         {
-            if (UnlockAllItems()) // Anything was unlocked by calling this
+            if (UnlockAllItems() && destroyOnUnlock) // Anything was unlocked by calling this
             {
                 Destroy(this.gameObject);
             }

@@ -28,6 +28,11 @@ public class Man : MonoBehaviour {
 
     protected System.DateTime hitTime;
 
+    // Achievement: I Shouldn't Be Alive
+    private float hpRecoveredThisLife;
+    // Achievement: Air Time
+    public float boostUsedSinceLanding;
+
 	// Use this for initialization
 	public virtual void Start () {
         health = maxHealth;
@@ -140,6 +145,15 @@ public class Man : MonoBehaviour {
         {
             ChangeHealth(health - damage);
             ui.ShowHurtImage(playerNumber, damage);
+            
+            // Stat: damage_dealt
+            ui.gsm.steam.AddDamageDealt(damage);
+
+            if (damage >= 500)
+            {
+                // Achievement: Heavy Hitter
+                ui.gsm.steam.UnlockAchievement(GameConstants.AchievementId.HEAVY_HITTER);
+            }
 
             hitTime = System.DateTime.Now;
             //Debug.Log("Player " + playerNumber + ": " + damage + " damage taken");
@@ -152,6 +166,9 @@ public class Man : MonoBehaviour {
         {
             return;
         }
+
+        AddHpRecovered(newHealth);
+
         health = newHealth;
         if (health <= 0)
         {
@@ -170,6 +187,43 @@ public class Man : MonoBehaviour {
             health = maxHealth;
         }
         ui.ChangeHealth(health / maxHealth, playerNumber);
+    }
+
+    // Achievement: I Shouldn't Be Alive
+    private void AddHpRecovered(float newHealth)
+    {
+        if (newHealth > health)
+        {
+            float toAdd = 0;
+            if (newHealth > maxHealth)
+            {
+                toAdd = maxHealth - health;
+            }
+            else
+            {
+                toAdd = newHealth - health;
+            }
+
+            hpRecoveredThisLife += toAdd;
+
+            if (hpRecoveredThisLife >= 1000)
+            {
+                // Achievement: I Shouldn't Be Alive
+                ui.gsm.steam.UnlockAchievement(GameConstants.AchievementId.I_SHOULDNT_BE_ALIVE);
+            }
+        }
+    }
+
+    // Achievement: Air Time
+    public void AddBoostUsed(float boostUsed)
+    {
+        boostUsedSinceLanding += boostUsed;
+
+        if (boostUsedSinceLanding >= 50)
+        {
+            // Achievement: Air Time
+            ui.gsm.steam.UnlockAchievement(GameConstants.AchievementId.AIR_TIME);
+        }
     }
 
     protected virtual void ExtraDeathEffects()
