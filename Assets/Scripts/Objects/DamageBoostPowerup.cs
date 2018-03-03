@@ -23,6 +23,11 @@ public class DamageBoostPowerup : Pickup
             if (weapons.GetChild(i).gameObject.activeSelf)
             {
                 damagingObject = weapons.GetChild(i).GetComponent<DamageMultiplyingObject>();
+                if (damagingObject == null)
+                {
+                    damagingObject = weapons.GetChild(i).Find("FlailHead").GetComponent<DamageMultiplyingObject>();
+                }
+
                 break;
             }
         }

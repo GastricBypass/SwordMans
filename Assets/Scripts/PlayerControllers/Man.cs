@@ -24,6 +24,8 @@ public class Man : MonoBehaviour {
     public string misc;
     public string skin;
 
+    public bool hasExploded;
+
     protected bool dead = false;
 
     protected System.DateTime hitTime;
@@ -35,7 +37,7 @@ public class Man : MonoBehaviour {
 
 	// Use this for initialization
 	public virtual void Start () {
-        health = maxHealth;
+        //health = maxHealth;
         hitTime = System.DateTime.Now;
         ui = FindObjectOfType<UIManager>();
 
@@ -44,6 +46,8 @@ public class Man : MonoBehaviour {
         SetWeapon(weapon);
         SetMisc(misc);
         SetHat(hat);
+
+        ui.ChangeHealth(health / maxHealth, playerNumber);
 
         // TODO: temporarily disabled for non-online play
 

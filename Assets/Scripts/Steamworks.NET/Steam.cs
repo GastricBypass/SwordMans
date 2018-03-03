@@ -58,8 +58,8 @@ public class Steam : MonoBehaviour
     private bool m_bRequestedStats;
     private bool m_bStatsValid;
 
-    // Should we store stats this frame?
-    private bool m_bStoreStats;
+    // Should we store stats this frame? Yes? Always?
+    //private bool m_bStoreStats;
 
     // Persisted Stat details
     private float m_damageDealt;
@@ -130,21 +130,21 @@ public class Steam : MonoBehaviour
             return;
 
         //Store stats in the Steam database if necessary
-        if (m_bStoreStats)
-        {
-            // already set any achievements in UnlockAchievement
+        //if (m_bStoreStats)
+        //{
+        //    // already set any achievements in UnlockAchievement
 
-            // set stats
-            SteamUserStats.SetStat("damage_dealt", m_damageDealt);
-            SteamUserStats.SetStat("hp_recovered", m_hpRecovered);
-            SteamUserStats.SetStat("boost_used", m_boostUsed);
-            SteamUserStats.SetStat("weapons_used", m_weaponsUsed);
+        //    // set stats
+        //    SteamUserStats.SetStat("damage_dealt", m_damageDealt);
+        //    SteamUserStats.SetStat("hp_recovered", m_hpRecovered);
+        //    SteamUserStats.SetStat("boost_used", m_boostUsed);
+        //    SteamUserStats.SetStat("weapons_used", m_weaponsUsed);
 
-            bool bSuccess = SteamUserStats.StoreStats();
-            // If this failed, we never sent anything to the server, try
-            // again later.
-            m_bStoreStats = !bSuccess;
-        }
+        //    bool bSuccess = SteamUserStats.StoreStats();
+        //    // If this failed, we never sent anything to the server, try
+        //    // again later.
+        //    m_bStoreStats = !bSuccess;
+        //}
     }
 
     public void UnlockAchievement(GameConstants.AchievementId achievementId)
@@ -170,13 +170,15 @@ public class Steam : MonoBehaviour
         SteamUserStats.SetAchievement(achievement.m_eAchievementID.ToString());
 
         // Store stats end of frame
-        m_bStoreStats = true;
+        //m_bStoreStats = true;
     }
 
     public void AddBoostUsed(float boost)
     {
         m_boostUsed += boost;
-
+        SteamUserStats.SetStat("boost_used", m_boostUsed);
+        bool bSuccess = SteamUserStats.StoreStats();
+        
         if (m_boostUsed >= 1000)
         {
             // Achievement: Frequent Flyer
@@ -187,6 +189,8 @@ public class Steam : MonoBehaviour
     public void AddDamageDealt(float damage)
     {
         m_damageDealt += damage;
+        SteamUserStats.SetStat("damage_dealt", m_damageDealt);
+        bool bSuccess = SteamUserStats.StoreStats();
 
         if (m_damageDealt >= 100000)
         {
@@ -198,6 +202,8 @@ public class Steam : MonoBehaviour
     public void AddHpRecovered(float health)
     {
         m_hpRecovered += health;
+        SteamUserStats.SetStat("hp_recovered", m_hpRecovered);
+        bool bSuccess = SteamUserStats.StoreStats();
 
         if (m_hpRecovered >= 50000)
         {
@@ -209,6 +215,8 @@ public class Steam : MonoBehaviour
     public void AddWeaponsUsed(int weaponsUsed)
     {
         m_weaponsUsed += weaponsUsed;
+        SteamUserStats.SetStat("weapons_used", m_weaponsUsed);
+        bool bSuccess = SteamUserStats.StoreStats();
 
         if (m_weaponsUsed >= 10)
         {

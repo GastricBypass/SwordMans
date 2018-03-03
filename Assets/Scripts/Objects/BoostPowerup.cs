@@ -35,6 +35,11 @@ public class BoostPowerup : Pickup
             if (weapons.GetChild(i).gameObject.activeSelf)
             {
                 sword = weapons.GetChild(i).GetComponent<Sword>();
+                if (sword == null)
+                {
+                    sword = weapons.GetChild(i).GetComponentInChildren<Sword>();
+                }
+
                 break;
             }
         }

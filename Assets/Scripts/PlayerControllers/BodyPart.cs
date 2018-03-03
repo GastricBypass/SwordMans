@@ -16,9 +16,18 @@ public class BodyPart : MonoBehaviour {
 	void Update () {
 		if (owner.ui != null && owner.ui.useInBounds && OutOfBounds())
         {
-            owner.TakeDamage(1000f);
-            //Destroy(owner.gameObject);
-            StartCoroutine(DestroyAfterTime(owner.gameObject, 0.5f));
+            if (!owner.hasExploded)
+            {
+                owner.hasExploded = true;
+
+                float playerHealth = owner.health;
+                owner.ChangeHealth(playerHealth - 1000f);
+
+                owner.ui.gsm.RespawnPlayers(new int[] { owner.playerNumber }, playerHealth);
+                
+                //Destroy(owner.gameObject);
+                StartCoroutine(DestroyAfterTime(owner.gameObject, 0.5f));
+            }
         }
 	}
 

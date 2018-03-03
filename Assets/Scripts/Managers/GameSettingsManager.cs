@@ -224,7 +224,7 @@ public class GameSettingsManager : MonoBehaviour {
         }
     }
 
-    public void RespawnPlayers(int[] playerNumbers)
+    public void RespawnPlayers(int[] playerNumbers, float healthOverride = 1000)
     {
         CameraFollow camera = FindObjectOfType<CameraFollow>();
         for (int i = 0; i < playerNumbers.Length; i++)
@@ -246,6 +246,11 @@ public class GameSettingsManager : MonoBehaviour {
             player.hat = playerHats[playerNumberIndex];
             player.misc = playerMisc[playerNumberIndex];
             player.skin = playerSkins[playerNumberIndex];
+
+            if (healthOverride != 1000)
+            {
+                player.health = healthOverride;
+            }
 
             if (NetworkServer.active)
             {

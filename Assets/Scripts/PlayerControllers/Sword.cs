@@ -71,7 +71,16 @@ public class Sword : MonoBehaviour
                 Collider[] colliders = this.gameObject.GetComponents<Collider>();
                 foreach (Collider collider in colliders)
                 {
-                    collider.material = null;
+                    collider.material = null; // Make weapons have friction after the person dies.
+                }
+
+                for (int i = 0; i < this.transform.childCount; i++)
+                {
+                    Collider collider = this.transform.GetChild(i).GetComponent<Collider>();
+                    if (collider != null)
+                    {
+                        collider.material = null; // Make the weapons child colliders also have friction.
+                    }
                 }
 
                 Destroy(this);
@@ -197,10 +206,55 @@ public class Sword : MonoBehaviour
 
     private void OnCollisionEnter(Collision collision)
     {
-        if (collision.collider.GetComponent<Sword>() != null)
+        //if (!HasRigidbody(collision.transform))
+        //{
+        //    attacking = false;
+        //}
+
+        if (HasSword(collision.transform))
         {
             attacking = false;
             rigbod.velocity = -rigbod.velocity;
+        }
+    }
+
+    private bool HasRigidbody(Transform transform)
+    {
+        if (transform.GetComponent<Rigidbody>() == null)
+        {
+            if (transform.parent == null)
+            {
+                return false;
+            }
+            else
+            {
+                return HasRigidbody(transform.parent);
+            }
+        }
+
+        else
+        {
+            return true;
+        }
+    }
+
+    private bool HasSword(Transform transform)
+    {
+        if (transform.GetComponent<Sword>() == null)
+        {
+            if (transform.parent == null)
+            {
+                return false;
+            }
+            else
+            {
+                return HasSword(transform.parent);
+            }
+        }
+
+        else
+        {
+            return true;
         }
     }
 }
