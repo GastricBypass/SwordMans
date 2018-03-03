@@ -7,12 +7,22 @@ public class Pickup : MonoBehaviour {
     public bool destroyedOnPickup = true;
     public int healthGained;
 
+    public AudioClip pickupNoise;
+    private AudioSource audioSource;
+
     public float duration; // there needs to be a better way to do this. If someone has the effects of a pickup when another spawns, they keep the effects forever.
+
+    protected GameSettingsManager gsm;
 
     // Use this for initialization
     void Start ()
     {
-		
+        gsm = FindObjectOfType<GameSettingsManager>();
+
+        audioSource = this.gameObject.AddComponent<AudioSource>();
+        audioSource.playOnAwake = false;
+        audioSource.clip = pickupNoise;
+        audioSource.volume = gsm.settings.effectsVolume;
 	}
 	
 	// Update is called once per frame
@@ -27,9 +37,11 @@ public class Pickup : MonoBehaviour {
 
         if (recipient != null)
         {
+            audioSource.Play();
+
             recipient.owner.ChangeHealth(recipient.owner.health + healthGained);
             // Stat: hp_recovered
-            FindObjectOfType<GameSettingsManager>().steam.AddHpRecovered(healthGained);
+            gsm.steam.AddHpRecovered(healthGained);
 
             ExtraEffects(recipient);
             if (destroyedOnPickup)
