@@ -174,7 +174,7 @@ public class ShopMenuManager : MonoBehaviour
 
         if (newImage != null)
         {
-            newItemListing.GetComponent<Image>().sprite = newImage;
+            newItemListing.transform.Find("Image").GetComponent<Image>().sprite = newImage;
         }
 
         newItemListing.transform.Find("Text").GetComponent<Text>().text = itemPrice + "g";
@@ -184,7 +184,7 @@ public class ShopMenuManager : MonoBehaviour
         if (manager.gsm.data.hats.Contains(itemName) || manager.gsm.data.misc.Contains(itemName))
         {
             newItemListing.transform.Find("Text").GetComponent<Text>().text = "owned";
-            newItemListing.GetComponent<Image>().color = new Color(.1f, .1f, .1f, .1f);
+            //newItemListing.GetComponent<Image>().color = new Color(.03f, .03f, .03f, .03f);
         }
     }
 
@@ -241,8 +241,8 @@ public class ShopMenuManager : MonoBehaviour
 
         Destroy(confirmButton.gameObject);
 
-        itemListing.GetComponent<Image>().color = new Color(.1f, .1f, .1f, .1f);
-        itemListing.interactable = false;
+        //itemListing.GetComponent<Image>().color = new Color(.03f, .03f, .03f, .03f);
+        //itemListing.interactable = false;
         itemListing.transform.Find("Text").GetComponent<Text>().text = "owned";
         itemListing.Select();
 

@@ -54,6 +54,11 @@ public class ArenaUIManager : UIManager
 
     public void StartNextWave()
     {
+        if (gameOver)
+        {
+            return;
+        }
+
         if (waveNumber > 0)
         { 
             gsm.data.AddGold(waveNumber + gsm.numberOfPlayers - 1);
