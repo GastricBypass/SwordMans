@@ -23,7 +23,10 @@ public class BodyPart : MonoBehaviour {
                 float playerHealth = owner.health;
                 owner.ChangeHealth(playerHealth - 1000f);
 
-                owner.ui.gsm.RespawnPlayers(new int[] { owner.playerNumber }, playerHealth);
+                if (playerHealth > 0) // Their original health before taking the out of bounds damage, so if it was 0, they were already dead and don't need to be respawned.
+                {
+                    owner.ui.gsm.RespawnPlayers(new int[] { owner.playerNumber }, playerHealth);
+                }
                 
                 //Destroy(owner.gameObject);
                 StartCoroutine(DestroyAfterTime(owner.gameObject, 0.5f));
@@ -85,6 +88,7 @@ public class BodyPart : MonoBehaviour {
             }
         }
 
+        bool fromSword = false;
         // no damage if it is hit with its own weapon
         Sword sword = colliderTransform.GetComponent<Sword>();
         if (sword != null)
@@ -93,6 +97,8 @@ public class BodyPart : MonoBehaviour {
             {
                 damage = 0;
             }
+
+            fromSword = true;
         }
 
         // extra damage from weapons or other damaging objects
@@ -104,6 +110,12 @@ public class BodyPart : MonoBehaviour {
             {
                 damage = 0;
             }
+        }
+
+        if (fromSword && damage * damageMultiplier >= 500 && owner.CanTakeDamage())
+        {
+            // Achievement: Heavy Hitter
+            owner.ui.gsm.steam.UnlockAchievement(GameConstants.AchievementId.HEAVY_HITTER);
         }
 
         return damage;

@@ -43,6 +43,8 @@ public class GameSettingsManager : MonoBehaviour {
 
     public Steam steam;
 
+    public bool inDemo = false;
+
     private GameSettingsManager singletonGsm;
 
     // Use this for initialization
@@ -231,10 +233,18 @@ public class GameSettingsManager : MonoBehaviour {
         {
             int playerNumberIndex = playerNumbers[i] - 1; // for index uses
 
-            Man player = Instantiate(playerPrefab) as Man;
-            if (playerNumberIndex == Input.GetJoystickNames().Length) // player with number = number of controllers + 1 will use keyboard controls
+            Man player;
+            if (numberOfPlayers > playerNumberIndex)
             {
-                player.usesKeyboardControls = true;
+                player = Instantiate(playerPrefab) as Man;
+                if (i == Input.GetJoystickNames().Length) // player with number = number of controllers + 1 will use keyboard controls
+                {
+                    player.usesKeyboardControls = true;
+                }
+            }
+            else
+            {
+                player = Instantiate(AIPlayerPrefab) as Man;
             }
 
             player.transform.position = playerSpawns[playerNumberIndex].position;
@@ -288,7 +298,7 @@ public class GameSettingsManager : MonoBehaviour {
             steam.UnlockAchievement(GameConstants.AchievementId.FRIENDS_MAKE_EVERYTHING_BETTER);
         }
 
-        for (int i = 0; i < playerWeapons.Count && i < numberOfPlayers; i++)
+        for (int i = 0; i < playerWeapons.Count && i < numberOfPlayers; i++) // To check to make sure it was players and not AIs using them
         {
             // Achievement: Well Rounded
             data.AddWeaponUsed(playerWeapons[i]);
@@ -356,7 +366,15 @@ public class GameSettingsManager : MonoBehaviour {
         }
         else
         {
-            currentStage = "Main Menu";
+            if (inDemo)
+            {
+                currentStage = "Main Menu Demo";
+            }
+            else
+            {
+                currentStage = "Main Menu";
+            }
+
             SetCursor(true);
         }
         
@@ -372,6 +390,7 @@ public class GameSettingsManager : MonoBehaviour {
     public void LoadTutorial()
     {
         currentStage = "Tutorial";
+        SetCursor(false);
         SceneManager.LoadScene(currentStage, LoadSceneMode.Single);
         music.SetSong(currentStage);
     }

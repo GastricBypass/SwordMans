@@ -192,7 +192,7 @@ public class Steam : MonoBehaviour
         SteamUserStats.SetStat("damage_dealt", m_damageDealt);
         bool bSuccess = SteamUserStats.StoreStats();
 
-        if (m_damageDealt >= 100000)
+        if (bSuccess && m_damageDealt >= 100000)
         {
             // Achievement: Frequent Fragger
             UnlockAchievement(GameConstants.AchievementId.FREQUENT_FRAGGER);
@@ -205,7 +205,7 @@ public class Steam : MonoBehaviour
         SteamUserStats.SetStat("hp_recovered", m_hpRecovered);
         bool bSuccess = SteamUserStats.StoreStats();
 
-        if (m_hpRecovered >= 50000)
+        if (bSuccess && m_hpRecovered >= 50000)
         {
             // Achievement: Frequent Flee-er
             UnlockAchievement(GameConstants.AchievementId.FREQUENT_FLEEER);
@@ -218,7 +218,7 @@ public class Steam : MonoBehaviour
         SteamUserStats.SetStat("weapons_used", m_weaponsUsed);
         bool bSuccess = SteamUserStats.StoreStats();
 
-        if (m_weaponsUsed >= 10)
+        if (bSuccess && m_weaponsUsed >= 10)
         {
             // Achievement: Well Rounded
             UnlockAchievement(GameConstants.AchievementId.WELL_ROUNDED);
@@ -323,34 +323,40 @@ public class Steam : MonoBehaviour
     //-----------------------------------------------------------------------------
     // Purpose: Display the user's stats and achievements
     //-----------------------------------------------------------------------------
-    public void Render()
+    //public void Render()
+    //{
+    //    if (!SteamManager.Initialized)
+    //    {
+    //        GUILayout.Label("Steamworks not Initialized");
+    //        return;
+    //    }
+
+    //    GUILayout.Label("damage_dealt: " + m_damageDealt);
+    //    GUILayout.Label("hp_recovered: " + m_hpRecovered);
+    //    GUILayout.Label("boost_used: " + m_boostUsed);
+    //    GUILayout.Label("weapons_used: " + m_weaponsUsed);
+
+    //    GUILayout.BeginArea(new Rect(Screen.width - 300, 0, 300, 800));
+    //    foreach (Achievement ach in m_Achievements)
+    //    {
+    //        GUILayout.Label(ach.m_eAchievementID.ToString());
+    //        GUILayout.Label(ach.m_strName + " - " + ach.m_strDescription);
+    //        GUILayout.Label("Achieved: " + ach.m_bAchieved);
+    //        GUILayout.Space(20);
+    //    }
+
+    //    // FOR TESTING PURPOSES ONLY!
+    //    if (GUILayout.Button("RESET STATS AND ACHIEVEMENTS"))
+    //    {
+    //        SteamUserStats.ResetAllStats(true);
+    //        SteamUserStats.RequestCurrentStats();
+    //    }
+    //    GUILayout.EndArea();
+    //}
+
+    public void ResetStatsAndAchievements()
     {
-        if (!SteamManager.Initialized)
-        {
-            GUILayout.Label("Steamworks not Initialized");
-            return;
-        }
-
-        GUILayout.Label("damage_dealt: " + m_damageDealt);
-        GUILayout.Label("hp_recovered: " + m_hpRecovered);
-        GUILayout.Label("boost_used: " + m_boostUsed);
-        GUILayout.Label("weapons_used: " + m_weaponsUsed);
-
-        GUILayout.BeginArea(new Rect(Screen.width - 300, 0, 300, 800));
-        foreach (Achievement ach in m_Achievements)
-        {
-            GUILayout.Label(ach.m_eAchievementID.ToString());
-            GUILayout.Label(ach.m_strName + " - " + ach.m_strDescription);
-            GUILayout.Label("Achieved: " + ach.m_bAchieved);
-            GUILayout.Space(20);
-        }
-
-        // FOR TESTING PURPOSES ONLY!
-        if (GUILayout.Button("RESET STATS AND ACHIEVEMENTS"))
-        {
-            SteamUserStats.ResetAllStats(true);
-            SteamUserStats.RequestCurrentStats();
-        }
-        GUILayout.EndArea();
+        SteamUserStats.ResetAllStats(true);
+        SteamUserStats.RequestCurrentStats();
     }
 }

@@ -10,18 +10,6 @@ public class BoostPowerup : Pickup
     private Sword swordToEnhance;
     private GameObject bubble;
 
-    // Use this for initialization
-    void Start ()
-    {
-		
-	}
-	
-	// Update is called once per frame
-	void Update ()
-    {
-		
-	}
-
     protected override void ExtraEffects(BodyPart recipient)
     {
         base.ExtraEffects(recipient);

@@ -347,4 +347,10 @@ public class SettingsMenuManager : MonoBehaviour
             weaponSelectButtons[i].color = unselectedColor; // kind of confusing, but this is the same color as the background.
         }
     }
+
+    public void ResetStatsAndAchievements()
+    {
+        // Remember that resetting stats and achievements also requires you to delete the settings file in the game data.
+        manager.gsm.steam.ResetStatsAndAchievements();
+    }
 }

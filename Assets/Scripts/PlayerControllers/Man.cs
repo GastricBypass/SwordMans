@@ -143,21 +143,20 @@ public class Man : MonoBehaviour {
         }
     }
 
+    public bool CanTakeDamage(bool alwaysDealsDamage = false)
+    {
+        return (!invincible && health > 0 && (alwaysDealsDamage || (System.DateTime.Now - hitTime).TotalMilliseconds > invinceTimeMS));
+    }
+
     public void TakeDamage(float damage, bool alwaysDealsDamage = false)
     {
-        if (!invincible && damage > 0 && health > 0 && (alwaysDealsDamage || (System.DateTime.Now - hitTime).TotalMilliseconds > invinceTimeMS))
+        if (damage > 0 && CanTakeDamage(alwaysDealsDamage))
         {
             ChangeHealth(health - damage);
             ui.ShowHurtImage(playerNumber, damage);
             
             // Stat: damage_dealt
             ui.gsm.steam.AddDamageDealt(damage);
-
-            if (damage >= 500)
-            {
-                // Achievement: Heavy Hitter
-                ui.gsm.steam.UnlockAchievement(GameConstants.AchievementId.HEAVY_HITTER);
-            }
 
             hitTime = System.DateTime.Now;
             //Debug.Log("Player " + playerNumber + ": " + damage + " damage taken");
@@ -177,7 +176,10 @@ public class Man : MonoBehaviour {
         if (health <= 0)
         {
             health = 0;
-            ui.PlayerDead(playerNumber);
+            if (!hasExploded)
+            {
+                ui.PlayerDead(playerNumber);
+            }
             CameraFollow camera = FindObjectOfType<CameraFollow>();
             if (camera != null)
             {
