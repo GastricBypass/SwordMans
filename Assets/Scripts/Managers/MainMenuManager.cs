@@ -129,6 +129,9 @@ public class MainMenuManager : IMainMenuManager
     public Scrollbar shopMenuStartOption;
     public Transform shopMenuCameraPosition;
 
+    public GameObject creditsMenu;
+    public Transform creditsMenuCameraPosition;
+
     public Button backButton;
 
     public float moveThresh;
@@ -167,6 +170,8 @@ public class MainMenuManager : IMainMenuManager
         customizationMenu.SetActive(false);
         customizationMenuManager.ResetPlayerSelectors();
         shopMenu.SetActive(false);
+        creditsMenu.SetActive(false);
+
         backButton.gameObject.SetActive(true);
     }
 
@@ -213,6 +218,14 @@ public class MainMenuManager : IMainMenuManager
         settingsMenu.SetActive(true);
         settingsMenuStartOption.Select();
         SendCameraToTransform(settingsMenuCameraPosition);
+    }
+
+    public void CreditsButtonPressed()
+    {
+        DisableAllMenus();
+        creditsMenu.SetActive(true);
+        SendCameraToTransform(creditsMenuCameraPosition);
+        backButton.gameObject.SetActive(false);
     }
 
     public override void BackToMainMenu()

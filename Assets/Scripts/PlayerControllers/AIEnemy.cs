@@ -39,7 +39,13 @@ public class AIEnemy : Sword {
 
         if (target == null)
         {
-            rigbod.velocity = moveVector;
+            
+            if (owner.isInDamagingArea)
+            {
+                rigbod.velocity = new Vector3(0, moveSpeed, 0);
+            }
+
+            rigbod.velocity = new Vector3(0, rigbod.velocity.y, 0);
             return;
         }
 
@@ -48,7 +54,7 @@ public class AIEnemy : Sword {
             moveVector = new Vector3(target.transform.position.x, 0, target.transform.position.z) - new Vector3(this.transform.position.x, 0, this.transform.position.z);
             moveVector = moveVector.normalized * moveSpeed;
 
-            if (boost > 0 && target.transform.position.y > rigbod.transform.position.y + 4)
+            if (boost > 0 && (target.transform.position.y > rigbod.transform.position.y + 4 || owner.isInDamagingArea))
             {
                 moveVector += new Vector3(0, moveSpeed, 0);
                 boosting = true;

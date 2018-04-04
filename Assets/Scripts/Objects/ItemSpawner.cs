@@ -15,6 +15,7 @@ public class ItemSpawner : MonoBehaviour {
     public float timeBetweenSpawnsMinMS;
     public float timeBetweenSpawnsMaxMS;
     public bool destroyOldSpawnsOnNewSpawn = false;
+    public float delayOldSpawnDestroy = 0;
     public bool spawnRelativeToSpawner = false;
     public bool spawnOnLoad = false;
 
@@ -44,7 +45,7 @@ public class ItemSpawner : MonoBehaviour {
     {
         if (destroyOldSpawnsOnNewSpawn && previousSpawn != null)
         {
-            Destroy(previousSpawn.gameObject);
+            StartCoroutine(WaitToDestroySpawn(previousSpawn.gameObject, delayOldSpawnDestroy));
         }
 
         float x = Random.Range(minRange.x, maxRange.x);
@@ -85,5 +86,11 @@ public class ItemSpawner : MonoBehaviour {
         float timeToWaitMS = Random.Range(timeBetweenSpawnsMinMS, timeBetweenSpawnsMaxMS);
         yield return new WaitForSeconds(timeToWaitMS / 1000);
         canSpawn = true;
+    }
+
+    public IEnumerator WaitToDestroySpawn(GameObject toDestroy, float time)
+    {
+        yield return new WaitForSeconds(time);
+        Destroy(toDestroy.gameObject);
     }
 }

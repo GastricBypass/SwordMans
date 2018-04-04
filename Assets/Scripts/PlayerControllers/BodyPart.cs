@@ -25,7 +25,10 @@ public class BodyPart : MonoBehaviour {
 
                 if (playerHealth > 0) // Their original health before taking the out of bounds damage, so if it was 0, they were already dead and don't need to be respawned.
                 {
-                    owner.ui.gsm.RespawnPlayers(new int[] { owner.playerNumber }, playerHealth);
+                    if (owner.playerNumber > 0 && owner.playerNumber < 5)
+                    {
+                        owner.ui.gsm.RespawnPlayers(new int[] { owner.playerNumber }, playerHealth);
+                    }
                 }
                 
                 //Destroy(owner.gameObject);

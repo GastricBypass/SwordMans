@@ -176,7 +176,7 @@ public static class GameConstants {
         public static List<string> allMisc = new List<string>(new string[] { "None", "Belt", "Cape", "Spaulders", "Breastplate", "Armor", "Necklace", "Collar", "Ruff", "Spikes", "Dagger", "Equipment", "Vest", "Sweater Vest", "Skirt", "Tabard", "Loincloth", "Poncho", "Dress", "Shirt", "Tuxedo", "Scarf", "Backpack" });
 
         public static List<string> allVersusStages = new List<string>(new string[] { "Joust", "Castle", "Tavern", "Cabin", "Tower", "Ship", "Space Station", "Throne Room", "Pond", "Highlands", "Icebergs", "Bridge", "Market", "Volcano", "Colosseum", "Dungeon", "Mill", "Mansion" });
-        public static List<string> allCoopStages = new List<string>(new string[] { "Ch 1", "Ch 1 Part 1", "Ch 1 Part 2", "Ch 1 Part 3", "Ch 1 Resolution" });
+        public static List<string> allCoopStages = new List<string>(new string[] { "Ch 1", "Ch 1 Part 1", "Ch 1 Part 2", "Ch 1 Part 3", "Ch 1 Resolution", "Ch 2", "Ch 2 Part 1", "Ch 2 Part 2", "Ch 2 Part 3", "Ch 2 Resolution" });
         public static List<string> allArenaStages = new List<string>(new string[] { "Stadium" });
 
         public static List<string> allCoopGameModes = new List<string>(new string[] { "Arena", "Campaign" });

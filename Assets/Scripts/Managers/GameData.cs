@@ -169,5 +169,9 @@ public class GameData : MonoBehaviour
         {
             FindObjectOfType<UIManager>().UnlockItem(item);
         }
+        if (list == versusStages)
+        {
+            FindObjectOfType<UIManager>().UnlockItem(item);
+        }
     }
 }

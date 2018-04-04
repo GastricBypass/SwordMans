@@ -32,6 +32,7 @@ public class UIManager : MonoBehaviour
     public bool gameOver;
 
     public GameObject unlockedItem;
+    public Text unlockedItemOrStage;
     public Image unlockedItemImage;
     public Text unlockedItemText;
 
@@ -365,13 +366,25 @@ public class UIManager : MonoBehaviour
 
     public void UnlockItem(string itemName, string goldValue = "")
     {
-        Sprite newImage = (Sprite)Resources.Load("ItemImages/" + itemName, typeof(Sprite));
+        Sprite newImage;
+
+        unlockedItemText.text = goldValue + itemName;
+
+        if (GameConstants.Unlocks.allVersusStages.Contains(itemName) || GameConstants.Unlocks.allCoopStages.Contains(itemName))
+        {
+            unlockedItemOrStage.text = "Stage Unlocked";
+            newImage = (Sprite)Resources.Load("StageImages/" + itemName, typeof(Sprite));
+        }
+        else
+        {
+            unlockedItemOrStage.text = "Item Unlocked";
+            newImage = (Sprite)Resources.Load("ItemImages/" + itemName, typeof(Sprite));
+        }
 
         if (newImage != null)
         {
             unlockedItemImage.sprite = newImage;
         }
-        unlockedItemText.text = goldValue + itemName;
 
         AudioClip clip = (AudioClip)Resources.Load("Sounds/unlockItem", typeof(AudioClip));
         audioSource.clip = clip;

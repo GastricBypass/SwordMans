@@ -25,6 +25,7 @@ public class Man : MonoBehaviour {
     public string skin;
 
     public bool hasExploded;
+    public bool isInDamagingArea; // only used for AIs to determine if they're in a damaging area.
 
     protected bool dead = false;
 
