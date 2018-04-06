@@ -95,6 +95,7 @@
     <Compile Include="Assets\Scripts\Managers\CameraFollow.cs" />
     <Compile Include="Assets\Scripts\Managers\CampaignUIManager.cs" />
     <Compile Include="Assets\Scripts\Managers\CustomizationMenuManager.cs" />
+    <Compile Include="Assets\Scripts\Managers\CutsceneMovingObject.cs" />
     <Compile Include="Assets\Scripts\Managers\DemoMainMenuManager.cs" />
     <Compile Include="Assets\Scripts\Managers\EnemySpawner.cs" />
     <Compile Include="Assets\Scripts\Managers\GameConstants.cs" />

@@ -265,7 +265,7 @@ public class SettingsMenuManager : MonoBehaviour
         musicVolume.text = musicVolumeSlider.value.ToString();
     }
 
-    public void SetEffectscVolume()
+    public void SetEffectsVolume()
     {
         float volume = effectsVolumeSlider.value / 100f;
         manager.gsm.settings.SetEffectsVolume(volume);

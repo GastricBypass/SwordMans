@@ -14,6 +14,7 @@ public class CampaignUIManager : UIManager
     public float bossMaxHealth;
 
     public bool introLevel;
+    public bool cutsceneLevel;
 
     private bool playersLost;
 
@@ -29,7 +30,7 @@ public class CampaignUIManager : UIManager
 
         gsm.SpawnPlayers();
 
-        if (!introLevel)
+        if (!introLevel && !cutsceneLevel)
         {
             SetHealthBars();
         }
@@ -73,6 +74,10 @@ public class CampaignUIManager : UIManager
         if (introLevel)
         {
             StartCoroutine(StartEndGameCountdown());
+        }
+        else if (cutsceneLevel)
+        {
+            LoadNextLevel();
         }
         else
         {
@@ -147,5 +152,11 @@ public class CampaignUIManager : UIManager
     {
         gsm.data.UnlockCoopStage(nextLevelName);
         gsm.LoadStage(nextLevelName);
+    }
+
+    public void LoadNextLevel()
+    {
+        // bypass the game settings manager and just load the scene. That way it doesn't need to be unlocked
+        SceneManager.LoadScene(nextLevelName); 
     }
 }
