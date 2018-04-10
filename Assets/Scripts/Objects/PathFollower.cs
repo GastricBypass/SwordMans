@@ -6,6 +6,7 @@ public class PathFollower : IEntity
 {
     public List<Transform> waypoints;
     public float speed = 1;
+    public bool stopAtTheEnd = false;
     public bool reverse = false;
 
     public bool rotateWithMotion = false;
@@ -53,6 +54,10 @@ public class PathFollower : IEntity
             waypointIndex--;
             if (waypointIndex < 0)
             {
+                if (stopAtTheEnd)
+                {
+                    active = false;
+                }
                 waypointIndex = waypoints.Count - 1;
             }
         }
@@ -61,6 +66,10 @@ public class PathFollower : IEntity
             waypointIndex++;
             if (waypointIndex > waypoints.Count - 1)
             {
+                if (stopAtTheEnd)
+                {
+                    active = false;
+                }
                 waypointIndex = 0;
             }
         }

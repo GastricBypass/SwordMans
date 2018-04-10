@@ -51,7 +51,7 @@ public class Unlocker : IEntity {
 
         for (int i = 0; i < miscToUnlock.Count; i++)
         {
-            if (!gsm.data.HasItem(hatsToUnlock[i]))
+            if (!gsm.data.HasItem(miscToUnlock[i]))
             {
                 gsm.data.UnlockMisc(miscToUnlock[i]);
                 unlockedAnything = true;

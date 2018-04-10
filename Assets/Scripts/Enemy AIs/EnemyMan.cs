@@ -51,5 +51,10 @@ public class EnemyMan : Man {
         {
             Destroy(this.gameObject);
         }
+
+        if (isBoss)
+        {
+
+        }
     }
 }

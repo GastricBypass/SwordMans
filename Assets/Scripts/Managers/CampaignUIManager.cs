@@ -8,13 +8,13 @@ public class CampaignUIManager : UIManager
 {
     public string nextLevelName;
     public NextLevelArea nextLevelProgressionArea;
+    public bool introLevel;
+    public bool cutsceneLevel;
     public bool bossLevel;
     public Slider bossHealthBar;
     public Text bossHealthValue;
     public float bossMaxHealth;
-
-    public bool introLevel;
-    public bool cutsceneLevel;
+    public List<PathFollower> objectsToMoveOnBossDeath;
 
     private bool playersLost;
 
@@ -46,7 +46,7 @@ public class CampaignUIManager : UIManager
         bossHealthBar.gameObject.SetActive(bossLevel);
         bossMaxHealth = bossMaxHealth + (bossMaxHealth * gsm.numberOfPlayers / 2f);
         bossHealthBar.maxValue = bossMaxHealth;
-        ChangeHealth(1, 0);
+        ChangeHealth(1, 0); // even if the bosses player number isn't 0, this is fine
     }
 
     public override void ChangeHealth(float percent, int playerNumber)
@@ -56,6 +56,10 @@ public class CampaignUIManager : UIManager
         {
             bossHealthBar.value = percent * bossMaxHealth;
             bossHealthValue.text = (Mathf.Ceil(bossHealthBar.value) + " / " + bossMaxHealth);
+            if (bossHealthBar.value <= 0)
+            {
+                MoveBossDeathObjects();
+            }
         }
     }
 
@@ -152,6 +156,14 @@ public class CampaignUIManager : UIManager
     {
         gsm.data.UnlockCoopStage(nextLevelName);
         gsm.LoadStage(nextLevelName);
+    }
+
+    public void MoveBossDeathObjects()
+    {
+        foreach (var obj in objectsToMoveOnBossDeath)
+        {
+            obj.active = true;
+        }
     }
 
     public void LoadNextLevel()
