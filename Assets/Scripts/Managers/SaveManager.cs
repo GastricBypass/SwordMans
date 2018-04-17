@@ -35,20 +35,65 @@ public class SaveManager : MonoBehaviour
 
             data.hasSavedCosmetics = true;
 
+            //SetMissingDefaultUnlocks(data);
             // If the player is missing something that should be unlocked by default, unlock it.
-            foreach (string hat in GameConstants.Unlocks.startingHats)
+            foreach (string hat in GameConstants.Unlocks.startingHats) // hats
             {
                 if (!data.hats.Contains(hat))
                 {
                     data.UnlockHat(hat);
                 }
             }
-            foreach (string misc in GameConstants.Unlocks.startingMisc)
+            foreach (string misc in GameConstants.Unlocks.startingMisc) // misc
             {
                 if (!data.misc.Contains(misc))
                 {
                     data.UnlockMisc(misc);
                 }
+            }
+            foreach (string versusStage in GameConstants.Unlocks.startingVersusStages) // versus stages
+            {
+                if (!data.versusStages.Contains(versusStage))
+                {
+                    data.UnlockVersusStage(versusStage);
+                }
+            }
+            foreach (string coopStage in GameConstants.Unlocks.startingCoopStages) // campaign stages
+            {
+                if (!data.coopStages.Contains(coopStage))
+                {
+                    data.UnlockCoopStage(coopStage);
+                }
+            }
+            foreach (string arenaStage in GameConstants.Unlocks.startingArenaStages) // arena stages
+            {
+                if (!data.arenaStages.Contains(arenaStage))
+                {
+                    data.UnlockArenaStage(arenaStage);
+                }
+            }
+
+            List<string> chaptersToUnlock = new List<string>();
+            foreach (string coopStage in GameConstants.Unlocks.allCoopStages)
+            {
+                if (coopStage.Contains("Resolution")) // if they have completed a chapter, make sure to unlock the next chapter on startup.
+                {
+                    string chapterNumberString = coopStage.Replace("Ch", "");
+                    chapterNumberString = chapterNumberString.Replace("Resolution", "");
+                    chapterNumberString = chapterNumberString.Trim();
+
+                    int chapterNumber = int.Parse(chapterNumberString);
+                    string chapterName = "Ch " + (chapterNumber + 1);
+
+                    if (GameConstants.Unlocks.allCoopStages.Contains(chapterName))
+                    {
+                        chaptersToUnlock.Add(chapterName); // Unlock the stage if it's not already unlocked
+                    }
+                }
+            }
+            foreach (string chapter in chaptersToUnlock)
+            {
+                data.UnlockCoopStage(chapter);
             }
         }
 
@@ -56,6 +101,11 @@ public class SaveManager : MonoBehaviour
         {
             data.hasSavedCosmetics = false;
         }
+    }
+
+    private static void SetMissingDefaultUnlocks(GameData data)
+    {
+        
     }
 
     public static void SaveSettings(string filename, GameData data)

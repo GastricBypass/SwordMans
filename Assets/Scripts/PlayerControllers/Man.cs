@@ -69,7 +69,41 @@ public class Man : MonoBehaviour {
     //    GetComponent<NetworkIdentity>().AssignClientAuthority(connectionToServer);
     //}
 
-    void SetColor(string c)
+    public void ResetAllCosmetics()
+    {
+        ResetHat();
+        ResetMisc();
+        ResetWeapon();
+    }
+
+    public void ResetHat()
+    {
+        Transform head = transform.Find(GameConstants.Unlocks.hatsLocation);
+        for (int i = 0; i < head.childCount; i++)
+        {
+            head.GetChild(i).gameObject.SetActive(false);
+        }
+    }
+
+    public void ResetMisc()
+    {
+        Transform spine = transform.Find(GameConstants.Unlocks.miscLocation);
+        for (int i = 0; i < spine.childCount; i++)
+        {
+            spine.GetChild(i).gameObject.SetActive(false);
+        }
+    }
+
+    public void ResetWeapon()
+    {
+        Transform weapon = transform.Find("Weapon");
+        for (int i = 0; i < weapon.childCount; i++)
+        {
+            weapon.GetChild(i).gameObject.SetActive(false);
+        }
+    }
+
+    public void SetColor(string c)
     {
         Color toSet = GameConstants.PlayerColors.ParseFromName(c);
 
@@ -77,7 +111,7 @@ public class Man : MonoBehaviour {
         transform.Find("Body/Body Pelvis").GetComponent<MeshRenderer>().material.color = toSet;
         transform.Find("Body/Body Pelvis/Fill").GetComponent<MeshRenderer>().material.color = toSet;
 
-        Transform head = transform.Find("Body/Body Head/");
+        Transform head = transform.Find(GameConstants.Unlocks.hatsLocation);
         for (int i = 0; i < head.childCount; i++)
         {
             if (head.GetChild(i).GetComponent<SkinnedMeshRenderer>() != null)
@@ -90,7 +124,7 @@ public class Man : MonoBehaviour {
             }
         }
 
-        Transform spine = transform.Find("Body/Body Spine/Items/");
+        Transform spine = transform.Find(GameConstants.Unlocks.miscLocation);
         for (int i = 0; i < spine.childCount; i++)
         {
             if (spine.GetChild(i).GetComponent<SkinnedMeshRenderer>() != null)
@@ -104,12 +138,12 @@ public class Man : MonoBehaviour {
         }
     }
 
-    void SetWeapon(string w)
+    public void SetWeapon(string w)
     {
         transform.Find("Weapon/" + w).gameObject.SetActive(true);
     }
 
-    void SetHat(string h)
+    public void SetHat(string h)
     {
         if (h != "None")
         {
@@ -117,7 +151,7 @@ public class Man : MonoBehaviour {
         }
     }
 
-    void SetMisc(string m)
+    public void SetMisc(string m)
     {
         if (m != "None")
         {
@@ -125,7 +159,7 @@ public class Man : MonoBehaviour {
         }
     }
 
-    void SetSkin(string s)
+    public void SetSkin(string s)
     {
         Color toSet = GameConstants.SkinColors.ParseFromName(s);
 

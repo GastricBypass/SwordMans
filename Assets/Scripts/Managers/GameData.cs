@@ -45,6 +45,16 @@ public class GameData : MonoBehaviour
         SaveManager.SaveSettings(GameConstants.Files.settingsFileName, this);
     }
 
+    public void SaveCosmetics()
+    {
+        SaveManager.SaveCosmetics(GameConstants.Files.cosmeticsFileName, this);
+    }
+
+    public void SaveSettings()
+    {
+        SaveManager.SaveSettings(GameConstants.Files.settingsFileName, this);
+    }
+
     public void Load()
     {
         SaveManager.LoadCosmetics(GameConstants.Files.cosmeticsFileName, this);
@@ -64,7 +74,7 @@ public class GameData : MonoBehaviour
         else if (GameConstants.Unlocks.allHats.Contains(hatName))
         {
             Insert(hats, hatName);
-            Save();
+            SaveCosmetics();
         }
     }
 
@@ -81,7 +91,7 @@ public class GameData : MonoBehaviour
         else if (GameConstants.Unlocks.allMisc.Contains(miscName))
         {
             Insert(misc, miscName);
-            Save();
+            SaveCosmetics();
         }
     }
 
@@ -90,7 +100,7 @@ public class GameData : MonoBehaviour
         if (!versusStages.Contains(stageName) && GameConstants.Unlocks.allVersusStages.Contains(stageName))
         {
             Insert(versusStages, stageName);
-            Save();
+            SaveCosmetics();
         }
     }
 
@@ -99,7 +109,7 @@ public class GameData : MonoBehaviour
         if (!coopStages.Contains(stageName) && GameConstants.Unlocks.allCoopStages.Contains(stageName))
         {
             Insert(coopStages, stageName);
-            Save();
+            SaveCosmetics();
         }
     }
 
@@ -108,7 +118,7 @@ public class GameData : MonoBehaviour
         if (!arenaStages.Contains(stageName) && GameConstants.Unlocks.allArenaStages.Contains(stageName))
         {
             Insert(arenaStages, stageName);
-            Save();
+            SaveCosmetics();
         }
     }
 
@@ -128,7 +138,7 @@ public class GameData : MonoBehaviour
             FindObjectOfType<GameSettingsManager>().steam.UnlockAchievement(GameConstants.AchievementId.HOARDER);
         }
 
-        Save();
+        SaveCosmetics();
     }
 
     // Achievement: Well Rounded

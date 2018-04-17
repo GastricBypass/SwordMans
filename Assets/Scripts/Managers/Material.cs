@@ -182,7 +182,7 @@ public class Material : MonoBehaviour {
     {
         Material colliderMaterial = collision.collider.GetComponent<Material>();
 
-        if (colliderMaterial == null || !canSound || audioSource.isPlaying)
+        if (colliderMaterial == null || audioSource == null || !canSound || audioSource.isPlaying)
         {
             return true;
         }

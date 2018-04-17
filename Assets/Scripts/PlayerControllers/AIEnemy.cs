@@ -39,13 +39,16 @@ public class AIEnemy : Sword {
 
         if (target == null)
         {
-            
-            if (owner.isInDamagingArea)
+            if (boost > 0 && owner.isInDamagingArea)
             {
                 rigbod.velocity = new Vector3(0, moveSpeed, 0);
+                boosting = true;
+            }
+            else
+            {
+                rigbod.velocity = new Vector3(0, rigbod.velocity.y, 0);
             }
 
-            rigbod.velocity = new Vector3(0, rigbod.velocity.y, 0);
             return;
         }
 
@@ -66,7 +69,7 @@ public class AIEnemy : Sword {
                 boosting = true;
             }
 
-            if (boosting && !(target.transform.position.y > rigbod.transform.position.y + 4) && !(target.transform.position.y < rigbod.transform.position.y - 4))
+            if (boosting && !(target.transform.position.y > rigbod.transform.position.y + 4) && !(target.transform.position.y < rigbod.transform.position.y - 4) && !owner.isInDamagingArea)
             {
                 shouldRegenBoost = false; // Probably redundant, just trying things
                 EndBoost();

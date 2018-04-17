@@ -9,13 +9,23 @@ public class Teleporter : MonoBehaviour
     public bool freezeOnTeleport = false; // If a man enters, it will only freeze the body part that triggered it
     public float minimumTimeToTeleportTheSameObject = 0.05f;
 
+    public AudioClip teleportSound;
+    public bool playSoundOnTeleportMan = true;
+    public bool playSoundOnTeleportObject = true;
+
     private List<GameObject> objectsThatHaveBeenTeleportedRecently = new List<GameObject>();
+    private AudioSource audioSource;
 
 	// Use this for initialization
 	void Start ()
     {
-		
-	}
+        audioSource = this.gameObject.AddComponent<AudioSource>();
+
+        audioSource.clip = teleportSound;
+        audioSource.volume = FindObjectOfType<GameSettingsManager>().settings.effectsVolume;
+        audioSource.playOnAwake = false;
+        audioSource.loop = false;
+    }
 	
 	// Update is called once per frame
 	void Update ()
@@ -80,6 +90,11 @@ public class Teleporter : MonoBehaviour
         {
             if (!objectsThatHaveBeenTeleportedRecently.Contains(colliderBod.gameObject))
             {
+                if (playSoundOnTeleportObject)
+                {
+                    audioSource.Play();
+                }
+
                 colliderTransform.position = exit.transform.position - positionDifference;
                 StartCoroutine(AddThenRemoveFromList(colliderBod.gameObject));
             }
@@ -88,6 +103,11 @@ public class Teleporter : MonoBehaviour
 
     public void TeleportMan(Man man)
     {
+        if (playSoundOnTeleportMan)
+        {
+            audioSource.Play();
+        }
+
         Vector3 positionAdditive = exit.transform.position - this.transform.position;
         man.transform.position += positionAdditive;
     }

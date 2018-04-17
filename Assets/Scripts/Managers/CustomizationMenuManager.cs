@@ -124,7 +124,7 @@ public class CustomizationMenuManager : MonoBehaviour {
         }
 
         SetColor(colorIndeces[playerNum - 1], playerNum);
-        manager.gsm.SpawnMenuPlayers();
+        manager.gsm.SpawnSingleMenuPlayer(playerNum - 1);
     }
 
     public void BackColors(int playerNum)
@@ -137,7 +137,7 @@ public class CustomizationMenuManager : MonoBehaviour {
         }
 
         SetColor(colorIndeces[playerNum - 1], playerNum);
-        manager.gsm.SpawnMenuPlayers();
+        manager.gsm.SpawnSingleMenuPlayer(playerNum - 1);
     }
 
     public void ForwardWeapons(int playerNum)
@@ -150,7 +150,7 @@ public class CustomizationMenuManager : MonoBehaviour {
         }
 
         SetWeapon(weaponIndeces[playerNum - 1], playerNum);
-        manager.gsm.SpawnMenuPlayers();
+        manager.gsm.SpawnSingleMenuPlayer(playerNum - 1);
     }
 
     public void BackWeapons(int playerNum)
@@ -163,7 +163,7 @@ public class CustomizationMenuManager : MonoBehaviour {
         }
 
         SetWeapon(weaponIndeces[playerNum - 1], playerNum);
-        manager.gsm.SpawnMenuPlayers();
+        manager.gsm.SpawnSingleMenuPlayer(playerNum - 1);
     }
 
     public void ForwardHats(int playerNum)
@@ -176,7 +176,7 @@ public class CustomizationMenuManager : MonoBehaviour {
         }
 
         SetHat(hatIndeces[playerNum - 1], playerNum);
-        manager.gsm.SpawnMenuPlayers();
+        manager.gsm.SpawnSingleMenuPlayer(playerNum - 1);
     }
 
     public void BackHats(int playerNum)
@@ -189,7 +189,7 @@ public class CustomizationMenuManager : MonoBehaviour {
         }
 
         SetHat(hatIndeces[playerNum - 1], playerNum);
-        manager.gsm.SpawnMenuPlayers();
+        manager.gsm.SpawnSingleMenuPlayer(playerNum - 1);
     }
 
     public void ForwardMisc(int playerNum)
@@ -202,7 +202,7 @@ public class CustomizationMenuManager : MonoBehaviour {
         }
 
         SetMisc(miscIndeces[playerNum - 1], playerNum);
-        manager.gsm.SpawnMenuPlayers();
+        manager.gsm.SpawnSingleMenuPlayer(playerNum - 1);
     }
 
     public void BackMisc(int playerNum)
@@ -215,7 +215,7 @@ public class CustomizationMenuManager : MonoBehaviour {
         }
 
         SetMisc(miscIndeces[playerNum - 1], playerNum);
-        manager.gsm.SpawnMenuPlayers();
+        manager.gsm.SpawnSingleMenuPlayer(playerNum - 1);
     }
 
     public void ForwardSkins(int playerNum)
@@ -228,7 +228,7 @@ public class CustomizationMenuManager : MonoBehaviour {
         }
 
         SetSkin(skinIndeces[playerNum - 1], playerNum);
-        manager.gsm.SpawnMenuPlayers();
+        manager.gsm.SpawnSingleMenuPlayer(playerNum - 1);
     }
 
     public void BackSkins(int playerNum)
@@ -241,7 +241,7 @@ public class CustomizationMenuManager : MonoBehaviour {
         }
 
         SetSkin(skinIndeces[playerNum - 1], playerNum);
-        manager.gsm.SpawnMenuPlayers();
+        manager.gsm.SpawnSingleMenuPlayer(playerNum - 1);
     }
 
     private void SetColor(int index, int playerNum)

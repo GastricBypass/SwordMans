@@ -183,11 +183,32 @@ public class GameSettingsManager : MonoBehaviour {
         SpawnPlayers();
         numberOfPlayers = temp;
         numberOfAIPlayers = tempAI;
+    }
 
-        men = FindObjectsOfType<Man>();
+    public void SpawnSingleMenuPlayer(int i)
+    {
+        bool playerExists = false;
+
+        Man[] men = FindObjectsOfType<Man>();
         foreach (Man man in men)
         {
-            man.playerNumber = 0;
+            if (man.playerNumber == i + 1)
+            {
+                man.ResetAllCosmetics();
+
+                man.SetSkin(playerSkins[i]);
+                man.SetColor(playerColors[i]);
+                man.SetWeapon(playerWeapons[i]);
+                man.SetMisc(playerMisc[i]);
+                man.SetHat(playerHats[i]);
+
+                playerExists = true;
+            }
+        }
+
+        if (!playerExists)
+        {
+            SpawnSinglePlayer(i);
         }
     }
 
@@ -195,34 +216,39 @@ public class GameSettingsManager : MonoBehaviour {
     {
         for (int i = 0; i < numberOfPlayers + numberOfAIPlayers; i++)
         {
-            Man player;
-            if (numberOfPlayers > i)
-            {
-                player = Instantiate(playerPrefab) as Man;
-                if (i == Input.GetJoystickNames().Length) // player with number = number of controllers + 1 will use keyboard controls
-                {
-                    player.usesKeyboardControls = true;
-                }
-            }
-            else
-            {
-                player = Instantiate(AIPlayerPrefab) as Man;
-            }
+            SpawnSinglePlayer(i);
+        }
+    }
 
-            player.transform.position = playerSpawns[i].position;
-            player.transform.rotation = playerSpawns[i].rotation;
-
-            player.playerNumber = i + 1;
-            player.color = playerColors[i];
-            player.weapon = playerWeapons[i];
-            player.hat = playerHats[i];
-            player.misc = playerMisc[i];
-            player.skin = playerSkins[i];
-
-            if (NetworkServer.active)
+    public void SpawnSinglePlayer(int i)
+    {
+        Man player;
+        if (numberOfPlayers > i)
+        {
+            player = Instantiate(playerPrefab) as Man;
+            if (i == Input.GetJoystickNames().Length) // player with number = number of controllers + 1 will use keyboard controls
             {
-                NetworkServer.Spawn(player.gameObject);
+                player.usesKeyboardControls = true;
             }
+        }
+        else
+        {
+            player = Instantiate(AIPlayerPrefab) as Man;
+        }
+
+        player.transform.position = playerSpawns[i].position;
+        player.transform.rotation = playerSpawns[i].rotation;
+
+        player.playerNumber = i + 1;
+        player.color = playerColors[i];
+        player.weapon = playerWeapons[i];
+        player.hat = playerHats[i];
+        player.misc = playerMisc[i];
+        player.skin = playerSkins[i];
+
+        if (NetworkServer.active)
+        {
+            NetworkServer.Spawn(player.gameObject);
         }
     }
 

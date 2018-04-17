@@ -165,6 +165,9 @@ public static class GameConstants {
 
     public static class Unlocks
     {
+        public static string hatsLocation = "Body/Body Head/";
+        public static string miscLocation = "Body/Body Spine/Items/";
+
         public static List<string> startingHats = new List<string>(new string[] { "None", "Bandana", "Headband", "Bun Black", "Messy Black", "Ponytail Black" });
         public static List<string> startingMisc = new List<string>(new string[] { "None", "Belt", "Shirt", "Scarf", "Backpack", "Loincloth" });
 
