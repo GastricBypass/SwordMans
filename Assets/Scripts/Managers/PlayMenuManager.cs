@@ -20,10 +20,14 @@ public class PlayMenuManager : MonoBehaviour {
     public Button versusButton;
     public GameObject versusMenu;
     public Button versusMenuStartOption;
+    public Image versusStageImage;
 
     public Button coopButton;
     public GameObject coopMenu;
     public Button coopMenuStartOption;
+    public Image coopStageImage;
+
+    public Sprite defaultStageImage;
 
     public GameObject tutorialMenu;
     public Text tutorialNumberOfPlayers;
@@ -109,6 +113,8 @@ public class PlayMenuManager : MonoBehaviour {
             selectedStage.text = stages[activeStageIndex];
             coopSelectedStage.text = coopStages[coopActiveStageIndex];
         }
+
+        SetStageImage();
     }
 
 	// Update is called once per frame
@@ -158,6 +164,8 @@ public class PlayMenuManager : MonoBehaviour {
             manager.gsm.activeStageIndex = 0;
             manager.gsm.SetStages(stages);
         }
+
+        SetStageImage();
     }
 
     public void CoopButtonPressed()
@@ -172,6 +180,8 @@ public class PlayMenuManager : MonoBehaviour {
             manager.gsm.activeStageIndex = 0;
             manager.gsm.SetStages(arenaStages);
         }
+
+        SetStageImage();
     }
 
     public void HowToPlayPressed()
@@ -252,6 +262,8 @@ public class PlayMenuManager : MonoBehaviour {
             arenaSelectedStage.gameObject.SetActive(false);
             coopSelectedStage.gameObject.SetActive(true);
         }
+
+        SetStageImage();
     }
 
     public void ForwardGameModePressed()
@@ -281,6 +293,8 @@ public class PlayMenuManager : MonoBehaviour {
             arenaSelectedStage.gameObject.SetActive(false);
             coopSelectedStage.gameObject.SetActive(true);
         }
+
+        SetStageImage();
     }
 
     public void BackStagePressed()
@@ -322,6 +336,32 @@ public class PlayMenuManager : MonoBehaviour {
                 manager.gsm.activeStageIndex = coopActiveStageIndex;
             }
         }
+
+        SetStageImage();
+    }
+
+    public void SetStageImage(string stageName = "")
+    {
+        if (stageName == "")
+        {
+            if (manager.gsm.stages.Count > 0)
+            {
+                stageName = manager.gsm.stages[manager.gsm.activeStageIndex];
+            }
+        }
+
+        Sprite newImage = (Sprite)Resources.Load("StageImages/" + stageName, typeof(Sprite));
+
+        if (newImage != null)
+        {
+            versusStageImage.sprite = newImage;
+            coopStageImage.sprite = newImage; // maybe these two images could be combined?
+        }
+        else
+        {
+            versusStageImage.sprite = defaultStageImage;
+            coopStageImage.sprite = defaultStageImage;
+        }
     }
 
     public void ForwardStagePressed()
@@ -362,6 +402,8 @@ public class PlayMenuManager : MonoBehaviour {
                 manager.gsm.activeStageIndex = coopActiveStageIndex;
             }
         }
+        
+        SetStageImage();
     }
 
     public void IncNumPlayers()
