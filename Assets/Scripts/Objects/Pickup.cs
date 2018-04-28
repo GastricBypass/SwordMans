@@ -39,9 +39,16 @@ public class Pickup : MonoBehaviour {
         {
             audioSource.Play();
 
-            recipient.owner.ChangeHealth(recipient.owner.health + healthGained);
+            float newHealth = recipient.owner.health + healthGained;
+            recipient.owner.ChangeHealth(newHealth);
+
+            float healthActuallyGained = healthGained;
+            if (newHealth > recipient.owner.maxHealth)
+            {
+                healthActuallyGained = healthGained - (newHealth - recipient.owner.maxHealth);
+            }
             // Stat: hp_recovered
-            gsm.steam.AddHpRecovered(healthGained);
+            gsm.steam.AddHpRecovered(healthActuallyGained);
 
             ExtraEffects(recipient);
             if (destroyedOnPickup)
