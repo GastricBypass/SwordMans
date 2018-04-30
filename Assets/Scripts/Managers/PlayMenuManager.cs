@@ -11,8 +11,6 @@ public class PlayMenuManager : MonoBehaviour {
     public bool versus = true;
 
     public GameObject playOptionsMenu;
-    public Button versusSelect;
-    public Button coopSelect;
 
     public GameObject howToPlayMenu;
     public Button howToPlayMenuStartOption;
@@ -39,8 +37,12 @@ public class PlayMenuManager : MonoBehaviour {
     public Text numberOfAIPlayers;
 
     public List<string> coopStages;
+    public Text coopCurrentChapter;
     public Text coopSelectedStage;
     public Text coopNumberOfPlayers;
+
+    private int activeCampaignChapterNumber = 1;
+    private int numberOfAvailableChapters;
 
     public List<string> arenaStages;
     public Text arenaSelectedStage;
@@ -54,6 +56,9 @@ public class PlayMenuManager : MonoBehaviour {
 
     private int coopActiveStageIndex;
     private int arenaActiveStageIndex;
+    
+    private int currentChapterStartingIndex;
+    private int currentChapterEndingIndex;
 
     // Use this for initialization
     void Start ()
@@ -84,23 +89,33 @@ public class PlayMenuManager : MonoBehaviour {
             stages = manager.gsm.data.versusStages;
             coopStages = manager.gsm.data.coopStages;
             arenaStages = manager.gsm.data.arenaStages;
+
+            SetNumberOfAvailableChapters();
+
             SetStagePresets();
         }
     }
 	
     public void SetStagePresets()
     {
-        if (GsmStagesEqual(stages))
+        if (GsmStagesEqual(stages)) // versus
         {
             activeStageIndex = manager.gsm.activeStageIndex;
             selectedStage.text = stages[activeStageIndex];
         }
-        else if (GsmStagesEqual(coopStages))
+        else if (manager.gsm.stages.Count > 0 && manager.gsm.stages[0].Contains("Ch")) // campaign
         {
             coopActiveStageIndex = manager.gsm.activeStageIndex;
             coopSelectedStage.text = coopStages[coopActiveStageIndex];
+
+            string chapterNumberString = manager.gsm.stages[0].Replace("Ch", "");
+            chapterNumberString = chapterNumberString.Replace("Resolution", "");
+            chapterNumberString = chapterNumberString.Trim();
+
+            int chapterNumber = int.Parse(chapterNumberString);
+            activeCampaignChapterNumber = chapterNumber;
         }
-        else if (GsmStagesEqual(arenaStages))
+        else if (GsmStagesEqual(arenaStages)) // arena
         {
             arenaActiveStageIndex = manager.gsm.activeStageIndex;
             arenaSelectedStage.text = arenaStages[arenaActiveStageIndex];
@@ -118,7 +133,8 @@ public class PlayMenuManager : MonoBehaviour {
     }
 
 	// Update is called once per frame
-	void Update () {
+	void Update ()
+    {
 		if (manager.shouldRestoreDefaults)
         {
             versusMenu.SetActive(false);
@@ -259,6 +275,8 @@ public class PlayMenuManager : MonoBehaviour {
             manager.gsm.activeStageIndex = coopActiveStageIndex;
             manager.gsm.SetStages(coopStages);
 
+            SetChapterIndeces(activeCampaignChapterNumber);
+
             arenaSelectedStage.gameObject.SetActive(false);
             coopSelectedStage.gameObject.SetActive(true);
         }
@@ -289,6 +307,8 @@ public class PlayMenuManager : MonoBehaviour {
         {
             manager.gsm.activeStageIndex = coopActiveStageIndex;
             manager.gsm.SetStages(coopStages);
+
+            SetChapterIndeces(activeCampaignChapterNumber);
 
             arenaSelectedStage.gameObject.SetActive(false);
             coopSelectedStage.gameObject.SetActive(true);
@@ -327,9 +347,9 @@ public class PlayMenuManager : MonoBehaviour {
             else if (GameConstants.Unlocks.allCoopGameModes[activeCoopGameModeIndex] == "Campaign")
             {
                 coopActiveStageIndex--;
-                if (coopActiveStageIndex < 0)
+                if (coopActiveStageIndex < currentChapterStartingIndex)
                 {
-                    coopActiveStageIndex = coopStages.Count - 1;
+                    coopActiveStageIndex = currentChapterEndingIndex;
                 }
 
                 coopSelectedStage.text = coopStages[coopActiveStageIndex];
@@ -338,30 +358,6 @@ public class PlayMenuManager : MonoBehaviour {
         }
 
         SetStageImage();
-    }
-
-    public void SetStageImage(string stageName = "")
-    {
-        if (stageName == "")
-        {
-            if (manager.gsm.stages.Count > 0)
-            {
-                stageName = manager.gsm.stages[manager.gsm.activeStageIndex];
-            }
-        }
-
-        Sprite newImage = (Sprite)Resources.Load("StageImages/" + stageName, typeof(Sprite));
-
-        if (newImage != null)
-        {
-            versusStageImage.sprite = newImage;
-            coopStageImage.sprite = newImage; // maybe these two images could be combined?
-        }
-        else
-        {
-            versusStageImage.sprite = defaultStageImage;
-            coopStageImage.sprite = defaultStageImage;
-        }
     }
 
     public void ForwardStagePressed()
@@ -393,9 +389,9 @@ public class PlayMenuManager : MonoBehaviour {
             else if (GameConstants.Unlocks.allCoopGameModes[activeCoopGameModeIndex] == "Campaign")
             {
                 coopActiveStageIndex++;
-                if (coopActiveStageIndex > coopStages.Count - 1)
+                if (coopActiveStageIndex > currentChapterEndingIndex)
                 {
-                    coopActiveStageIndex = 0;
+                    coopActiveStageIndex = currentChapterStartingIndex;
                 }
 
                 coopSelectedStage.text = coopStages[coopActiveStageIndex];
@@ -404,6 +400,53 @@ public class PlayMenuManager : MonoBehaviour {
         }
         
         SetStageImage();
+    }
+
+    public void BackChapterPressed()
+    {
+        activeCampaignChapterNumber--;
+
+        if (activeCampaignChapterNumber < 1)
+        {
+            activeCampaignChapterNumber = numberOfAvailableChapters;
+        }
+
+        SetChapterIndeces(activeCampaignChapterNumber);
+    }
+
+    public void ForwardChapterPressed()
+    {
+        activeCampaignChapterNumber++;
+
+        if (activeCampaignChapterNumber > numberOfAvailableChapters)
+        {
+            activeCampaignChapterNumber = 1;
+        }
+
+        SetChapterIndeces(activeCampaignChapterNumber);
+    }
+
+    public void SetChapterIndeces(int chapter)
+    {
+        currentChapterStartingIndex = coopStages.IndexOf("Ch " + chapter);
+        if (currentChapterStartingIndex < 0)
+        {
+            currentChapterStartingIndex = 0;
+        }
+
+        for (int i = 0; i < coopStages.Count; i++)
+        {
+            if (coopStages[i].Contains("Ch " + chapter))
+            {
+                currentChapterEndingIndex = i;
+            }
+        }
+
+        coopActiveStageIndex = currentChapterEndingIndex;
+        coopCurrentChapter.text = "Chapter " + activeCampaignChapterNumber;
+
+        coopSelectedStage.text = coopStages[coopActiveStageIndex];
+        SetStageImage(coopStages[coopActiveStageIndex]);
     }
 
     public void IncNumPlayers()
@@ -472,8 +515,57 @@ public class PlayMenuManager : MonoBehaviour {
         manager.gsm.numberOfAIPlayers = numAIPlayers;
     }
 
+    public void SetStageImage(string stageName = "")
+    {
+        if (stageName == "")
+        {
+            if (manager.gsm.stages.Count > 0)
+            {
+                stageName = manager.gsm.stages[manager.gsm.activeStageIndex];
+            }
+        }
+
+        Sprite newImage = (Sprite)Resources.Load("StageImages/" + stageName, typeof(Sprite));
+
+        if (newImage != null)
+        {
+            versusStageImage.sprite = newImage;
+            coopStageImage.sprite = newImage; // maybe these two images could be combined?
+        }
+        else
+        {
+            versusStageImage.sprite = defaultStageImage;
+            coopStageImage.sprite = defaultStageImage;
+        }
+    }
+
+    private void SetNumberOfAvailableChapters()
+    {
+        for (int i = 1; i < 100 /*Just need a number I guess*/; i++)
+        {
+            if (!coopStages.Contains("Ch " + i))
+            {
+                numberOfAvailableChapters = i - 1;
+                return;
+            }
+        }
+    }
+
     private bool GsmStagesEqual(List<string> compare)
     {
-        return manager.gsm.stages.Count == compare.Count; // Lazy, fix later
+        if (manager.gsm.stages.Count != compare.Count)
+        {
+            return false;
+        }
+
+        for (int i = 0; i < manager.gsm.stages.Count; i++)
+        {
+            if (manager.gsm.stages[i] != compare[i])
+            {
+                return false;
+            }
+        }
+
+        return true;
     }
 }
