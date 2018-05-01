@@ -442,7 +442,7 @@ public class PlayMenuManager : MonoBehaviour {
             }
         }
 
-        coopActiveStageIndex = currentChapterEndingIndex;
+        coopActiveStageIndex = currentChapterStartingIndex;
         coopCurrentChapter.text = "Chapter " + activeCampaignChapterNumber;
 
         coopSelectedStage.text = coopStages[coopActiveStageIndex];
