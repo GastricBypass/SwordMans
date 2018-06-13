@@ -15,6 +15,8 @@ public class Oscillator : IEntity
 
     public bool positiveFirst = true;
 
+    public bool relativePosition;
+
     protected float difX;
     protected float difY;
     protected float difZ;
@@ -30,6 +32,16 @@ public class Oscillator : IEntity
     // Use this for initialization
     void Start ()
     {
+        if (relativePosition)
+        {
+            xRange.x += transform.position.x;
+            xRange.y += transform.position.x;
+            yRange.x += transform.position.y;
+            yRange.y += transform.position.y;
+            zRange.x += transform.position.z;
+            zRange.y += transform.position.z;
+        }
+
         avgX = (xRange.x + xRange.y) / 2;
         avgY = (yRange.x + yRange.y) / 2;
         avgZ = (zRange.x + zRange.y) / 2;

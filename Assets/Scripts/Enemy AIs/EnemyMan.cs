@@ -19,7 +19,6 @@ public class EnemyMan : Man {
         else
         {
             health = maxHealth;
-            hitTime = System.DateTime.Now;
             ui = FindObjectOfType<UIManager>();
         }
 

@@ -30,6 +30,8 @@ public class Man : MonoBehaviour {
     protected bool dead = false;
 
     protected System.DateTime hitTime;
+    
+    public List<GameObject> objectsThatRecentlyDealtDamage;
 
     // Achievement: I Shouldn't Be Alive
     private float hpRecoveredThisLife;
@@ -39,7 +41,6 @@ public class Man : MonoBehaviour {
 	// Use this for initialization
 	public virtual void Start () {
         //health = maxHealth;
-        hitTime = System.DateTime.Now;
         ui = FindObjectOfType<UIManager>();
 
         SetSkin(skin);
@@ -167,12 +168,39 @@ public class Man : MonoBehaviour {
         for (int i = 0; i < thisBody.childCount; i++)
         {
             Transform childBody = thisBody.GetChild(i);
-            childBody.GetComponent<MeshRenderer>().material.color = toSet;
+
+            if (childBody.gameObject.name == "Body Spine" || childBody.gameObject.name == "Body Pelvis")
+            {
+                // We don't need to set the color of the spine or pelvis
+                continue;
+            }
+
+            MeshRenderer childMesh = childBody.GetComponent<MeshRenderer>();
+            if (childMesh != null)
+            {
+                childMesh.material.color = toSet;
+                if (toSet.a == 0)
+                {
+                    childMesh.enabled = false;
+                }
+            }
+
+            if (childBody.gameObject.name == "Body Head")
+            {
+                // We don't need to set the color of the children of the head
+                continue;
+            }
+
             for (int j = 0; j < childBody.childCount; j++)
             {
-                if (childBody.GetChild(j).GetComponent<MeshRenderer>() != null)
+                MeshRenderer mesh = childBody.GetChild(j).GetComponent<MeshRenderer>();
+                if (mesh != null)
                 {
-                    childBody.GetChild(j).GetComponent<MeshRenderer>().material.color = toSet;
+                    mesh.material.color = toSet;
+                    if (toSet.a == 0)
+                    {
+                        mesh.enabled = false;
+                    }
                 }
             }
         }
@@ -180,7 +208,7 @@ public class Man : MonoBehaviour {
 
     public bool CanTakeDamage(bool alwaysDealsDamage = false)
     {
-        return (!invincible && health > 0 && (alwaysDealsDamage || (System.DateTime.Now - hitTime).TotalMilliseconds > invinceTimeMS));
+        return (!invincible && health > 0);
     }
 
     public void TakeDamage(float damage, bool alwaysDealsDamage = false)
@@ -192,8 +220,7 @@ public class Man : MonoBehaviour {
             
             // Stat: damage_dealt
             ui.gsm.steam.AddDamageDealt(damage);
-
-            hitTime = System.DateTime.Now;
+            
             //Debug.Log("Player " + playerNumber + ": " + damage + " damage taken");
         }
     }
@@ -228,6 +255,20 @@ public class Man : MonoBehaviour {
             health = maxHealth;
         }
         ui.ChangeHealth(health / maxHealth, playerNumber);
+    }
+
+    public void AddObjectThatRecentlyDealtDamage(GameObject obj)
+    {
+        objectsThatRecentlyDealtDamage.Add(obj);
+
+        StartCoroutine(RemoveObjectThatRecentlyDealtDamageAfterTime(obj, invinceTimeMS));
+    }
+
+    private IEnumerator RemoveObjectThatRecentlyDealtDamageAfterTime(GameObject obj, float ms)
+    {
+        yield return new WaitForSeconds(ms / 1000f);
+
+        objectsThatRecentlyDealtDamage.Remove(obj);
     }
 
     // Achievement: I Shouldn't Be Alive

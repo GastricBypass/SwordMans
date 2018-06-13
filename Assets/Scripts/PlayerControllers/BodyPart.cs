@@ -39,6 +39,11 @@ public class BodyPart : MonoBehaviour {
 
     private void OnCollisionEnter(Collision collision)
     {
+        if (owner.objectsThatRecentlyDealtDamage.Contains(collision.collider.gameObject))
+        {
+            return;
+        }
+
         //float damage = colliderBod.mass * Mathf.Pow((((thisBod.velocity * 0.2f) - colliderBod.velocity).magnitude), 2); // scaled individual velocity and collider's velocity squared times collider's mass
         //float damage = Mathf.Pow(collision.relativeVelocity.magnitude, 2) * colliderBod.mass; // Kinetic Energy
         //float damage = collision.relativeVelocity.magnitude * colliderBod.mass; // Momentum
@@ -49,7 +54,12 @@ public class BodyPart : MonoBehaviour {
 
         damage = CalculateDamage(damage, collision.collider.transform);
 
-        owner.TakeDamage(damage * damageMultiplier);
+        if (damage != 0) // redundant with the check in Man, but needed so we know if damage was dealt by this object recently
+        {
+            owner.TakeDamage(damage * damageMultiplier);
+
+            owner.AddObjectThatRecentlyDealtDamage(collision.collider.gameObject);
+        }
     }
 
     public float CalculateDamage(float damage, Transform colliderTransform)

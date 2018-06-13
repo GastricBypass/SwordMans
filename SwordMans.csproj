@@ -116,6 +116,7 @@
     <Compile Include="Assets\Scripts\Objects\AchievementUnlocker.cs" />
     <Compile Include="Assets\Scripts\Objects\BearTrap.cs" />
     <Compile Include="Assets\Scripts\Objects\BoostPowerup.cs" />
+    <Compile Include="Assets\Scripts\Objects\CollisionToggler.cs" />
     <Compile Include="Assets\Scripts\Objects\DamageAreaPowerup.cs" />
     <Compile Include="Assets\Scripts\Objects\DamageBoostPowerup.cs" />
     <Compile Include="Assets\Scripts\Objects\DamageMultiplyingObject.cs" />

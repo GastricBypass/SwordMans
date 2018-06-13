@@ -7,7 +7,7 @@ public class DamagingArea : IEntity
     public float damagePerTick;
     public float tickLengthMS;
     public List<Man> immuneToDamage;
-    public bool alwaysDealsDamage = true;
+    //public bool alwaysDealsDamage = true;
 
     private void OnTriggerStay(Collider other)
     {
@@ -16,7 +16,7 @@ public class DamagingArea : IEntity
             BodyPart recipient = other.GetComponent<BodyPart>();
             if (recipient != null && !immuneToDamage.Contains(recipient.owner))
             {
-                recipient.owner.TakeDamage(damagePerTick, alwaysDealsDamage);
+                recipient.owner.TakeDamage(damagePerTick);
                 recipient.owner.isInDamagingArea = true; // AI: to determine if they are in a damage dealing area.
 
                 StartCoroutine(WaitToDealDamageAgain(tickLengthMS, recipient.owner));
