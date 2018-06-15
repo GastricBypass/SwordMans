@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ItemSpawner : MonoBehaviour {
+public class ItemSpawner : IEntity {
 
     public List<GameObject> items;
 
@@ -26,7 +26,7 @@ public class ItemSpawner : MonoBehaviour {
     // Use this for initialization
     void Start ()
     {
-		if (!spawnOnLoad)
+		if (!spawnOnLoad && active)
         {
             StartCoroutine(ToggleCanSpawn());
         }
@@ -35,7 +35,7 @@ public class ItemSpawner : MonoBehaviour {
 	// Update is called once per frame
 	void Update ()
     {
-		if (canSpawn)
+		if (canSpawn && active)
         {
             SpawnItem();
         }

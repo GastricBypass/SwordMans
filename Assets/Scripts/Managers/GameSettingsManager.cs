@@ -386,7 +386,12 @@ public class GameSettingsManager : MonoBehaviour {
         }
         if (name != "Main Menu")
         {
+            if (name.Contains("Level"))
+            {
+                name = name.Substring(0, name.Length - 6);
+            }
             activeStageIndex = stages.IndexOf(name);
+
             currentStage = stages[activeStageIndex];
             SetCursor(false);
         }

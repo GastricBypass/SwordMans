@@ -90,6 +90,7 @@
     <Compile Include="Assets\Scripts\Enemy AIs\RandomForceAdder.cs" />
     <Compile Include="Assets\Scripts\Enemy AIs\Spider.cs" />
     <Compile Include="Assets\Scripts\Enemy AIs\Squid.cs" />
+    <Compile Include="Assets\Scripts\Enemy AIs\Wizard.cs" />
     <Compile Include="Assets\Scripts\Managers\ArenaUIManager.cs" />
     <Compile Include="Assets\Scripts\Managers\ButtonSound.cs" />
     <Compile Include="Assets\Scripts\Managers\CameraFollow.cs" />
@@ -142,6 +143,7 @@
     <Compile Include="Assets\Scripts\Objects\ScalingOscillator.cs" />
     <Compile Include="Assets\Scripts\Objects\Spinner.cs" />
     <Compile Include="Assets\Scripts\Objects\Springboard.cs" />
+    <Compile Include="Assets\Scripts\Objects\StageHazard.cs" />
     <Compile Include="Assets\Scripts\Objects\StayFuckingStill.cs" />
     <Compile Include="Assets\Scripts\Objects\StickyObject.cs" />
     <Compile Include="Assets\Scripts\Objects\Teleporter.cs" />

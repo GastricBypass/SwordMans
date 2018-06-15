@@ -65,10 +65,10 @@ public class Oscillator : IEntity
         //levelStartTime = System.DateTime.Now;
     }
 
-    public void Activate() // Waits until the oscillation is at a position close enough to the actual transform to start
+    public override void Activate() // Waits until the oscillation is at a position close enough to the actual transform to start
     {
         waitingToActivate = true;
-        active = true;
+        base.Activate();
     }
 	
 	// Update is called once per frame

@@ -39,7 +39,20 @@ public class BodyPart : MonoBehaviour {
 
     private void OnCollisionEnter(Collision collision)
     {
-        if (owner.objectsThatRecentlyDealtDamage.Contains(collision.collider.gameObject))
+        GameObject collidingObject = collision.collider.gameObject;
+
+        BodyPart bodyPart = collidingObject.GetComponent<BodyPart>();
+        if (bodyPart != null)
+        {// This is to prevent multiple body parts on the same man from all dealing damage to another player
+            collidingObject = bodyPart.owner.gameObject;
+        }
+        Sword sword = collidingObject.GetComponent<Sword>();
+        if (sword != null)
+        {// This is to prevent the sword and the body parts both dealing damage at the same time
+            collidingObject = sword.owner.gameObject;
+        }
+
+        if (owner.objectsThatRecentlyDealtDamage.Contains(collidingObject))
         {
             return;
         }
@@ -58,7 +71,7 @@ public class BodyPart : MonoBehaviour {
         {
             owner.TakeDamage(damage * damageMultiplier);
 
-            owner.AddObjectThatRecentlyDealtDamage(collision.collider.gameObject);
+            owner.AddObjectThatRecentlyDealtDamage(collidingObject);
         }
     }
 
