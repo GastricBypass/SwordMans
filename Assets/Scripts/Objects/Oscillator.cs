@@ -16,7 +16,8 @@ public class Oscillator : IEntity
     public bool positiveFirst = true;
 
     public bool relativePosition;
-
+    public bool stopAtMinimumPosition = false;
+    
     protected float difX;
     protected float difY;
     protected float difZ;
@@ -25,7 +26,10 @@ public class Oscillator : IEntity
     protected float avgY;
     protected float avgZ;
 
+    protected float timeSinceStart = 0;
+
     protected bool waitingToActivate = false;
+    protected bool waitingToDeactivate = false;
 
     //private System.DateTime levelStartTime;
 
@@ -65,14 +69,24 @@ public class Oscillator : IEntity
         //levelStartTime = System.DateTime.Now;
     }
 
-    public override void Activate() // Waits until the oscillation is at a position close enough to the actual transform to start
-    {
-        waitingToActivate = true;
-        base.Activate();
-    }
-	
-	// Update is called once per frame
-	void FixedUpdate ()
+    //public override void Activate() // Waits until the oscillation is at a position close enough to the actual transform to start
+    //{
+    //    waitingToActivate = true;
+    //    base.Activate();
+    //}
+
+    //public override void Deactivate()
+    //{
+    //    if (stopAtMinimumPosition)
+    //    {
+    //        waitingToDeactivate = true;
+    //    }
+
+    //    base.Deactivate();
+    //}
+
+    // Update is called once per frame
+    void FixedUpdate ()
     {
         if (active)
         {
@@ -80,7 +94,8 @@ public class Oscillator : IEntity
             float y = transform.position.y;
             float z = transform.position.z;
 
-            float timeDifSeconds = Time.timeSinceLevelLoad; // (float)(System.DateTime.Now - levelStartTime).TotalSeconds;
+            timeSinceStart += Time.deltaTime;
+            float timeDifSeconds = timeSinceStart; // (float)(System.DateTime.Now - levelStartTime).TotalSeconds;
 
             // if you set moveX to false, it will accelerate in the x direction very quickly.
             /*if (moveX)*/ x = difX / 2 * Mathf.Sin(timeDifSeconds / (waveTimeMS / 1000)) + avgX;
@@ -90,6 +105,13 @@ public class Oscillator : IEntity
             if (waitingToActivate)
             {
                 //float stepSize = new Vector3(difX, difY, difZ).magnitude / (timeDifSeconds / (waveTimeMS / 1000));
+                if ((transform.position - new Vector3(xRange.x, yRange.x, zRange.x)).magnitude < new Vector3(0.1f, 0.1f, 0.1f).magnitude)
+                {
+                    waitingToActivate = false;
+                }
+            }
+            else if (waitingToDeactivate)
+            {
                 if ((transform.position - new Vector3(x, y, z)).magnitude < new Vector3(0.1f, 0.1f, 0.1f).magnitude)
                 {
                     waitingToActivate = false;

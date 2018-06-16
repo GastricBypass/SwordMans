@@ -141,6 +141,7 @@
     <Compile Include="Assets\Scripts\Objects\RigidbodyDestroyer.cs" />
     <Compile Include="Assets\Scripts\Objects\RotationalOscillator.cs" />
     <Compile Include="Assets\Scripts\Objects\ScalingOscillator.cs" />
+    <Compile Include="Assets\Scripts\Objects\SelfDestructingObject.cs" />
     <Compile Include="Assets\Scripts\Objects\Spinner.cs" />
     <Compile Include="Assets\Scripts\Objects\Springboard.cs" />
     <Compile Include="Assets\Scripts\Objects\StageHazard.cs" />
