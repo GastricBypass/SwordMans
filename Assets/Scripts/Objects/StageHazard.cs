@@ -10,10 +10,14 @@ public class StageHazard : MonoBehaviour
     public bool ableToDeactivate = true;
     public float duration; // seconds
 
+    public bool limitEntitiesToNumberOfPlayers = false;
+
+    private GameSettingsManager gsm;
+
 	// Use this for initialization
 	void Start ()
     {
-		
+        gsm = FindObjectOfType<GameSettingsManager>();
 	}
 	
 	// Update is called once per frame
@@ -44,17 +48,23 @@ public class StageHazard : MonoBehaviour
     
     public void Activate()
     {
-        foreach (IEntity entity in entities)
+        for (int i = 0; i < entities.Count; i++)
         {
-            entity.Activate();
+            if (!limitEntitiesToNumberOfPlayers || i < gsm.numberOfPlayers)
+            {
+                entities[0].Activate();
+            }
         }
     }
 
     public void Deactivate()
     {
-        foreach (IEntity entity in entities)
+        for (int i = 0; i < entities.Count; i++)
         {
-            entity.Deactivate();
+            if (!limitEntitiesToNumberOfPlayers || i < gsm.numberOfPlayers)
+            {
+                entities[0].Deactivate();
+            }
         }
     }
 }

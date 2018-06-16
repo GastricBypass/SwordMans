@@ -29,6 +29,12 @@ public class EnemySpawner : IEntity {
         }
     }
 
+    public override void Activate() // only call if you want to add one to the number of enemies
+    {
+        numEnemiesToSpawn++;
+        base.Activate();
+    }
+
     public void SpawnEnemy()
     {
         readyToSpawn = false;
