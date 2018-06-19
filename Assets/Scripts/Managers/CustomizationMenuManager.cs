@@ -59,6 +59,7 @@ public class CustomizationMenuManager : MonoBehaviour {
         {
             hats = manager.gsm.data.hats;
             misc = manager.gsm.data.misc;
+            skins = manager.gsm.data.skins;
             SetCustomizationPresets();
         }
     }

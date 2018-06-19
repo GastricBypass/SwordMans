@@ -6,6 +6,7 @@ public class Unlocker : IEntity {
 
     public List<string> hatsToUnlock;
     public List<string> miscToUnlock;
+    public List<string> skinsToUnlock;
     public List<string> versusStagesToUnlock;
     public List<string> coopStagesToUnlock;
 
@@ -54,6 +55,15 @@ public class Unlocker : IEntity {
             if (!gsm.data.HasItem(miscToUnlock[i]))
             {
                 gsm.data.UnlockMisc(miscToUnlock[i]);
+                unlockedAnything = true;
+            }
+        }
+
+        for (int i = 0; i < skinsToUnlock.Count; i++)
+        {
+            if (!gsm.data.HasItem(skinsToUnlock[i]))
+            {
+                gsm.data.UnlockSkin(skinsToUnlock[i]);
                 unlockedAnything = true;
             }
         }

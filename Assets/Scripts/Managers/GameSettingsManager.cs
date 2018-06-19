@@ -104,6 +104,9 @@ public class GameSettingsManager : MonoBehaviour {
             data.misc = GameConstants.Unlocks.startingMisc;
             data.misc.Sort();
 
+            data.skins = GameConstants.Unlocks.startingSkins;
+            //data.skins.Sort(); // there's only a few, no need to sort
+
             data.versusStages = GameConstants.Unlocks.startingVersusStages;
             data.versusStages.Sort();
 

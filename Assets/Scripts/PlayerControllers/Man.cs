@@ -85,7 +85,11 @@ public class Man : MonoBehaviour {
         Transform head = transform.Find(GameConstants.Unlocks.hatsLocation);
         for (int i = 0; i < head.childCount; i++)
         {
-            head.GetChild(i).gameObject.SetActive(false);
+            Transform child = head.GetChild(i);
+            if (child.name != "Skull (not a hat)")
+            {
+                child.gameObject.SetActive(false);
+            }
         }
     }
 
@@ -186,6 +190,10 @@ public class Man : MonoBehaviour {
                 {
                     childMesh.enabled = false;
                 }
+                else
+                {
+                    childMesh.enabled = true;
+                }
             }
 
             if (childBody.gameObject.name == "Body Head")
@@ -203,6 +211,10 @@ public class Man : MonoBehaviour {
                     if (toSet.a == 0)
                     {
                         mesh.enabled = false;
+                    }
+                    else
+                    {
+                        mesh.enabled = true;
                     }
                 }
             }

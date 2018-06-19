@@ -13,6 +13,7 @@ public class GameData : MonoBehaviour
 
     public List<string> hats;
     public List<string> misc;
+    public List<string> skins;
     public List<string> versusStages;
     public List<string> coopStages;
     public List<string> arenaStages;
@@ -95,6 +96,20 @@ public class GameData : MonoBehaviour
         }
     }
 
+    public void UnlockSkin(string skinName)
+    {
+        if (skins.Contains(skinName))
+        {
+            return;
+        }
+
+        else if (GameConstants.Unlocks.allSkins.Contains(skinName)) 
+        {
+            Insert(skins, skinName);
+            SaveCosmetics();
+        }
+    }
+
     public void UnlockVersusStage(string stageName)
     {
         if (!versusStages.Contains(stageName) && GameConstants.Unlocks.allVersusStages.Contains(stageName))
@@ -155,7 +170,7 @@ public class GameData : MonoBehaviour
 
     public bool HasItem(string itemName)
     {
-        return misc.Contains(itemName) || hats.Contains(itemName);
+        return misc.Contains(itemName) || hats.Contains(itemName) || skins.Contains(itemName);
     }
 
     public void Insert(List<string> list, string item)
@@ -175,7 +190,7 @@ public class GameData : MonoBehaviour
             }
         }
 
-        if (list == hats || list == misc)
+        if (list == hats || list == misc || list == skins)
         {
             FindObjectOfType<UIManager>().UnlockItem(item);
         }

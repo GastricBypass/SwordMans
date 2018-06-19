@@ -51,6 +51,13 @@ public class SaveManager : MonoBehaviour
                     data.UnlockMisc(misc);
                 }
             }
+            foreach (string skin in GameConstants.Unlocks.startingSkins) // skins
+            {
+                if (!data.skins.Contains(skin))
+                {
+                    data.UnlockMisc(skin);
+                }
+            }
             foreach (string versusStage in GameConstants.Unlocks.startingVersusStages) // versus stages
             {
                 if (!data.versusStages.Contains(versusStage))
@@ -150,6 +157,7 @@ public class SaveManager : MonoBehaviour
         private float gold;
         private List<string> unlockedHats;
         private List<string> unlockedMisc;
+        private List<string> unlockedSkins;
         private List<string> unlockedVersusStages;
         private List<string> unlockedCoopStages;
         private List<string> unlockedArenaStages;
@@ -167,6 +175,7 @@ public class SaveManager : MonoBehaviour
             gold = data.gold;
             unlockedHats = data.hats;
             unlockedMisc = data.misc;
+            unlockedSkins = data.skins;
             unlockedVersusStages = data.versusStages;
             unlockedCoopStages = data.coopStages;
             unlockedArenaStages = data.arenaStages;
@@ -188,6 +197,7 @@ public class SaveManager : MonoBehaviour
             data.gold = gold;
             data.hats = unlockedHats;
             data.misc = unlockedMisc;
+            data.skins = unlockedSkins;
             data.versusStages = unlockedVersusStages;
             data.coopStages = unlockedCoopStages;
             data.arenaStages = unlockedArenaStages;
