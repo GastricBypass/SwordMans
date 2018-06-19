@@ -49,7 +49,10 @@ public class Man : MonoBehaviour {
         SetMisc(misc);
         SetHat(hat);
 
-        ui.ChangeHealth(health / maxHealth, playerNumber);
+        if (CanUpdateUiHealth())
+        {
+            ui.ChangeHealth(health / maxHealth, playerNumber);
+        }
 
         // TODO: temporarily disabled for non-online play
 
@@ -216,8 +219,7 @@ public class Man : MonoBehaviour {
         if (damage > 0 && CanTakeDamage(alwaysDealsDamage))
         {
             ChangeHealth(health - damage);
-            ui.ShowHurtImage(playerNumber, damage);
-            
+
             // Stat: damage_dealt
             ui.gsm.steam.AddDamageDealt(damage);
             
@@ -233,7 +235,8 @@ public class Man : MonoBehaviour {
         }
 
         AddHpRecovered(newHealth);
-
+        
+        float oldHealth = health;
         health = newHealth;
         if (health <= 0)
         {
@@ -254,7 +257,20 @@ public class Man : MonoBehaviour {
         {
             health = maxHealth;
         }
-        ui.ChangeHealth(health / maxHealth, playerNumber);
+
+        if (CanUpdateUiHealth())
+        {
+            ui.ChangeHealth(health / maxHealth, playerNumber);
+            if (health < oldHealth)
+            {
+                ui.ShowHurtImage(playerNumber, oldHealth - health);
+            }
+        }
+    }
+
+    public virtual bool CanUpdateUiHealth()
+    {
+        return true;
     }
 
     public void AddObjectThatRecentlyDealtDamage(GameObject obj)

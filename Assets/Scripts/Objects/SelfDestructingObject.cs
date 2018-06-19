@@ -6,10 +6,15 @@ public class SelfDestructingObject : MonoBehaviour
 {
     public float lifetime = 5; // seconds
 
+    public bool destroyOnCollision = true;
+
 	// Use this for initialization
 	void Start()
     {
-        StartCoroutine(DestroyAfterTime(lifetime));
+        if (lifetime > 0)
+        {
+            StartCoroutine(DestroyAfterTime(lifetime));
+        }
     }
 	
     public IEnumerator DestroyAfterTime(float seconds)
@@ -17,5 +22,13 @@ public class SelfDestructingObject : MonoBehaviour
         yield return new WaitForSeconds(seconds);
 
         Destroy(this.gameObject);
+    }
+
+    public void OnCollisionEnter(Collision collision)
+    {
+        if (destroyOnCollision)
+        {
+            Destroy(this.gameObject);
+        }
     }
 }

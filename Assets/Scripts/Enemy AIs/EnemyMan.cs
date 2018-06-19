@@ -43,6 +43,15 @@ public class EnemyMan : Man {
 		
 	}
 
+    public override bool CanUpdateUiHealth()
+    {
+        if (isBoss && isEnemy)
+        {
+            return base.CanUpdateUiHealth();
+        }
+        else return false;
+    }
+
     protected override void ExtraDeathEffects()
     {
         base.ExtraDeathEffects();

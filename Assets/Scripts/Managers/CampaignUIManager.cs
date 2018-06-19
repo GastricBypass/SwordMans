@@ -46,7 +46,7 @@ public class CampaignUIManager : UIManager
         bossHealthBar.gameObject.SetActive(bossLevel);
         bossMaxHealth = bossMaxHealth + (bossMaxHealth * gsm.numberOfPlayers / 2f);
         bossHealthBar.maxValue = bossMaxHealth;
-        ChangeHealth(1, 0); // even if the bosses player number isn't 0, this is fine
+        ChangeHealth(1, 0); // even if the boss's player number isn't 0, this is fine
     }
 
     public override void ChangeHealth(float percent, int playerNumber)
