@@ -182,7 +182,7 @@ public static class GameConstants {
         public static List<string> startingArenaStages = new List<string>(new string[] { "Stadium", "Beach" });
 
         public static List<string> allHats = new List<string>(new string[] { "None", "Bandana", "Coif", "Helmet", "Hood", "Jester", "Noble", "Cap", "Crown", "Viking", "Space", "Tricorn", "Spartan", "Fedora", "Bowler", "Tophat", "Boater", "Shades", "Bucket", "Cone", "Sunhat", "Tiara", "Circlet", "Headband", "Elf Hat", "Mustache", "Wizard", "Squid", "Pirate", "Bun Black", "Messy Black", "Ponytail Black", "Bun Blond", "Messy Blond", "Ponytail Blond", "Bun Brown", "Messy Brown", "Ponytail Brown", "Bun Red", "Messy Red", "Ponytail Red", "Peasant", "Umbrella", "Snorkel" });
-        public static List<string> allMisc = new List<string>(new string[] { "None", "Belt", "Cape", "Spaulders", "Breastplate", "Armor", "Necklace", "Collar", "Ruff", "Spikes", "Dagger", "Equipment", "Vest", "Sweater Vest", "Skirt", "Tabard", "Loincloth", "Poncho", "Dress", "Shirt", "Tuxedo", "Scarf", "Backpack", "Lantern", "Tunic", "Innertube" });
+        public static List<string> allMisc = new List<string>(new string[] { "None", "Belt", "Cape", "Spaulders", "Breastplate", "Armor", "Necklace", "Collar", "Ruff", "Spikes", "Dagger", "Equipment", "Vest", "Sweater Vest", "Skirt", "Tabard", "Loincloth", "Poncho", "Dress", "Shirt", "Tuxedo", "Scarf", "Backpack", "Lantern", "Tunic", "Innertube", "Towel" });
         public static List<string> allSkins = new List<string>(new string[] { "Medium", "Dark", "Light", "Bones" });
 
         public static List<string> allVersusStages = new List<string>(new string[] { "Joust", "Castle", "Tavern", "Cabin", "Tower", "Ship", "Space Station", "Throne Room", "Pond", "Highlands", "Icebergs", "Bridge", "Market", "Volcano", "Colosseum", "Dungeon", "Mill", "Mansion" });
@@ -192,7 +192,7 @@ public static class GameConstants {
         public static List<string> allCoopGameModes = new List<string>(new string[] { "Arena", "Campaign" });
 
         public static List<string> purchasableHats = new List<string>(new string[] { "Bandana", "Coif", "Helmet", "Hood", "Jester", "Noble", "Cap", "Viking", "Tricorn", "Spartan", "Fedora", "Bowler", "Tophat", "Boater", "Shades", "Bucket", "Cone", "Sunhat", "Tiara", "Circlet", "Headband", "Elf Hat", "Mustache", "Wizard", "Bun Black", "Messy Black", "Ponytail Black", "Bun Blond", "Messy Blond", "Ponytail Blond", "Bun Brown", "Messy Brown", "Ponytail Brown", "Bun Red", "Messy Red", "Ponytail Red", "Peasant", "Umbrella", "Snorkel" });
-        public static List<string> purchasableMisc = new List<string>(new string[] { "Belt", "Cape", "Spaulders", "Breastplate", "Armor", "Necklace", "Collar", "Ruff", "Spikes", "Dagger", "Equipment", "Vest", "Sweater Vest", "Skirt", "Tabard", "Loincloth", "Poncho", "Dress", "Shirt", "Tuxedo", "Scarf", "Backpack", "Tunic", "Innertube" });
+        public static List<string> purchasableMisc = new List<string>(new string[] { "Belt", "Cape", "Spaulders", "Breastplate", "Armor", "Necklace", "Collar", "Ruff", "Spikes", "Dagger", "Equipment", "Vest", "Sweater Vest", "Skirt", "Tabard", "Loincloth", "Poncho", "Dress", "Shirt", "Tuxedo", "Scarf", "Backpack", "Tunic", "Innertube", "Towel" });
 
         public static Dictionary<string, float> hatPrices = new Dictionary<string, float>
         {
@@ -262,7 +262,8 @@ public static class GameConstants {
             { "Scarf", 20 },
             { "Backpack", 30 },
             { "Tunic", 30 },
-            { "Innertube", 100 }
+            { "Innertube", 100 },
+            { "Towel", 50 }
         };
     }
 
