@@ -29,6 +29,9 @@ public class UIManager : MonoBehaviour
     public Text roundNumber;
     public Text endGamePlayerWinText;
     public Text endGameCountdownTimer;
+
+    public Text timeRemaining;
+
     public bool gameOver;
 
     public GameObject unlockedItem;
@@ -52,6 +55,8 @@ public class UIManager : MonoBehaviour
         DisplayRoundBubbles();
 
         SetHealthBars();
+
+        SetTimeRemaining();
 
         StartCoroutine(DisplayRoundNumber());
     }
@@ -302,12 +307,70 @@ public class UIManager : MonoBehaviour
         }
     }
 
+    public void SetTimeRemaining()
+    {
+        if (gsm.settings.timePerRound > 0)
+        {
+            timeRemaining.gameObject.SetActive(true);
+            timeRemaining.text = GameConstants.TimeUtilities.ParseTime(gsm.settings.timePerRound);
+            StartCoroutine(EndRoundAfterTime(gsm.settings.timePerRound));
+        }
+        else
+        {
+            timeRemaining.gameObject.SetActive(false);
+        }
+    }
+
     public virtual void PlayerDead(int playerNumber)
     {
         if (playerNumber > 0 && playerNumber <= 4)
         {
             deadPlayers[playerNumber - 1] = true;
         }
+    }
+
+    public IEnumerator EndRoundAfterTime(int seconds)
+    {
+        for (int i = seconds; i >= 0; i--)
+        {
+            yield return new WaitForSeconds(1);
+            timeRemaining.text = GameConstants.TimeUtilities.ParseTime(i);
+        }
+
+        winningPlayerNumber = GetPlayerNumberWithMostHealth();
+        if (!gameOver && winningPlayerNumber != 0)
+        {
+            StartCoroutine(StartEndGameCountdown());
+        }
+    }
+
+    public int GetPlayerNumberWithMostHealth()
+    {
+        float max = 0;
+        int playerNumber = 0;
+        int numInactivePlayers = 0;
+
+        for (int i = 0; i < healthMeters.Length; i++)
+        {
+            if (!healthMeters[i].IsActive())
+            {
+                numInactivePlayers++;
+                continue;
+            }
+
+            if (healthMeters[i].value > max)
+            {
+                max = healthMeters[i].value;
+                playerNumber = i + 1;
+            }
+        }
+
+        if (numInactivePlayers >= 3)
+        {
+            return 0;
+        }
+
+        return playerNumber;
     }
 
     public virtual IEnumerator StartEndGameCountdown()

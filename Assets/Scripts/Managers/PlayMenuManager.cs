@@ -711,20 +711,6 @@ public class PlayMenuManager : MonoBehaviour {
             return "∞";
         }
 
-        int numberOf30SecondIncrements = seconds / 30;
-        int remainder = seconds % 60;
-
-        string time = numberOf30SecondIncrements / 2 + ":" + ParseSeconds2Digit(remainder);
-
-        return time;
-    }
-
-    private string ParseSeconds2Digit(int seconds)
-    {
-        if (seconds < 10)
-        {
-            return "0" + seconds;
-        }
-        else return seconds.ToString();
+        return GameConstants.TimeUtilities.ParseTime(seconds);
     }
 }
