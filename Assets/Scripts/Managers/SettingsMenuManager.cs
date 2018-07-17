@@ -24,7 +24,7 @@ public class SettingsMenuManager : MonoBehaviour
     public Button toggleShowBlood;
     private GameObject showBloodSelected;
 
-    public int maxNumberOfRounds;
+    public int maxNumberOfRounds = 5;
     public Text numberOfRounds;
 
     public Button toggleRandomStageSelect;

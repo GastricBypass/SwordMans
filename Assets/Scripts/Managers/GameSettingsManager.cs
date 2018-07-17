@@ -464,8 +464,10 @@ public class GameSettingsManager : MonoBehaviour {
         public bool showHealthValues = true;
         public bool showBlood = true;
 
-        public int roundsPerStage = 3;
         public bool randomStageSelect = false;
+        public int roundsPerStage = 1;
+        public int livesPerRound = 3;
+        public int timePerRound = 150; // seconds
 
         public bool windowed = false;
         public int resolution;
@@ -500,8 +502,10 @@ public class GameSettingsManager : MonoBehaviour {
             showHealthValues = data.showHealthValues;
             showBlood = data.showBlood;
 
-            roundsPerStage = data.roundsPerStage;
             randomStageSelect = data.randomStageSelect;
+            roundsPerStage = data.roundsPerStage;
+            livesPerRound = data.livesPerRound;
+            timePerRound = data.timePerRound;
 
             windowed = data.windowed;
             resolution = data.resolution;
@@ -519,8 +523,10 @@ public class GameSettingsManager : MonoBehaviour {
             data.showHealthValues = showHealthValues;
             data.showBlood = showBlood;
 
-            data.roundsPerStage = roundsPerStage;
             data.randomStageSelect = randomStageSelect;
+            data.roundsPerStage = roundsPerStage;
+            data.livesPerRound = livesPerRound;
+            data.timePerRound = timePerRound;
 
             data.windowed = windowed;
             data.resolution = new List<Resolution>(Screen.resolutions).IndexOf(Screen.currentResolution);
@@ -559,6 +565,14 @@ public class GameSettingsManager : MonoBehaviour {
             data.Save();
         }
 
+        public void SetRandomStageSelect(bool value)
+        {
+            randomStageSelect = value;
+            data.randomStageSelect = value;
+
+            data.Save();
+        }
+
         public void SetRoundsPerStage(int value)
         {
             roundsPerStage = value;
@@ -567,10 +581,18 @@ public class GameSettingsManager : MonoBehaviour {
             data.Save();
         }
 
-        public void SetRandomStageSelect(bool value)
+        public void SetLivesPerRound(int value)
         {
-            randomStageSelect = value;
-            data.randomStageSelect = value;
+            livesPerRound = value;
+            data.livesPerRound = value;
+
+            data.Save();
+        }
+
+        public void SetTimePerRound(int value)
+        {
+            timePerRound = value;
+            data.timePerRound = value;
 
             data.Save();
         }

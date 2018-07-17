@@ -20,6 +20,22 @@ public class PlayMenuManager : MonoBehaviour {
     public Button versusMenuStartOption;
     public Image versusStageImage;
 
+    // versus options
+    public GameObject versusOptionsMenu;
+    public Button versusOptionsMenuStartOption;
+    // random stage
+    public Button toggleRandomStageSelect;
+    private GameObject randomStageSelectSelected;
+    // num rounds
+    public int maxNumberOfRounds = 5;
+    public Text numberOfRounds;
+    // num rounds
+    public int maxNumberOfLives = 5;
+    public Text numberOfLives;
+    // num rounds
+    public int maxTimePerRound = 600; // seconds
+    public Text timePerRound;
+
     public Button coopButton;
     public GameObject coopMenu;
     public Button coopMenuStartOption;
@@ -63,12 +79,16 @@ public class PlayMenuManager : MonoBehaviour {
     // Use this for initialization
     void Start ()
     {
+        // versus options
+        randomStageSelectSelected = toggleRandomStageSelect.transform.Find("Selected").gameObject;
+
         StartCoroutine(RepeatedlyTryToSetStages(0.1f));
 
         versusMenu.SetActive(false);
+        versusOptionsMenu.SetActive(false);
         coopMenu.SetActive(false);
         howToPlayMenu.SetActive(false);
-	}
+    }
 
     public IEnumerator RepeatedlyTryToSetStages(float time)
     {
@@ -80,20 +100,34 @@ public class PlayMenuManager : MonoBehaviour {
         }
         else
         {
-            numPlayers = manager.gsm.numberOfPlayers;
-            numAIPlayers = manager.gsm.numberOfAIPlayers;
-            numberOfPlayers.text = manager.gsm.numberOfPlayers.ToString();
-            numberOfAIPlayers.text = manager.gsm.numberOfAIPlayers.ToString();
-            coopNumberOfPlayers.text = manager.gsm.numberOfPlayers.ToString();
-
-            stages = manager.gsm.data.versusStages;
-            coopStages = manager.gsm.data.coopStages;
-            arenaStages = manager.gsm.data.arenaStages;
-
-            SetNumberOfAvailableChapters();
-
-            SetStagePresets();
+            SetStages();
+            SetSettings();
         }
+    }
+
+    public void SetStages()
+    {
+        numPlayers = manager.gsm.numberOfPlayers;
+        numAIPlayers = manager.gsm.numberOfAIPlayers;
+        numberOfPlayers.text = manager.gsm.numberOfPlayers.ToString();
+        numberOfAIPlayers.text = manager.gsm.numberOfAIPlayers.ToString();
+        coopNumberOfPlayers.text = manager.gsm.numberOfPlayers.ToString();
+
+        stages = manager.gsm.data.versusStages;
+        coopStages = manager.gsm.data.coopStages;
+        arenaStages = manager.gsm.data.arenaStages;
+
+        SetNumberOfAvailableChapters();
+
+        SetStagePresets();
+    }
+
+    public void SetSettings()
+    {
+        randomStageSelectSelected.SetActive(manager.gsm.settings.randomStageSelect);
+        numberOfRounds.text = manager.gsm.settings.roundsPerStage.ToString();
+        numberOfLives.text = manager.gsm.settings.livesPerRound.ToString();
+        timePerRound.text = ParseTime(manager.gsm.settings.timePerRound);
     }
 	
     public void SetStagePresets()
@@ -132,8 +166,8 @@ public class PlayMenuManager : MonoBehaviour {
         SetStageImage();
     }
 
-	// Update is called once per frame
-	void Update ()
+    // Update is called once per frame
+    void Update ()
     {
 		if (manager.shouldRestoreDefaults)
         {
@@ -171,6 +205,7 @@ public class PlayMenuManager : MonoBehaviour {
     public void VersusButtonPressed()
     {
         playOptionsMenu.SetActive(false);
+        versusOptionsMenu.SetActive(false);
         versusMenu.SetActive(true);
         versusMenuStartOption.Select();
         versus = true;
@@ -184,6 +219,15 @@ public class PlayMenuManager : MonoBehaviour {
         SetStageImage();
     }
 
+    public void VersusOptionsButtonPressed()
+    {
+        versusMenu.SetActive(false);
+        versusOptionsMenu.SetActive(true);
+
+        SetSettings();
+        versusOptionsMenuStartOption.Select();
+    }
+
     public void CoopButtonPressed()
     {
         playOptionsMenu.SetActive(false);
@@ -191,10 +235,21 @@ public class PlayMenuManager : MonoBehaviour {
         coopMenuStartOption.Select();
         versus = false;
 
-        if (!GsmStagesEqual(arenaStages))
+        if (GameConstants.Unlocks.allCoopGameModes[activeCoopGameModeIndex] == "Arena")
         {
-            manager.gsm.activeStageIndex = 0;
-            manager.gsm.SetStages(arenaStages);
+            if (!GsmStagesEqual(arenaStages))
+            {
+                manager.gsm.activeStageIndex = 0;
+                manager.gsm.SetStages(arenaStages);
+            }
+        }
+        else if (GameConstants.Unlocks.allCoopGameModes[activeCoopGameModeIndex] == "Campaign")
+        {
+            if (!GsmStagesEqual(coopStages))
+            {
+                manager.gsm.activeStageIndex = 0;
+                manager.gsm.SetStages(coopStages);
+            }
         }
 
         SetStageImage();
@@ -567,5 +622,109 @@ public class PlayMenuManager : MonoBehaviour {
         }
 
         return true;
+    }
+
+    //////////     VERSUS OPTIONS SETTINGS     //////////
+    
+    public void ToggleRandomStageSelect()
+    {
+        manager.gsm.settings.SetRandomStageSelect(!manager.gsm.settings.randomStageSelect);
+        randomStageSelectSelected.SetActive(!randomStageSelectSelected.activeSelf);
+    }
+
+    public void ForwardNumRounds()
+    {
+        manager.gsm.settings.SetRoundsPerStage(manager.gsm.settings.roundsPerStage + 1);
+
+        if (manager.gsm.settings.roundsPerStage > maxNumberOfRounds)
+        {
+            manager.gsm.settings.SetRoundsPerStage(1);
+        }
+
+        numberOfRounds.text = manager.gsm.settings.roundsPerStage.ToString();
+    }
+
+    public void BackNumRounds()
+    {
+        manager.gsm.settings.SetRoundsPerStage(manager.gsm.settings.roundsPerStage - 1);
+
+        if (manager.gsm.settings.roundsPerStage < 1)
+        {
+            manager.gsm.settings.SetRoundsPerStage(maxNumberOfRounds);
+        }
+
+        numberOfRounds.text = manager.gsm.settings.roundsPerStage.ToString();
+    }
+
+    public void ForwardNumLives()
+    {
+        manager.gsm.settings.SetLivesPerRound(manager.gsm.settings.livesPerRound + 1);
+        
+        if (manager.gsm.settings.livesPerRound > maxNumberOfLives)
+        {
+            manager.gsm.settings.SetLivesPerRound(1);
+        }
+        
+        numberOfLives.text = manager.gsm.settings.livesPerRound.ToString();
+    }
+
+    public void BackNumLives()
+    {
+        manager.gsm.settings.SetLivesPerRound(manager.gsm.settings.livesPerRound - 1);
+        
+        if (manager.gsm.settings.livesPerRound < 1)
+        {
+            manager.gsm.settings.SetLivesPerRound(maxNumberOfLives);
+        }
+        
+        numberOfLives.text = manager.gsm.settings.livesPerRound.ToString();
+    }
+
+    public void ForwardTime()
+    {
+        manager.gsm.settings.SetTimePerRound(manager.gsm.settings.timePerRound + 30);
+
+        if (manager.gsm.settings.timePerRound > maxTimePerRound)
+        {
+            manager.gsm.settings.SetTimePerRound(0);
+        }
+
+        timePerRound.text = ParseTime(manager.gsm.settings.timePerRound);
+    }
+
+    public void BackTime()
+    {
+        manager.gsm.settings.SetTimePerRound(manager.gsm.settings.timePerRound - 30);
+
+        if (manager.gsm.settings.timePerRound < 0)
+        {
+            manager.gsm.settings.SetTimePerRound(maxTimePerRound);
+        }
+
+        timePerRound.text = ParseTime(manager.gsm.settings.timePerRound);
+    }
+
+    private string ParseTime(int seconds)
+    {
+        if (seconds == 0)
+        {
+            return "∞";
+        }
+
+        int numberOf30SecondIncrements = seconds / 30;
+        int remainder = seconds % 60;
+
+        string time = numberOf30SecondIncrements / 2 + ":" + ParseSeconds2Digit(remainder);
+
+        return time;
+    }
+
+    private string ParseSeconds2Digit(int seconds)
+    {
+        if (seconds < 10)
+        {
+            return "0" + seconds;
+        }
+        else return seconds.ToString();
     }
 }

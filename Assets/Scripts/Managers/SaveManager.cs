@@ -81,7 +81,7 @@ public class SaveManager : MonoBehaviour
             }
 
             List<string> chaptersToUnlock = new List<string>();
-            foreach (string coopStage in GameConstants.Unlocks.allCoopStages)
+            foreach (string coopStage in data.coopStages)
             {
                 if (coopStage.Contains("Resolution")) // if they have completed a chapter, make sure to unlock the next chapter on startup.
                 {
@@ -220,8 +220,10 @@ public class SaveManager : MonoBehaviour
         public bool showHealthValues;
         public bool showBlood;
 
-        public int roundsPerStage;
         public bool randomStageSelect;
+        public int roundsPerStage;
+        public int livesPerRound;
+        public int timePerRound;
 
         public bool windowed;
         public int resolution;
@@ -244,8 +246,10 @@ public class SaveManager : MonoBehaviour
             showHealthValues = data.showHealthValues;
             showBlood = data.showBlood;
 
-            roundsPerStage = data.roundsPerStage;
             randomStageSelect = data.randomStageSelect;
+            roundsPerStage = data.roundsPerStage;
+            livesPerRound = data.livesPerRound;
+            timePerRound = data.timePerRound;
 
             windowed = data.windowed;
             resolution = data.resolution;
@@ -264,8 +268,10 @@ public class SaveManager : MonoBehaviour
             data.showHealthValues = showHealthValues;
             data.showBlood = showBlood;
 
-            data.roundsPerStage = roundsPerStage;
             data.randomStageSelect = randomStageSelect;
+            data.roundsPerStage = roundsPerStage;
+            data.livesPerRound = livesPerRound;
+            data.timePerRound = timePerRound;
 
             data.windowed = windowed;
             data.resolution = resolution;

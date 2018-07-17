@@ -27,8 +27,10 @@ public class GameData : MonoBehaviour
     public bool showHealthValues;
     public bool showBlood;
 
-    public int roundsPerStage;
     public bool randomStageSelect;
+    public int roundsPerStage;
+    public int livesPerRound;
+    public int timePerRound;
 
     public bool windowed;
     public int resolution;

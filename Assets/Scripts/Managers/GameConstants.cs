@@ -182,7 +182,7 @@ public static class GameConstants {
         public static List<string> startingArenaStages = new List<string>(new string[] { "Stadium", "Beach" });
 
         public static List<string> allHats = new List<string>(new string[] { "None", "Bandana", "Coif", "Helmet", "Hood", "Jester", "Noble", "Cap", "Crown", "Viking", "Space", "Tricorn", "Spartan", "Fedora", "Bowler", "Tophat", "Boater", "Shades", "Bucket", "Cone", "Sunhat", "Tiara", "Circlet", "Headband", "Elf Hat", "Mustache", "Wizard", "Squid", "Pirate", "Bun Black", "Messy Black", "Ponytail Black", "Bun Blond", "Messy Blond", "Ponytail Blond", "Bun Brown", "Messy Brown", "Ponytail Brown", "Bun Red", "Messy Red", "Ponytail Red", "Peasant", "Umbrella", "Snorkel" });
-        public static List<string> allMisc = new List<string>(new string[] { "None", "Belt", "Cape", "Spaulders", "Breastplate", "Armor", "Necklace", "Collar", "Ruff", "Spikes", "Dagger", "Equipment", "Vest", "Sweater Vest", "Skirt", "Tabard", "Loincloth", "Poncho", "Dress", "Shirt", "Tuxedo", "Scarf", "Backpack", "Lantern", "Tunic", "Innertube", "Towel" });
+        public static List<string> allMisc = new List<string>(new string[] { "None", "Belt", "Cape", "Spaulders", "Breastplate", "Armor", "Necklace", "Collar", "Ruff", "Spikes", "Dagger", "Equipment", "Vest", "Sweater Vest", "Skirt", "Tabard", "Loincloth", "Poncho", "Dress", "Shirt", "Tuxedo", "Scarf", "Backpack", "Lantern", "Tunic", "Innertube", "Towel", "Bone Armor" });
         public static List<string> allSkins = new List<string>(new string[] { "Medium", "Dark", "Light", "Bones" });
 
         public static List<string> allVersusStages = new List<string>(new string[] { "Joust", "Castle", "Tavern", "Cabin", "Tower", "Ship", "Space Station", "Throne Room", "Pond", "Highlands", "Icebergs", "Bridge", "Market", "Volcano", "Colosseum", "Dungeon", "Mill", "Mansion" });
@@ -290,6 +290,7 @@ public static class GameConstants {
         NEW_KING, // Done
         WE_HAVE_LIFTOFF, // Done
         SCOURGE_OF_THE_SEWERS, // Done
-        BARBARIANS_BANE // Done
+        BARBARIANS_BANE, // Done
+        NECROMANCERS_NEMESIS, // Done
     };
 }

@@ -8,6 +8,7 @@ public class EnemyMan : Man {
     public bool disappearsOnDeath = true;
     public bool isBoss;
     public bool hasSamePlayerCustomizationOptions = false;
+    public bool isVersusEnemy = false;
 
 	// Use this for initialization
 	public override void Start ()
@@ -49,7 +50,7 @@ public class EnemyMan : Man {
         {
             return base.CanUpdateUiHealth();
         }
-        else return false;
+        else return isVersusEnemy;
     }
 
     protected override void ExtraDeathEffects()
