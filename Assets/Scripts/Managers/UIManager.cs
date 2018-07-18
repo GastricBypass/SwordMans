@@ -32,6 +32,9 @@ public class UIManager : MonoBehaviour
 
     public Text timeRemaining;
 
+    public GameObject[] lifeCounters;
+    public Text[] livesRemaining;
+
     public bool gameOver;
 
     public GameObject unlockedItem;
@@ -57,6 +60,8 @@ public class UIManager : MonoBehaviour
         SetHealthBars();
 
         SetTimeRemaining();
+
+        SetLives();
 
         StartCoroutine(DisplayRoundNumber());
     }
@@ -283,7 +288,20 @@ public class UIManager : MonoBehaviour
         {
             if (deadPlayers[i])
             {
-                numDead++;
+                int lives;
+                if (TryParseLivesRemaining(livesRemaining[i].text, out lives)) 
+                {
+                    if (lives > 1)
+                    {
+                        livesRemaining[i].text = "x" + (lives - 1);
+                        gsm.RespawnPlayers(new int[] { i + 1 });
+                        deadPlayers[i] = false;
+                    }
+                    else
+                    {
+                        numDead++;
+                    }
+                }
             }
             else
             {
@@ -321,6 +339,29 @@ public class UIManager : MonoBehaviour
         }
     }
 
+    public void SetLives()
+    {
+        if (gsm.settings.livesPerRound > 1)
+        {
+            foreach (GameObject lifeCounter in lifeCounters)
+            {
+                lifeCounter.SetActive(true);
+            }
+
+            foreach (var lifeText in livesRemaining)
+            {
+                lifeText.text = "x" + gsm.settings.livesPerRound;
+            }
+        }
+        else
+        {
+            foreach (GameObject lifeCounter in lifeCounters)
+            {
+                lifeCounter.SetActive(false);
+            }
+        }
+    }
+
     public virtual void PlayerDead(int playerNumber)
     {
         if (playerNumber > 0 && playerNumber <= 4)
@@ -346,7 +387,8 @@ public class UIManager : MonoBehaviour
 
     public int GetPlayerNumberWithMostHealth()
     {
-        float max = 0;
+        float maxHealth = 0;
+        int maxLives = 0;
         int playerNumber = 0;
         int numInactivePlayers = 0;
 
@@ -357,11 +399,24 @@ public class UIManager : MonoBehaviour
                 numInactivePlayers++;
                 continue;
             }
-
-            if (healthMeters[i].value > max)
+            
+            int lives;
+            if (TryParseLivesRemaining(livesRemaining[i].text, out lives))
             {
-                max = healthMeters[i].value;
-                playerNumber = i + 1;
+                if (lives > maxLives)
+                {
+                    maxLives = lives;
+                    maxHealth = healthMeters[i].value;
+                    playerNumber = i + 1;
+                }
+                else if (lives == maxLives)
+                {
+                    if (healthMeters[i].value > maxHealth)
+                    {
+                        maxHealth = healthMeters[i].value;
+                        playerNumber = i + 1;
+                    }
+                }
             }
         }
 
@@ -371,6 +426,13 @@ public class UIManager : MonoBehaviour
         }
 
         return playerNumber;
+    }
+
+    private bool TryParseLivesRemaining(string livesText, out int livesRemaining)
+    {
+        string number = livesText.Replace("x", string.Empty);
+
+        return int.TryParse(number, out livesRemaining);
     }
 
     public virtual IEnumerator StartEndGameCountdown()

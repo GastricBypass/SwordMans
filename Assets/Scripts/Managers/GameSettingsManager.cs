@@ -266,7 +266,7 @@ public class GameSettingsManager : MonoBehaviour {
             if (numberOfPlayers > playerNumberIndex)
             {
                 player = Instantiate(playerPrefab) as Man;
-                if (i == Input.GetJoystickNames().Length) // player with number = number of controllers + 1 will use keyboard controls
+                if (playerNumberIndex == Input.GetJoystickNames().Length) // player with number = number of controllers + 1 will use keyboard controls
                 {
                     player.usesKeyboardControls = true;
                 }
