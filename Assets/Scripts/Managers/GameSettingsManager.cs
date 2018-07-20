@@ -465,9 +465,9 @@ public class GameSettingsManager : MonoBehaviour {
         public bool showBlood = true;
 
         public bool randomStageSelect = false;
-        public int roundsPerStage = 1;
-        public int livesPerRound = 3;
-        public int timePerRound = 150; // seconds
+        public int roundsPerStage = 3;
+        public int livesPerRound = 1;
+        public int timePerRound = 0; // seconds
 
         public bool windowed = false;
         public int resolution;

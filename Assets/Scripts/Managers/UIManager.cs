@@ -294,7 +294,7 @@ public class UIManager : MonoBehaviour
                     if (lives > 1)
                     {
                         livesRemaining[i].text = "x" + (lives - 1);
-                        gsm.RespawnPlayers(new int[] { i + 1 });
+                        StartCoroutine(RespawnPlayerAfterTime(i + 1, 1));
                         deadPlayers[i] = false;
                     }
                     else
@@ -323,6 +323,13 @@ public class UIManager : MonoBehaviour
         {
             return false;
         }
+    }
+
+    public IEnumerator RespawnPlayerAfterTime(int playerNumber, float time)
+    {
+        yield return new WaitForSeconds(time);
+
+        gsm.RespawnPlayers(new int[] { playerNumber });
     }
 
     public void SetTimeRemaining()
@@ -359,6 +366,11 @@ public class UIManager : MonoBehaviour
             {
                 lifeCounter.SetActive(false);
             }
+        }
+
+        foreach (var lifeText in livesRemaining)
+        {
+            lifeText.text = "x" + gsm.settings.livesPerRound;
         }
     }
 

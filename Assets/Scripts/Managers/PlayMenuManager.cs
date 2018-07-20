@@ -172,6 +172,7 @@ public class PlayMenuManager : MonoBehaviour {
 		if (manager.shouldRestoreDefaults)
         {
             versusMenu.SetActive(false);
+            versusOptionsMenu.SetActive(false);
             coopMenu.SetActive(false);
             howToPlayMenu.SetActive(false);
             tutorialMenu.SetActive(false);
@@ -188,6 +189,7 @@ public class PlayMenuManager : MonoBehaviour {
     public void PlayOptionsPressed()
     {
         versusMenu.SetActive(false);
+        versusOptionsMenu.SetActive(false);
         coopMenu.SetActive(false);
         howToPlayMenu.SetActive(false);
         playOptionsMenu.SetActive(true);

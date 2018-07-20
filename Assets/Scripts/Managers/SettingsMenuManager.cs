@@ -24,11 +24,11 @@ public class SettingsMenuManager : MonoBehaviour
     public Button toggleShowBlood;
     private GameObject showBloodSelected;
 
-    public int maxNumberOfRounds = 5;
-    public Text numberOfRounds;
+    //public int maxNumberOfRounds = 5;
+    //public Text numberOfRounds;
 
-    public Button toggleRandomStageSelect;
-    private GameObject randomStageSelectSelected;
+    //public Button toggleRandomStageSelect;
+    //private GameObject randomStageSelectSelected;
     
     public Button toggleWindowed;
     private GameObject toggleWindowedSelected;
@@ -62,7 +62,7 @@ public class SettingsMenuManager : MonoBehaviour
         colorizeHealthBarsSelected = toggleColorizeHealthBars.transform.Find("Selected").gameObject;
         showHealthValuesSelected = toggleShowHealthValues.transform.Find("Selected").gameObject;
         showBloodSelected = toggleShowBlood.transform.Find("Selected").gameObject;
-        randomStageSelectSelected = toggleRandomStageSelect.transform.Find("Selected").gameObject;
+        //randomStageSelectSelected = toggleRandomStageSelect.transform.Find("Selected").gameObject;
         musicOnSelected = toggleMusicOn.transform.Find("Selected").gameObject;
         toggleWindowedSelected = toggleWindowed.transform.Find("Selected").gameObject;
 
@@ -86,8 +86,8 @@ public class SettingsMenuManager : MonoBehaviour
             colorizeHealthBarsSelected.SetActive(manager.gsm.settings.colorizeHealthBars);
             showHealthValuesSelected.SetActive(manager.gsm.settings.showHealthValues);
             showBloodSelected.SetActive(manager.gsm.settings.showBlood);
-            numberOfRounds.text = manager.gsm.settings.roundsPerStage.ToString();
-            randomStageSelectSelected.SetActive(manager.gsm.settings.randomStageSelect);
+            //numberOfRounds.text = manager.gsm.settings.roundsPerStage.ToString();
+            //randomStageSelectSelected.SetActive(manager.gsm.settings.randomStageSelect);
 
             musicOnSelected.SetActive(manager.gsm.settings.musicOn);
             manager.gsm.SetMusicOn(manager.gsm.settings.musicOn);
@@ -190,35 +190,35 @@ public class SettingsMenuManager : MonoBehaviour
         showBloodSelected.SetActive(!showBloodSelected.activeSelf);
     }
 
-    public void ForwardNumRounds()
-    {
-        manager.gsm.settings.SetRoundsPerStage(manager.gsm.settings.roundsPerStage + 1);
-        
-        if (manager.gsm.settings.roundsPerStage > maxNumberOfRounds)
-        {
-            manager.gsm.settings.SetRoundsPerStage(1);
-        }
-
-        numberOfRounds.text = manager.gsm.settings.roundsPerStage.ToString();
-    }
-
-    public void BackNumRounds()
-    {
-        manager.gsm.settings.SetRoundsPerStage(manager.gsm.settings.roundsPerStage - 1);
-
-        if (manager.gsm.settings.roundsPerStage < 1)
-        {
-            manager.gsm.settings.SetRoundsPerStage(maxNumberOfRounds);
-        }
-
-        numberOfRounds.text = manager.gsm.settings.roundsPerStage.ToString();
-    }
-
-    public void ToggleRandomStageSelect()
-    {
-        manager.gsm.settings.SetRandomStageSelect(!manager.gsm.settings.randomStageSelect);
-        randomStageSelectSelected.SetActive(!randomStageSelectSelected.activeSelf);
-    }
+    //public void ForwardNumRounds()
+    //{
+    //    manager.gsm.settings.SetRoundsPerStage(manager.gsm.settings.roundsPerStage + 1);
+    //    
+    //    if (manager.gsm.settings.roundsPerStage > maxNumberOfRounds)
+    //    {
+    //        manager.gsm.settings.SetRoundsPerStage(1);
+    //    }
+    //
+    //    numberOfRounds.text = manager.gsm.settings.roundsPerStage.ToString();
+    //}
+    //
+    //public void BackNumRounds()
+    //{
+    //    manager.gsm.settings.SetRoundsPerStage(manager.gsm.settings.roundsPerStage - 1);
+    //
+    //    if (manager.gsm.settings.roundsPerStage < 1)
+    //    {
+    //        manager.gsm.settings.SetRoundsPerStage(maxNumberOfRounds);
+    //    }
+    //
+    //    numberOfRounds.text = manager.gsm.settings.roundsPerStage.ToString();
+    //}
+    //
+    //public void ToggleRandomStageSelect()
+    //{
+    //    manager.gsm.settings.SetRandomStageSelect(!manager.gsm.settings.randomStageSelect);
+    //    randomStageSelectSelected.SetActive(!randomStageSelectSelected.activeSelf);
+    //}
 
     public void ToggleWindowed()
     {
