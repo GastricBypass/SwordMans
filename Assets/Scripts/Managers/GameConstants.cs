@@ -174,7 +174,7 @@ public static class GameConstants {
         public static string miscLocation = "Body/Body Spine/Items/";
 
         public static List<string> startingHats = new List<string>(new string[] { "None", "Bandana", "Headband", "Bun Black", "Messy Black", "Ponytail Black", "Peasant",
-                                                         /* TEMP STARTING HATS */ "Buds", "Penguin" });
+                                                         /* TEMP STARTING HATS */ });
         public static List<string> startingMisc = new List<string>(new string[] { "None", "Belt", "Shirt", "Scarf", "Backpack", "Loincloth", "Tunic" });
         public static List<string> startingSkins = new List<string>(new string[] { "Medium", "Dark", "Light" });
 
