@@ -170,9 +170,23 @@ public class Steam : MonoBehaviour
 
         // mark it down
         SteamUserStats.SetAchievement(achievement.m_eAchievementID.ToString());
+        GameSettingsManager gsm = FindObjectOfType<GameSettingsManager>();
+        if (gsm != null)
+        {
+            gsm.data.UnlockAchievement(achievement.m_eAchievementID);
+        }
 
         // Store stats end of frame
         //m_bStoreStats = true;
+    }
+
+    public bool IsAchievementUnlocked(GameConstants.AchievementId achievementId)
+    {
+        bool achieved;
+        // get the achievement from steam instead of checking the cached version in case the stats and achievements havent been loaded yet.
+        SteamUserStats.GetAchievement(achievementId.ToString(), out achieved); 
+
+        return achieved;
     }
 
     public void AddBoostUsed(float boost)

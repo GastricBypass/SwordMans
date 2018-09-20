@@ -102,6 +102,15 @@ public class SaveManager : MonoBehaviour
             {
                 data.UnlockCoopStage(chapter);
             }
+
+            // If a player is doesn't have an achieved achievement in their data, add it and give them the money.
+            foreach (GameConstants.AchievementId achievement in (GameConstants.AchievementId[])Enum.GetValues(typeof(GameConstants.AchievementId)))
+            {
+                if (!data.unlockedAchievements.Contains(achievement) && data.IsAchievementUnlockedOnSteam(achievement))
+                {
+                    data.UnlockAchievement(achievement);
+                }
+            }
         }
 
         else
@@ -161,7 +170,10 @@ public class SaveManager : MonoBehaviour
         private List<string> unlockedVersusStages;
         private List<string> unlockedCoopStages;
         private List<string> unlockedArenaStages;
+
         private List<string> currentShopItems;
+
+        private List<GameConstants.AchievementId> unlockedAchievements;
 
         private DateTime lastPlayDate;
 
@@ -181,6 +193,8 @@ public class SaveManager : MonoBehaviour
             unlockedArenaStages = data.arenaStages;
             
             currentShopItems = data.shopItems;
+
+            unlockedAchievements = data.unlockedAchievements;
 
             // This whole mess was to reset the shop at midnight, but I think just storing the lastPlayDate on the data should do it.
             if (data.lastPlayDate.Date != DateTime.Now.Date) // reset shop items at midnight local time. This should only take effect after reloading the game
@@ -210,6 +224,8 @@ public class SaveManager : MonoBehaviour
             {
                 data.shopItems = new List<string>();
             }
+
+            data.unlockedAchievements = unlockedAchievements;
         }
     }
 
@@ -258,7 +274,7 @@ public class SaveManager : MonoBehaviour
             musicOn = data.musicOn;
             musicVolume = data.musicVolume;
             effectsVolume = data.effectsVolume;
-
+            
             weaponsUsed = data.weaponsUsed;
         }
 
@@ -280,7 +296,7 @@ public class SaveManager : MonoBehaviour
             data.musicOn = musicOn;
             data.musicVolume = musicVolume;
             data.effectsVolume = effectsVolume;
-
+            
             data.weaponsUsed = weaponsUsed;
         }
     }

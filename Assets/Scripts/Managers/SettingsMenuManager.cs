@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
@@ -352,5 +353,14 @@ public class SettingsMenuManager : MonoBehaviour
     {
         // Remember that resetting stats and achievements also requires you to delete the settings file in the game data.
         manager.gsm.steam.ResetStatsAndAchievements();
+    }
+
+    public void UnlockAllAchievements()
+    {
+        // Gives you all that gold too, but only if it unlocks them
+        foreach (GameConstants.AchievementId achievement in (GameConstants.AchievementId[])Enum.GetValues(typeof(GameConstants.AchievementId)))
+        {
+            manager.gsm.steam.UnlockAchievement(achievement);
+        }
     }
 }

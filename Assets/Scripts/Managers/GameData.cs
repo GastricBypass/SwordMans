@@ -17,6 +17,7 @@ public class GameData : MonoBehaviour
     public List<string> versusStages;
     public List<string> coopStages;
     public List<string> arenaStages;
+    public List<GameConstants.AchievementId> unlockedAchievements;
 
     public List<string> shopItems;
 
@@ -137,6 +138,24 @@ public class GameData : MonoBehaviour
             Insert(arenaStages, stageName);
             SaveCosmetics();
         }
+    }
+
+    // Achievement: all of them
+    public void UnlockAchievement(GameConstants.AchievementId achievement)
+    {
+        // This should ONLY be done on achievements that are already unlocked on steam
+
+        if (!unlockedAchievements.Contains(achievement))
+        {
+            unlockedAchievements.Add(achievement);
+            AddGold(50);
+            SaveCosmetics();
+        }
+    }
+
+    public bool IsAchievementUnlockedOnSteam(GameConstants.AchievementId achievement)
+    {
+        return FindObjectOfType<GameSettingsManager>().steam.IsAchievementUnlocked(achievement);
     }
 
     public void AddGold(float amount)
