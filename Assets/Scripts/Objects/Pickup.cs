@@ -53,13 +53,17 @@ public class Pickup : MonoBehaviour {
             ExtraEffects(recipient);
             if (destroyedOnPickup)
             {
-                
                 StartCoroutine(WaitToDestroy(this.gameObject, duration));
-                this.GetComponent<Collider>().enabled = false;
-                this.GetComponent<MeshRenderer>().enabled = false;
+                Disable();
                 //this.gameObject.SetActive(false); // hide the object and destroy later commenting this out makes it actually get to the end, but it doesn't set everything back to normal
             }
         }
+    }
+
+    public void Disable()
+    {
+        this.GetComponent<Collider>().enabled = false;
+        this.GetComponent<MeshRenderer>().enabled = false;
     }
 
     protected virtual void ExtraEffects(BodyPart recipient)

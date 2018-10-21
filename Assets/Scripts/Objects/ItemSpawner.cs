@@ -90,6 +90,12 @@ public class ItemSpawner : IEntity {
 
     public IEnumerator WaitToDestroySpawn(GameObject toDestroy, float time)
     {
+        Pickup pickup = toDestroy.GetComponent<Pickup>();
+        if (pickup != null)
+        {
+            pickup.Disable();
+        }
+
         yield return new WaitForSeconds(time);
         Destroy(toDestroy.gameObject);
     }
