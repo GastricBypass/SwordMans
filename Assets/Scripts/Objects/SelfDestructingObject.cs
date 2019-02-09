@@ -10,6 +10,8 @@ public class SelfDestructingObject : MonoBehaviour
     public bool destroyOnTriggerEnter = true;
     public bool onlyDestroyWhenHittingNonRigidbodies = true;
 
+    public List<GameObject> exemptObjects;
+
 	// Use this for initialization
 	void Start()
     {
@@ -30,7 +32,8 @@ public class SelfDestructingObject : MonoBehaviour
     {
         if (destroyOnCollision)
         {
-            if (onlyDestroyWhenHittingNonRigidbodies && FindParentRigidbody(collision.collider.transform) != null)
+            Rigidbody parentBody = FindParentRigidbody(collision.collider.transform);
+            if (parentBody != null && (onlyDestroyWhenHittingNonRigidbodies || exemptObjects.Contains(parentBody.gameObject)))
             {
                 return;
             }
@@ -43,7 +46,8 @@ public class SelfDestructingObject : MonoBehaviour
     {
         if (destroyOnTriggerEnter)
         {
-            if (onlyDestroyWhenHittingNonRigidbodies && FindParentRigidbody(other.transform) != null)
+            Rigidbody parentBody = FindParentRigidbody(other.transform);
+            if (parentBody != null && (onlyDestroyWhenHittingNonRigidbodies || exemptObjects.Contains(parentBody.gameObject)))
             {
                 return;
             }

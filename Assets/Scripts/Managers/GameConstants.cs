@@ -174,16 +174,16 @@ public static class GameConstants {
         public static string miscLocation = "Body/Body Spine/Items/";
 
         public static List<string> startingHats = new List<string>(new string[] { "None", "Bandana", "Headband", "Bun Black", "Messy Black", "Ponytail Black", "Peasant",
-                                                         /* TEMP STARTING HATS */ "Santa"});
+                                                         /* TEMP STARTING HATS */ "Hearts", "Arrow"});
         public static List<string> startingMisc = new List<string>(new string[] { "None", "Belt", "Shirt", "Scarf", "Backpack", "Loincloth", "Tunic",
-                                                         /* TEMP STARTING MISC */ "Coat"});
+                                                         /* TEMP STARTING MISC */ });
         public static List<string> startingSkins = new List<string>(new string[] { "Medium", "Dark", "Light" });
 
         public static List<string> startingVersusStages = new List<string>(new string[] { "Joust", "Castle", "Tavern", "Cabin", "Tower", "Ship", "Throne Room", "Pond", "Highlands", "Icebergs", "Bridge", "Market", "Volcano", "Colosseum", "Dungeon", "Mill", "Mansion", "Graveyard" });
         public static List<string> startingCoopStages = new List<string>(new string[] { "Ch 1" });
         public static List<string> startingArenaStages = new List<string>(new string[] { "Stadium", "Beach" });
 
-        public static List<string> allHats = new List<string>(new string[] { "None", "Bandana", "Coif", "Helmet", "Hood", "Jester", "Noble", "Cap", "Crown", "Viking", "Space", "Tricorn", "Spartan", "Fedora", "Bowler", "Tophat", "Boater", "Shades", "Bucket", "Cone", "Sunhat", "Tiara", "Circlet", "Headband", "Elf Hat", "Mustache", "Wizard", "Squid", "Pirate", "Bun Black", "Messy Black", "Ponytail Black", "Bun Blond", "Messy Blond", "Ponytail Blond", "Bun Brown", "Messy Brown", "Ponytail Brown", "Bun Red", "Messy Red", "Ponytail Red", "Peasant", "Umbrella", "Snorkel", "Buds", "Penguin", "Pumpkin", "Beak", "Santa" });
+        public static List<string> allHats = new List<string>(new string[] { "None", "Bandana", "Coif", "Helmet", "Hood", "Jester", "Noble", "Cap", "Crown", "Viking", "Space", "Tricorn", "Spartan", "Fedora", "Bowler", "Tophat", "Boater", "Shades", "Bucket", "Cone", "Sunhat", "Tiara", "Circlet", "Headband", "Elf Hat", "Mustache", "Wizard", "Squid", "Pirate", "Bun Black", "Messy Black", "Ponytail Black", "Bun Blond", "Messy Blond", "Ponytail Blond", "Bun Brown", "Messy Brown", "Ponytail Brown", "Bun Red", "Messy Red", "Ponytail Red", "Peasant", "Umbrella", "Snorkel", "Buds", "Penguin", "Pumpkin", "Beak", "Santa", "Beanie", "Earmuffs", "Hearts", "Arrow" });
         public static List<string> allMisc = new List<string>(new string[] { "None", "Belt", "Cape", "Spaulders", "Breastplate", "Armor", "Necklace", "Collar", "Ruff", "Spikes", "Dagger", "Equipment", "Vest", "Sweater Vest", "Skirt", "Tabard", "Loincloth", "Poncho", "Dress", "Shirt", "Tuxedo", "Scarf", "Backpack", "Lantern", "Tunic", "Innertube", "Towel", "Bone Armor", "Cloak", "Turkey", "Coat" });
         public static List<string> allSkins = new List<string>(new string[] { "Medium", "Dark", "Light", "Bones" });
 
@@ -193,7 +193,7 @@ public static class GameConstants {
 
         public static List<string> allCoopGameModes = new List<string>(new string[] { "Arena", "Campaign" });
 
-        public static List<string> purchasableHats = new List<string>(new string[] { "Bandana", "Coif", "Helmet", "Hood", "Jester", "Noble", "Cap", "Viking", "Tricorn", "Spartan", "Fedora", "Bowler", "Tophat", "Boater", "Shades", "Bucket", "Cone", "Sunhat", "Tiara", "Circlet", "Headband", "Elf Hat", "Mustache", "Wizard", "Bun Black", "Messy Black", "Ponytail Black", "Bun Blond", "Messy Blond", "Ponytail Blond", "Bun Brown", "Messy Brown", "Ponytail Brown", "Bun Red", "Messy Red", "Ponytail Red", "Peasant", "Umbrella", "Snorkel", "Buds", "Penguin", "Pumpkin", "Beak", "Santa" });
+        public static List<string> purchasableHats = new List<string>(new string[] { "Bandana", "Coif", "Helmet", "Hood", "Jester", "Noble", "Cap", "Viking", "Tricorn", "Spartan", "Fedora", "Bowler", "Tophat", "Boater", "Shades", "Bucket", "Cone", "Sunhat", "Tiara", "Circlet", "Headband", "Elf Hat", "Mustache", "Wizard", "Bun Black", "Messy Black", "Ponytail Black", "Bun Blond", "Messy Blond", "Ponytail Blond", "Bun Brown", "Messy Brown", "Ponytail Brown", "Bun Red", "Messy Red", "Ponytail Red", "Peasant", "Umbrella", "Snorkel", "Buds", "Penguin", "Pumpkin", "Beak", "Santa", "Beanie", "Earmuffs", "Hearts", "Arrow" });
         public static List<string> purchasableMisc = new List<string>(new string[] { "Belt", "Cape", "Spaulders", "Breastplate", "Armor", "Necklace", "Collar", "Ruff", "Spikes", "Dagger", "Equipment", "Vest", "Sweater Vest", "Skirt", "Tabard", "Loincloth", "Poncho", "Dress", "Shirt", "Tuxedo", "Scarf", "Backpack", "Tunic", "Innertube", "Towel", "Cloak", "Turkey", "Coat" });
 
         public static Dictionary<string, float> hatPrices = new Dictionary<string, float>
@@ -241,7 +241,11 @@ public static class GameConstants {
             { "Penguin", 60 },
             { "Pumpkin", 80 },
             { "Beak", 30 },
-            { "Santa", 100 }
+            { "Santa", 100 },
+            { "Beanie", 30 },
+            { "Earmuffs", 30 },
+            { "Hearts", 60 },
+            { "Arrow", 60 }
         };
 
         public static Dictionary<string, float> miscPrices = new Dictionary<string, float>

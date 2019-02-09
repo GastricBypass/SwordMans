@@ -59,6 +59,10 @@ public class Sword : MonoBehaviour
             {
                 BlockInput();
             }
+            else
+            {
+                blocking = false;
+            }
 
             if (owner.health <= 0)
             {
@@ -189,7 +193,7 @@ public class Sword : MonoBehaviour
         canAttack = true;
     }
 
-    protected IEnumerator WaitAttackMS(float ms)
+    protected virtual IEnumerator WaitAttackMS(float ms)
     {
         attacking = true;
         yield return new WaitForSeconds(ms / 1000f);

@@ -157,10 +157,13 @@ public class Player : Sword {
     {
         if (blocking)
         {
-            Vector3 tug = Vector3.up * -blockStrength;
+            //Vector3 tug = Vector3.up * -blockStrength;
+            //
+            //rigbod.AddForceAtPosition(transform.TransformPoint(Vector3.up), tug);
+            //rigbod.AddForceAtPosition(transform.TransformPoint(-Vector3.up), -tug);
 
-            rigbod.AddForceAtPosition(transform.TransformPoint(Vector3.up), tug);
-            rigbod.AddForceAtPosition(transform.TransformPoint(-Vector3.up), -tug);
+            var rot = Quaternion.FromToRotation(transform.up, Vector3.up);       // TODO: Doesn't seem to be any different than above. Try to make it more consistently pull small objects
+            rigbod.AddTorque(new Vector3(rot.x, rot.y, rot.z) * blockStrength);
         }
     }
 }

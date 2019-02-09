@@ -25,7 +25,7 @@ public class DamageBoostPowerup : Pickup
                 damagingObject = weapons.GetChild(i).GetComponent<DamageMultiplyingObject>();
                 if (damagingObject == null)
                 {
-                    damagingObject = weapons.GetChild(i).Find("FlailHead").GetComponent<DamageMultiplyingObject>();
+                    damagingObject = weapons.GetChild(i).Find("FlailHead").GetComponent<DamageMultiplyingObject>(); // TODO: Might be a gun, maybe make a new extension of DamageMultiplying object that applies the multiplier to bullets
                 }
 
                 break;
