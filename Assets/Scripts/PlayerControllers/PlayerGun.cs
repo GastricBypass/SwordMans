@@ -8,6 +8,8 @@ public class PlayerGun : Player
     public float bulletSpeed = 50;
     public float bulletDamageMultiplier = 1;
     public bool automatic = false;
+    public bool hasLaserSights = false;
+    public GameObject laserSights;
 
     public float recoilRecoverySpeed = 0.1f;
 
@@ -116,6 +118,11 @@ public class PlayerGun : Player
     {
         if (blocking)
         {
+            if (hasLaserSights)
+            {
+                laserSights.SetActive(true);
+            }
+
             Vector3 desired = desiredAimingRotation.eulerAngles;
             Vector3 current = rigbod.rotation.eulerAngles;
             if (desiredAimingRotation != rigbod.rotation)
@@ -137,6 +144,11 @@ public class PlayerGun : Player
 
         else
         {
+            if (hasLaserSights)
+            {
+                laserSights.SetActive(false);
+            }
+
             rigbod.freezeRotation = false;
         }
     }
