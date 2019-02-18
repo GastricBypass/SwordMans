@@ -53,23 +53,12 @@ public class StickyObject : IEntity
 
         else if (stickToNonRigidBodies)
         {
-            //FixedJoint joint = collision.collider.gameObject.AddComponent<FixedJoint>();
-            //
-            //joint.connectedBody = this.GetComponent<Rigidbody>();
-            //joint.breakForce = breakForce;
-            // ^ this literally destroys the world
-            
             float angle = Vector3.Angle(rigbod.velocity, -collision.contacts[0].normal);
 
-            Debug.Log(//"Velocity: " + rigbod.velocity + "\n" + 
-                //"Normal: " + -collision.contacts[0].normal + "\n" + 
-                "Angle: " + angle);
-
-            if (angle < minNonRigbodStickAngle || angle > 180 - minNonRigbodStickAngle) // TODO: Work on this. Ideally, any narrow angle of impact shouldn't stick
+            if (angle < minNonRigbodStickAngle || angle > 180 - minNonRigbodStickAngle) //TODO: Works okay, but inconsistent. Ideally, any narrow angle of impact shouldn't stick ever.
             {
                 rigbod.constraints = RigidbodyConstraints.FreezeAll;
             }
-            //Destroy(rigBod);
         }
     }
 }
