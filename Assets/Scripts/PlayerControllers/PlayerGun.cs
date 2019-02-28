@@ -5,6 +5,10 @@ using UnityEngine;
 public class PlayerGun : Player
 {
     public Rigidbody bulletPrefab;
+    public AudioClip shootSound;
+    public float volumeMultiplier = 1;
+    public ParticleSystem muzzleFlashPrefab;
+
     public float bulletSpeed = 50;
     public float bulletDamageMultiplier = 1;
     public bool automatic = false;
@@ -18,8 +22,25 @@ public class PlayerGun : Player
     public Vector3 bulletSpawnOffset = new Vector3(0, 0, -1);
 
     private List<Rigidbody> bullets = new List<Rigidbody>();
+    private GameSettingsManager gsm;
+    private AudioSource audioSource;
+    private ParticleSystem muzzleFlash;
 
     private Quaternion desiredAimingRotation = Quaternion.Euler(0, 0, 0);
+
+    protected override void Start()
+    {
+        base.Start();
+
+        gsm = FindObjectOfType<GameSettingsManager>();
+        volumeMultiplier = volumeMultiplier * gsm.settings.effectsVolume;
+        audioSource = gameObject.AddComponent<AudioSource>();
+
+        if (muzzleFlashPrefab != null)
+        {
+            muzzleFlash = Instantiate<ParticleSystem>(muzzleFlashPrefab, this.transform);
+        }
+    }
 
     protected override IEnumerator WaitAttackMS(float ms)
     {
@@ -68,6 +89,22 @@ public class PlayerGun : Player
         bullet.velocity = spread * Vector3.back * bulletSpeed;
 
         bullets.Add(bullet);
+
+        PlayShotSound();
+        PlayMuzzleFlash();
+    }
+
+    public void PlayShotSound()
+    {
+        audioSource.volume = volumeMultiplier;
+        audioSource.clip = shootSound;
+
+        audioSource.Play();
+    }
+
+    public void PlayMuzzleFlash()
+    {
+        muzzleFlash.Play();
     }
 
     private Quaternion GetSpread()
