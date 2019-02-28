@@ -39,6 +39,7 @@ public class PlayerGun : Player
         if (muzzleFlashPrefab != null)
         {
             muzzleFlash = Instantiate<ParticleSystem>(muzzleFlashPrefab, this.transform);
+            muzzleFlash.gameObject.transform.position += bulletSpawnOffset + new Vector3(0, 0, 0.5f);
         }
     }
 
@@ -104,7 +105,10 @@ public class PlayerGun : Player
 
     public void PlayMuzzleFlash()
     {
-        muzzleFlash.Play();
+        if (muzzleFlash != null)
+        {
+            muzzleFlash.Play();
+        }
     }
 
     private Quaternion GetSpread()

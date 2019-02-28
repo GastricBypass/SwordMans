@@ -26,33 +26,56 @@ public class Exploder : MonoBehaviour
             explosion.damagePerTick = damagePerTick;
             explosion.tickLengthMS = tickLength * 1000f;
 
-            RadialPushingArea pusher = this.gameObject.GetComponent<RadialPushingArea>();
-            if (pusher == null)
-            { 
-                pusher = explosion.gameObject.AddComponent<RadialPushingArea>();
-            }
-            pusher.pushMagnitude = pushForce;
+            SetupPusher(explosion);
+            SetupSelfDestructer(explosion);
 
-            StartCoroutine(DestroyAfterTime(explosion.gameObject, explosionDuration));
+            //StartCoroutine(Utilities.DestroyAfterTime(explosion.gameObject, explosionDuration));
 
-            Collider collider = this.GetComponent<Collider>();
-            if (collider != null)
-            {
-                collider.isTrigger = true;
-            }
-            MeshRenderer mesh = this.GetComponent<MeshRenderer>();
-            if (mesh != null)
-            {
-                mesh.enabled = false;
-            }
+            //Collider collider = this.GetComponent<Collider>();
+            //if (collider != null)
+            //{
+            //    collider.isTrigger = true;
+            //}
+            //MeshRenderer mesh = this.GetComponent<MeshRenderer>();
+            //if (mesh != null)
+            //{
+            //    mesh.enabled = false;
+            //}
+            Destroy(this.gameObject);
         }
     }
 
-    public IEnumerator DestroyAfterTime(GameObject toDestroy, float time)
+    public void SetupPusher(DamagingArea explosion)
     {
-        yield return new WaitForSeconds(time);
-
-        Destroy(toDestroy);
-        Destroy(this.gameObject);
+        RadialPushingArea pusher = explosion.gameObject.GetComponent<RadialPushingArea>();
+        if (pusher == null)
+        {
+            pusher = explosion.gameObject.AddComponent<RadialPushingArea>();
+        }
+        pusher.pushMagnitude = pushForce;
     }
+
+    public void SetupSelfDestructer(DamagingArea explosion)
+    {
+        SelfDestructingObject destructer = explosion.gameObject.GetComponent<SelfDestructingObject>();
+        if (destructer == null)
+        {
+            destructer = explosion.gameObject.AddComponent<SelfDestructingObject>();
+        }
+        destructer.lifetime = explosionDuration;
+    }
+
+    //public IEnumerator DestroyAfterTime(GameObject toDestroy, float time)
+    //{
+    //    Disable();
+    //    yield return new WaitForSeconds(time);
+    //
+    //    Destroy(toDestroy);
+    //    Destroy(this.gameObject);
+    //}
+    //
+    //public void Disable()
+    //{
+    //    
+    //}
 }
