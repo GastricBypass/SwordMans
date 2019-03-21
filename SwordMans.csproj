@@ -161,7 +161,9 @@
     <Compile Include="Assets\Scripts\Objects\ViscousArea.cs" />
     <Compile Include="Assets\Scripts\Objects\Water.cs" />
     <Compile Include="Assets\Scripts\PlayerControllers\AIEnemy.cs" />
+    <Compile Include="Assets\Scripts\PlayerControllers\AIEnemyGun.cs" />
     <Compile Include="Assets\Scripts\PlayerControllers\BodyPart.cs" />
+    <Compile Include="Assets\Scripts\PlayerControllers\IGun.cs" />
     <Compile Include="Assets\Scripts\PlayerControllers\Man.cs" />
     <Compile Include="Assets\Scripts\PlayerControllers\Player.cs" />
     <Compile Include="Assets\Scripts\PlayerControllers\PlayerGun.cs" />
