@@ -10,7 +10,7 @@ public class AISwordMan : AIEnemy {
     public float zeal = 0.5f; // how likely they are to continue attacking when their target is at low health (changed aggression)
     public Vector2 aggressionSwitchRange = new Vector2(2, 5);
 
-    private bool aggressive;
+    protected bool aggressive;
     public float aggressionFactor;
 
     // Use this for initialization
