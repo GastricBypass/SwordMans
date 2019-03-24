@@ -137,6 +137,7 @@
     <Compile Include="Assets\Scripts\Objects\ITrap.cs" />
     <Compile Include="Assets\Scripts\Objects\ItemSpawner.cs" />
     <Compile Include="Assets\Scripts\Objects\KeepUpright.cs" />
+    <Compile Include="Assets\Scripts\Objects\Laser.cs" />
     <Compile Include="Assets\Scripts\Objects\LimitedItemSpawner.cs" />
     <Compile Include="Assets\Scripts\Objects\NextLevelArea.cs" />
     <Compile Include="Assets\Scripts\Objects\NonFloatyObject.cs" />
