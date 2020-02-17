@@ -23,6 +23,9 @@ public class PlayMenuManager : MonoBehaviour {
     // versus options
     public GameObject versusOptionsMenu;
     public Button versusOptionsMenuStartOption;
+    // gun mans
+    public Button toggleGunMans;
+    private GameObject gunMansSelected;
     // random stage
     public Button toggleRandomStageSelect;
     private GameObject randomStageSelectSelected;
@@ -81,6 +84,7 @@ public class PlayMenuManager : MonoBehaviour {
     {
         // versus options
         randomStageSelectSelected = toggleRandomStageSelect.transform.Find("Selected").gameObject;
+        gunMansSelected = toggleGunMans.transform.Find("Selected").gameObject;
 
         StartCoroutine(RepeatedlyTryToSetStages(0.1f));
 
@@ -124,10 +128,25 @@ public class PlayMenuManager : MonoBehaviour {
 
     public void SetSettings()
     {
+        gunMansSelected.SetActive(manager.gsm.gunMans);
+        SetWeapons();
+
         randomStageSelectSelected.SetActive(manager.gsm.settings.randomStageSelect);
         numberOfRounds.text = manager.gsm.settings.roundsPerStage.ToString();
         numberOfLives.text = manager.gsm.settings.livesPerRound.ToString();
         timePerRound.text = ParseTime(manager.gsm.settings.timePerRound);
+    }
+
+    private void SetWeapons()
+    {
+        if (manager.gsm.gunMans)
+        {
+            manager.customizationMenuManager.weapons = GameConstants.Weapons.guns;
+        }
+        else
+        {
+            manager.customizationMenuManager.weapons = GameConstants.Weapons.swords;
+        }
     }
 	
     public void SetStagePresets()
@@ -193,6 +212,7 @@ public class PlayMenuManager : MonoBehaviour {
         coopMenu.SetActive(false);
         howToPlayMenu.SetActive(false);
         playOptionsMenu.SetActive(true);
+        manager.backButton.gameObject.SetActive(true);
 
         if (versus)
         {
@@ -207,6 +227,7 @@ public class PlayMenuManager : MonoBehaviour {
     public void VersusButtonPressed()
     {
         playOptionsMenu.SetActive(false);
+        manager.backButton.gameObject.SetActive(false);
         versusOptionsMenu.SetActive(false);
         versusMenu.SetActive(true);
         versusMenuStartOption.Select();
@@ -232,7 +253,10 @@ public class PlayMenuManager : MonoBehaviour {
 
     public void CoopButtonPressed()
     {
+        manager.gsm.gunMans = false; // can't play gun mans in arena or campaign (yet?)
+
         playOptionsMenu.SetActive(false);
+        manager.backButton.gameObject.SetActive(false);
         coopMenu.SetActive(true);
         coopMenuStartOption.Select();
         versus = false;
@@ -628,6 +652,29 @@ public class PlayMenuManager : MonoBehaviour {
 
     //////////     VERSUS OPTIONS SETTINGS     //////////
     
+    public void ToggleGunMans()
+    {
+        manager.gsm.gunMans = !manager.gsm.gunMans;
+
+        List<int> indeces = new List<int>();
+        for (int i = 0; i < manager.gsm.playerWeapons.Count; i++)
+        {
+            indeces.Add(manager.customizationMenuManager.weapons.IndexOf(manager.gsm.playerWeapons[i]));
+        }
+
+        SetWeapons();
+
+        for (int i = 0; i < indeces.Count; i++)
+        {
+            if (indeces[i] >= 0) // to handle the case where the customization menu has not yet been loaded.
+            {
+                manager.gsm.playerWeapons[i] = manager.customizationMenuManager.weapons[indeces[i]];
+            }
+        }
+
+        gunMansSelected.SetActive(manager.gsm.gunMans);
+    }
+
     public void ToggleRandomStageSelect()
     {
         manager.gsm.settings.SetRandomStageSelect(!manager.gsm.settings.randomStageSelect);

@@ -297,7 +297,7 @@ public class Steam : MonoBehaviour
         {
             if (EResult.k_EResultOK == pCallback.m_eResult)
             {
-                Debug.Log("StoreStats - success");
+                //Debug.Log("StoreStats - success");
             }
             else if (EResult.k_EResultInvalidParam == pCallback.m_eResult)
             {

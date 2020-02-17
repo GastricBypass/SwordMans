@@ -16,7 +16,11 @@ public class CampaignUIManager : UIManager
     public float bossMaxHealth;
     public List<PathFollower> objectsToMoveOnBossDeath;
 
-    private bool playersLost;
+    public GameObject resumeButton;
+    public GameObject playButton;
+    public Canvas extraCanvas;
+
+    protected bool playersLost;
 
 	// Use this for initialization
 	public override void Start ()
@@ -75,16 +79,17 @@ public class CampaignUIManager : UIManager
 
     public override void StartPressed()
     {
-        if (introLevel)
+        if (extraCanvas != null)
         {
-            StartCoroutine(StartEndGameCountdown());
+            extraCanvas.gameObject.SetActive(!extraCanvas.gameObject.activeSelf);
         }
-        else if (cutsceneLevel)
+        if (cutsceneLevel)
         {
             LoadNextLevel();
         }
         else
         {
+            // For intro levels, you'll need to enable the "play" button and disable the "resume" button.
             base.StartPressed();
         }
     }
@@ -107,20 +112,18 @@ public class CampaignUIManager : UIManager
             return true;
         }
 
-        if (WinConditions())
+        if (nextLevelProgressionArea.playersInArea.Count >= gsm.numberOfPlayers - numDead)
         {
-            if (nextLevelProgressionArea.playersInArea.Count >= gsm.numberOfPlayers - numDead)
-            {
-                return true;
-            }
+            return true;
         }
 
         return false;
     }
 
-    public bool WinConditions()
+    // Start countdown from a button
+    public void StartNextLevelCountdown()
     {
-        return true;
+        StartCoroutine(StartEndGameCountdown());
     }
 
     public override IEnumerator StartEndGameCountdown()
@@ -169,6 +172,7 @@ public class CampaignUIManager : UIManager
     public void LoadNextLevel()
     {
         // bypass the game settings manager and just load the scene. That way it doesn't need to be unlocked
+        // This is needed for the intro levels, nothing else (I think)
         SceneManager.LoadScene(nextLevelName); 
     }
 }

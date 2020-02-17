@@ -33,6 +33,7 @@ public class GameSettingsManager : MonoBehaviour {
     public List<string> playerSkins = new List<string>(new string[4]);
 
     public Settings settings = new Settings();
+    public bool gunMans = false; // This isn't saved in settings
 
     public int roundNumber = 1;
     public int[] wins;
@@ -137,13 +138,13 @@ public class GameSettingsManager : MonoBehaviour {
 
     public void SwitchToLocalPlay()
     {
-        NetworkManager networkManager = FindObjectOfType<NetworkManager>();
-        if (networkManager != null)
-        {
-            Destroy(networkManager);
-        }
-
-        SceneManager.LoadScene("Main Menu");
+        //NetworkManager networkManager = FindObjectOfType<NetworkManager>();
+        //if (networkManager != null)
+        //{
+        //    Destroy(networkManager);
+        //}
+        //
+        //SceneManager.LoadScene("Main Menu");
     }
 
     public void SetCursor(bool active)
@@ -249,10 +250,10 @@ public class GameSettingsManager : MonoBehaviour {
         player.misc = playerMisc[i];
         player.skin = playerSkins[i];
 
-        if (NetworkServer.active)
-        {
-            NetworkServer.Spawn(player.gameObject);
-        }
+        //if (NetworkServer.active)
+        //{
+        //    NetworkServer.Spawn(player.gameObject);
+        //}
     }
 
     public void RespawnPlayers(int[] playerNumbers, float healthOverride = 1000)
@@ -291,10 +292,10 @@ public class GameSettingsManager : MonoBehaviour {
                 player.health = healthOverride;
             }
 
-            if (NetworkServer.active)
-            {
-                NetworkServer.Spawn(player.gameObject);
-            }
+            //if (NetworkServer.active)
+            //{
+            //    NetworkServer.Spawn(player.gameObject);
+            //}
 
             if (camera != null)
             {

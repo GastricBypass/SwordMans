@@ -68,6 +68,9 @@ public class UIManager : MonoBehaviour
 
     public void CommonStart()
     {
+        gsm = FindObjectOfType<GameSettingsManager>();
+        deadPlayers = new bool[gsm.numberOfPlayers + gsm.numberOfAIPlayers];
+
         audioSource = gameObject.AddComponent<AudioSource>();
 
         RectTransform backdrop = pauseMenu.transform.Find("Backdrop").GetComponent<RectTransform>();
@@ -88,8 +91,6 @@ public class UIManager : MonoBehaviour
 
         unlockedItem.SetActive(false);
 
-        gsm = FindObjectOfType<GameSettingsManager>();
-
         for (int i = 0; i < gsm.playerSpawns.Count; i++)
         {
             if (playerSpawns[i] == null)
@@ -99,8 +100,6 @@ public class UIManager : MonoBehaviour
             }
             gsm.playerSpawns[i] = playerSpawns[i];
         }
-
-        deadPlayers = new bool[gsm.numberOfPlayers + gsm.numberOfAIPlayers];
     }
 
     // Update is called once per frame

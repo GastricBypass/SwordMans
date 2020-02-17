@@ -158,8 +158,22 @@ public class MainMenuManager : IMainMenuManager
         DisableAllMenus();
         mainMenu.SetActive(true);
         backButton.gameObject.SetActive(false);
-        mainMenuStartOption.Select();
+        StartCoroutine(RepeatedlyTryToSelectMenuItem(0.1f));
         SendCameraToTransform(mainMenuCameraPosition);
+    }
+
+    public IEnumerator RepeatedlyTryToSelectMenuItem(float time)
+    {
+        yield return new WaitForSecondsRealtime(time);
+
+        if (!mainMenuStartOption.enabled)
+        {
+            StartCoroutine(RepeatedlyTryToSelectMenuItem(time));
+        }
+        else
+        {
+            mainMenuStartOption.Select();
+        }
     }
 
     public void DisableAllMenus()
@@ -179,7 +193,7 @@ public class MainMenuManager : IMainMenuManager
     {
         DisableAllMenus();
         playMenu.SetActive(true);
-        backButton.gameObject.SetActive(false);
+        //backButton.gameObject.SetActive(false);
 
         if (playMenuManager.versus)
         {
@@ -198,6 +212,7 @@ public class MainMenuManager : IMainMenuManager
     {
         DisableAllMenus();
         customizationMenu.SetActive(true);
+        backButton.gameObject.SetActive(false);
         SendCameraToTransform(customizationMenuCameraPosition);
         customizationMenuManager.SetCustomizationPresets();
         gsm.SpawnMenuPlayers();

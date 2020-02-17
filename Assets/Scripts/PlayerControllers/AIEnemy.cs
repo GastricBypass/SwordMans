@@ -143,10 +143,16 @@ public class AIEnemy : Sword {
     public void OnDestroy()
     {
         ArenaUIManager arenaUI = FindObjectOfType<ArenaUIManager>();
-
         if (arenaUI != null)
         {
             arenaUI.EnemyDied();
+        }
+
+        // I'm so sorry future me
+        CampaignArenaUIManager campaignArenaUI = FindObjectOfType<CampaignArenaUIManager>();
+        if (campaignArenaUI != null)
+        {
+            campaignArenaUI.EnemyDied();
         }
     }
 }

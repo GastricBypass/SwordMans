@@ -75,7 +75,7 @@ public class Player : Sword {
             boosting = true;
         }
 
-        if (Input.GetKeyUp(KeyCode.Space) || Input.GetKeyUp(KeyCode.LeftControl))
+        if (boosting && !(Input.GetKey(KeyCode.Space) || Input.GetKey(KeyCode.LeftControl)))
         {
             EndBoost();
         }
@@ -104,7 +104,7 @@ public class Player : Sword {
             boosting = true;
         }
 
-        if (Input.GetButtonUp(playerNumber + "Rise") || Input.GetButtonUp(playerNumber + "Lower"))
+        if (boosting && !(Input.GetButton(playerNumber + "Rise") || Input.GetButton(playerNumber + "Lower")))
         {
             EndBoost();
         }

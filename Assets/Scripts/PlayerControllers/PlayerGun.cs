@@ -26,6 +26,8 @@ public class PlayerGun : Player
     private AudioSource audioSource;
     private ParticleSystem muzzleFlash;
 
+    private DamageMultiplyingObject damageMultiplier; // used for damage multiplier powerup
+
     private Quaternion desiredAimingRotation = Quaternion.Euler(0, 0, 0);
 
     protected override void Start()
@@ -41,6 +43,8 @@ public class PlayerGun : Player
             muzzleFlash = Instantiate<ParticleSystem>(muzzleFlashPrefab, this.transform);
             muzzleFlash.gameObject.transform.position += bulletSpawnOffset + new Vector3(0, 0, 0.5f);
         }
+
+        damageMultiplier = this.gameObject.GetComponent<DamageMultiplyingObject>();
     }
 
     protected override IEnumerator WaitAttackMS(float ms)
@@ -85,6 +89,7 @@ public class PlayerGun : Player
         {
             damageMult.immuneToDamage.Add(this.owner);
             damageMult.damageMultiplier *= bulletDamageMultiplier;
+            damageMult.damageMultiplier *= damageMultiplier.damageMultiplier;
         }
 
         bullet.velocity = spread * Vector3.back * bulletSpeed;

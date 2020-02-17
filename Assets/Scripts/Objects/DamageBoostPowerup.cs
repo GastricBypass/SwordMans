@@ -18,7 +18,7 @@ public class DamageBoostPowerup : Pickup
 
         DamageMultiplyingObject damagingObject = null;
 
-        for (int i = 0; i < (weapons.childCount); i++)
+        for (int i = 0; i < weapons.childCount; i++)
         {
             if (weapons.GetChild(i).gameObject.activeSelf)
             {

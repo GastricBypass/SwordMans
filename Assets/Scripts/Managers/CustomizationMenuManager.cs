@@ -6,7 +6,7 @@ using UnityEngine.SceneManagement;
 
 public class CustomizationMenuManager : MonoBehaviour {
 
-    public IMainMenuManager manager;
+    public MainMenuManager manager;
 
     public List<string> colors;
     public List<string> weapons;
@@ -74,11 +74,24 @@ public class CustomizationMenuManager : MonoBehaviour {
 
     public void SetCustomizationPresets()
     {
+        if (manager.gsm.gunMans)
+        {
+            weapons = GameConstants.Weapons.guns;
+        }
+        else
+        {
+            weapons = GameConstants.Weapons.swords;
+        }
+
         for (int i = 0; i < 4; i++)
         {
             selectedColors[i].text = manager.gsm.playerColors[i];
             colorIndeces[i] = colors.IndexOf(manager.gsm.playerColors[i]);
 
+            if (!weapons.Contains(manager.gsm.playerWeapons[i]))
+            {
+                manager.gsm.playerWeapons[i] = weapons[0];
+            }
             selectedWeapons[i].text = manager.gsm.playerWeapons[i];
             weaponIndeces[i] = weapons.IndexOf(manager.gsm.playerWeapons[i]);
 
