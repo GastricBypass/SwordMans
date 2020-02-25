@@ -8,6 +8,7 @@ public class Toggler : MonoBehaviour {
     public float inactiveTimeMS;
 
     public IEntity target;
+    public List<GameObject> gameObjectsToDisable;
 
     private bool shouldSetActive = false;
     private bool shouldSetInactive = true;
@@ -43,6 +44,11 @@ public class Toggler : MonoBehaviour {
     private IEnumerator SetActive()
     {
         target.active = true;
+        foreach (var obj in gameObjectsToDisable)
+        {
+            obj.SetActive(true);
+        }
+
         shouldSetActive = false;
         yield return new WaitForSeconds(activeTimeMS / 1000f);
         shouldSetInactive = true;
@@ -51,6 +57,11 @@ public class Toggler : MonoBehaviour {
     private IEnumerator SetInactive()
     {
         target.active = false;
+        foreach (var obj in gameObjectsToDisable)
+        {
+            obj.SetActive(false);
+        }
+
         shouldSetInactive = false;
         yield return new WaitForSeconds(inactiveTimeMS / 1000f);
         shouldSetActive = true;
