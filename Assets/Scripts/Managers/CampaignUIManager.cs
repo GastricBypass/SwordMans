@@ -112,7 +112,7 @@ public class CampaignUIManager : UIManager
             return true;
         }
 
-        if (nextLevelProgressionArea.playersInArea.Count >= gsm.numberOfPlayers - numDead)
+        if (nextLevelProgressionArea.AllPlayersInArea(gsm.numberOfPlayers, deadPlayers))
         {
             return true;
         }

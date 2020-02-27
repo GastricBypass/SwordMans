@@ -37,4 +37,24 @@ public class NextLevelArea : MonoBehaviour {
             playersInArea.Remove(player.playerNumber);
         }
     }
+
+    // This actually checks that all of the player numbers in the area are as expected.
+    public bool AllPlayersInArea(int numPlayers, bool[] deadPlayers)
+    {
+        int numOfPlayersInArea = 0;
+
+        for (int i = 0; i < numPlayers; i++)
+        {
+            if (playersInArea.Contains(i + 1))
+            {
+                numOfPlayersInArea++;
+            }
+            else if (deadPlayers[i])
+            {
+                numOfPlayersInArea++;
+            }
+        }
+
+        return numPlayers <= numOfPlayersInArea;
+    }
 }
