@@ -7,6 +7,8 @@ public class FireTrap : ITrap
     public List<Transform> fireSpawners;
     public ParticleSystem firePrefab;
 
+    public List<Man> immuneToDamage;
+
     private List<ParticleSystem> fires = new List<ParticleSystem>();
 
     public override void Activate()
@@ -25,6 +27,12 @@ public class FireTrap : ITrap
             {
                 audio.volume = audio.volume / fireSpawners.Count;
                 StartCoroutine(waitToStopSound(main.duration, audio));
+            }
+
+            var damage = fire.gameObject.GetComponent<DamagingArea>();
+            if (damage != null)
+            {
+                damage.immuneToDamage.AddRange(immuneToDamage);
             }
 
             fire.Play();

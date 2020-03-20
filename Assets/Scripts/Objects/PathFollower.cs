@@ -40,7 +40,7 @@ public class PathFollower : IEntity
             RotateToDirection(direction);
         }
 
-        if ((this.transform.position - currentWaypoint.transform.position).magnitude < dPosition.magnitude)
+        if ((this.transform.position - currentWaypoint.transform.position).magnitude <= dPosition.magnitude)
         {
             this.transform.position = currentWaypoint.transform.position;
             SetNewCurrentWaypoint();

@@ -20,9 +20,12 @@ public class Activator : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetButton(activateOnButtonPress))
+        if (!string.IsNullOrEmpty(activateOnButtonPress))
         {
-            Activate();
+            if (Input.GetButton(activateOnButtonPress))
+            {
+                Activate();
+            }
         }
     }
 

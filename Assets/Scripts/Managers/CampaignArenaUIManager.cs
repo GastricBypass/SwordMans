@@ -9,6 +9,8 @@ public class CampaignArenaUIManager : CampaignUIManager
 {
     public int roundsUntilWin = 5;
 
+    public float difficultyMultiplier = 1;
+
     public List<EnemyMan> possibleEasyEnemyPrefabs;
     public List<EnemyMan> possibleHardEnemyPrefabs;
     public List<EnemyMan> possibleBossPrefabs;
@@ -58,7 +60,7 @@ public class CampaignArenaUIManager : CampaignUIManager
         int numSpawners = enemySpawners.Count;
         int numPlayers = gsm.numberOfPlayers;
 
-        int numEnemies = (int)Mathf.Ceil((waveNumber * numPlayers) / 2f);
+        int numEnemies = (int)Mathf.Ceil((waveNumber * numPlayers * difficultyMultiplier) / 2f);
 
         enemiesRemaining = numEnemies;
         enemiesRemainingText.text = "Enemies Remaining: " + enemiesRemaining;

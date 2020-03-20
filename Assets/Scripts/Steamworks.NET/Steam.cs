@@ -46,7 +46,10 @@ public class Steam : MonoBehaviour
         new Achievement(GameConstants.AchievementId.WE_HAVE_LIFTOFF, "We Have Liftoff", "Boldly go where no sword man has gone before."),
         new Achievement(GameConstants.AchievementId.SCOURGE_OF_THE_SEWERS, "Scourge of the Sewers", "Complete chapter 1 of the campaign."),
         new Achievement(GameConstants.AchievementId.BARBARIANS_BANE, "Barbarian's Bane", "Complete chapter 2 of the campaign."),
-        new Achievement(GameConstants.AchievementId.NECROMANCERS_NEMESIS, "Necromancer's Nemesis", "Complete chapter 3 of the campaign")
+        new Achievement(GameConstants.AchievementId.NECROMANCERS_NEMESIS, "Necromancer's Nemesis", "Complete chapter 3 of the campaign."),
+        new Achievement(GameConstants.AchievementId.DEMONS_DEMISE, "Demon's Demise", "Complete chapter 4 of the campaign."),
+        new Achievement(GameConstants.AchievementId.SAMURAI_SLAUGHTER, "Samurai Slaughter", "Complete chapter 5 of the campaign."),
+        new Achievement(GameConstants.AchievementId.CASTLE_CHAMPION, "Castle Champion", "Complete chapter 6 of the campaign.")
     };
 
     protected Callback<GameOverlayActivated_t> m_GameOverlayActivated;

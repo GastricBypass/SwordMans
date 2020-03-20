@@ -8,12 +8,14 @@ public class BodyPart : MonoBehaviour {
     public float damageMultiplier = 1;
 
 	// Use this for initialization
-	void Start () {
+	void Start ()
+    {
 		
 	}
 	
 	// Update is called once per frame
-	void Update () {
+	public virtual void Update ()
+    {
 		if (owner.ui != null && owner.ui.useInBounds && OutOfBounds())
         {
             if (!owner.hasExploded)

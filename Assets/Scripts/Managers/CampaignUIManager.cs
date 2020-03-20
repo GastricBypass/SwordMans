@@ -120,6 +120,14 @@ public class CampaignUIManager : UIManager
         return false;
     }
 
+    public void ForcePlayerLose()
+    {
+        for (int i = 0; i < deadPlayers.Length; i++)
+        {
+            deadPlayers[i] = true;
+        }
+    }
+
     // Start countdown from a button
     public void StartNextLevelCountdown()
     {
@@ -172,7 +180,7 @@ public class CampaignUIManager : UIManager
     public void LoadNextLevel()
     {
         // bypass the game settings manager and just load the scene. That way it doesn't need to be unlocked
-        // This is needed for the intro levels, nothing else (I think)
+        // This is needed for the cutscene levels, or some intro levels in chapter 6
         SceneManager.LoadScene(nextLevelName); 
     }
 }

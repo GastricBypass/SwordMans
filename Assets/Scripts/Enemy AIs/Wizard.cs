@@ -54,6 +54,7 @@ public class Wizard : AISwordMan
             }
 
             fireball.velocity = (target.transform.position - fireballSpawnPosition).normalized * fireballSpeed;
+            attacking = false;
         }
         
         base.Attack();

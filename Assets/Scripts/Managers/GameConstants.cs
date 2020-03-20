@@ -18,6 +18,7 @@ public static class GameConstants {
         public static Color yellow = Color.yellow;
         public static Color orange = new Color(255f / 255f, 100f / 255f, 0f / 255f);
         public static Color purple = Color.magenta;
+        public static Color white = new Color(255f / 255f, 255f / 255f, 255f / 255f);
 
         // Returns a color by the given name if it exists, otherwise it returns black
         public static Color ParseFromName(string name)
@@ -48,6 +49,11 @@ public static class GameConstants {
             else if (lowerCaseName == "purple")
             {
                 color = purple;
+            }
+
+            else if (lowerCaseName == "white") // only for npc
+            {
+                color = white;
             }
 
             return color;
@@ -189,12 +195,12 @@ public static class GameConstants {
         public static List<string> startingCoopStages = new List<string>(new string[] { "Ch 1" });
         public static List<string> startingArenaStages = new List<string>(new string[] { "Stadium", "Beach", "Hell" });
 
-        public static List<string> allHats = new List<string>(new string[] { "None", "Bandana", "Coif", "Helmet", "Hood", "Jester", "Noble", "Cap", "Crown", "Viking", "Space", "Tricorn", "Spartan", "Fedora", "Bowler", "Tophat", "Boater", "Shades", "Bucket", "Cone", "Sunhat", "Tiara", "Circlet", "Headband", "Elf Hat", "Mustache", "Wizard", "Squid", "Pirate", "Bun Black", "Messy Black", "Ponytail Black", "Bun Blond", "Messy Blond", "Ponytail Blond", "Bun Brown", "Messy Brown", "Ponytail Brown", "Bun Red", "Messy Red", "Ponytail Red", "Peasant", "Umbrella", "Snorkel", "Buds", "Penguin", "Pumpkin", "Beak", "Santa", "Beanie", "Earmuffs", "Hearts", "Arrow", "Birthday Hat", "Army Helmet", "Horns", "Demon Helmet", "Kabuto" });
-        public static List<string> allMisc = new List<string>(new string[] { "None", "Belt", "Cape", "Spaulders", "Breastplate", "Armor", "Necklace", "Collar", "Ruff", "Spikes", "Dagger", "Equipment", "Vest", "Sweater Vest", "Skirt", "Tabard", "Loincloth", "Poncho", "Dress", "Shirt", "Tuxedo", "Scarf", "Backpack", "Lantern", "Tunic", "Innertube", "Towel", "Bone Armor", "Cloak", "Turkey", "Coat", "Bulletproof Vest", "Battle Banner", "Radio", "Ammo Belt", "Demon Tail", "Karuta" });
+        public static List<string> allHats = new List<string>(new string[] { "None", "Bandana", "Coif", "Helmet", "Hood", "Jester", "Noble", "Cap", "Crown", "Viking", "Space", "Tricorn", "Spartan", "Fedora", "Bowler", "Tophat", "Boater", "Shades", "Bucket", "Cone", "Sunhat", "Tiara", "Circlet", "Headband", "Elf Hat", "Mustache", "Wizard", "Squid", "Pirate", "Bun Black", "Messy Black", "Ponytail Black", "Bun Blond", "Messy Blond", "Ponytail Blond", "Bun Brown", "Messy Brown", "Ponytail Brown", "Bun Red", "Messy Red", "Ponytail Red", "Peasant", "Umbrella", "Snorkel", "Buds", "Penguin", "Pumpkin", "Beak", "Santa", "Beanie", "Earmuffs", "Hearts", "Arrow", "Birthday Hat", "Army Helmet", "Horns", "Demon Helmet", "Kabuto", "Kettle Hat" });
+        public static List<string> allMisc = new List<string>(new string[] { "None", "Belt", "Cape", "Spaulders", "Breastplate", "Armor", "Necklace", "Collar", "Ruff", "Spikes", "Dagger", "Equipment", "Vest", "Sweater Vest", "Skirt", "Tabard", "Loincloth", "Poncho", "Dress", "Shirt", "Tuxedo", "Scarf", "Backpack", "Lantern", "Tunic", "Innertube", "Towel", "Bone Armor", "Cloak", "Turkey", "Coat", "Bulletproof Vest", "Battle Banner", "Radio", "Ammo Belt", "Demon Tail", "Karuta", "Pocket Zombie" });
         public static List<string> allSkins = new List<string>(new string[] { "Medium", "Dark", "Light", "Bones" });
 
         public static List<string> allVersusStages = new List<string>(new string[] { "Joust", "Castle", "Tavern", "Cabin", "Tower", "Ship", "Space Station", "Throne Room", "Pond", "Highlands", "Icebergs", "Bridge", "Market", "Volcano", "Colosseum", "Dungeon", "Mill", "Mansion", "Graveyard" });
-        public static List<string> allCoopStages = new List<string>(new string[] { "Ch 1", "Ch 1 Part 1", "Ch 1 Part 2", "Ch 1 Part 3", "Ch 1 Resolution", "Ch 2", "Ch 2 Part 1", "Ch 2 Part 2", "Ch 2 Part 3", "Ch 2 Resolution", "Ch 3", "Ch 3 Part 1", "Ch 3 Part 2", "Ch 3 Part 3", "Ch 3 Resolution", "Ch 4", "Ch 4 Part 1", "Ch 4 Part 2", "Ch 4 Part 3", "Ch 4 Resolution", "Ch 5", "Ch 5 Part 1", "Ch 5 Part 2", "Ch 5 Part 3", "Ch 5 Resolution", "Ch 6", "Ch 6 Part 1", "Ch 6 Part 2", "Ch 6 Part 3", "Ch 6 Resolution" });
+        public static List<string> allCoopStages = new List<string>(new string[] { "Ch 1", "Ch 1 Part 1", "Ch 1 Part 2", "Ch 1 Part 3", "Ch 1 Resolution", "Ch 2", "Ch 2 Part 1", "Ch 2 Part 2", "Ch 2 Part 3", "Ch 2 Resolution", "Ch 3", "Ch 3 Part 1", "Ch 3 Part 2", "Ch 3 Part 3", "Ch 3 Resolution", "Ch 4", "Ch 4 Part 1", "Ch 4 Part 2", "Ch 4 Part 3", "Ch 4 Resolution", "Ch 5", "Ch 5 Part 1", "Ch 5 Part 2", "Ch 5 Part 3", "Ch 5 Resolution", "Ch 6", "Ch 6 Part 1", "Ch 6 Part 2", "Ch 6 Part 2 Fight", "Ch 6 Part 3", "Ch 6 Part 4", "Ch 6 Resolution" });
         public static List<string> allArenaStages = new List<string>(new string[] { "Stadium", "Beach", "Hell" });
 
         public static List<string> allCoopGameModes = new List<string>(new string[] { "Arena", "Campaign" });
@@ -343,5 +349,7 @@ public static class GameConstants {
         BARBARIANS_BANE, // Done
         NECROMANCERS_NEMESIS, // Done
         DEMONS_DEMISE, // TODO: THIS!
+        SAMURAI_SLAUGHTER, // TODO: THIS!
+        CASTLE_CHAMPION // TODO: THIS!
     };
 }

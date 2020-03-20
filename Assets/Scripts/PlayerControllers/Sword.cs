@@ -24,6 +24,8 @@ public class Sword : MonoBehaviour
 
     public float blockStrength = 1500;
 
+    public bool destroyOnDeath = false;
+
     protected Rigidbody rigbod;
     protected System.DateTime startTime;
 
@@ -88,6 +90,10 @@ public class Sword : MonoBehaviour
                 }
 
                 Destroy(this);
+                if (destroyOnDeath)
+                {
+                    Destroy(this.gameObject);
+                }
             }
         }
     }
