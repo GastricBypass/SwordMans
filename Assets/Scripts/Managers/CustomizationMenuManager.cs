@@ -74,12 +74,21 @@ public class CustomizationMenuManager : MonoBehaviour {
 
     public void SetCustomizationPresets()
     {
-        if (manager.gsm.gunMans)
+        if (manager.gsm.playMode == VersusPlayMode.Guns)
         {
             weapons = GameConstants.Weapons.guns;
         }
+        else if (manager.gsm.playMode == VersusPlayMode.Combined)
+        {
+            List<string> concatWeapons = new List<string>();
+            concatWeapons.AddRange(GameConstants.Weapons.swords);
+            concatWeapons.AddRange(GameConstants.Weapons.guns);
+
+            weapons = concatWeapons;
+        }
         else
         {
+            // If somehow nothing is selected, pick just swords
             weapons = GameConstants.Weapons.swords;
         }
 

@@ -101,6 +101,7 @@
     <Compile Include="Assets\Scripts\Managers\StageMusic.cs" />
     <Compile Include="Assets\Scripts\Managers\UIManager.cs" />
     <Compile Include="Assets\Scripts\Managers\Utilities.cs" />
+    <Compile Include="Assets\Scripts\Managers\VersusPlayMode.cs" />
     <Compile Include="Assets\Scripts\Objects\AchievementUnlocker.cs" />
     <Compile Include="Assets\Scripts\Objects\Activator.cs" />
     <Compile Include="Assets\Scripts\Objects\BearTrap.cs" />

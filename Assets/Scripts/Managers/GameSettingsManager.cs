@@ -33,7 +33,7 @@ public class GameSettingsManager : MonoBehaviour {
     public List<string> playerSkins = new List<string>(new string[4]);
 
     public Settings settings = new Settings();
-    public bool gunMans = false; // This isn't saved in settings
+    public VersusPlayMode playMode = VersusPlayMode.Swords; // This isn't saved in settings
 
     public int roundNumber = 1;
     public int[] wins;

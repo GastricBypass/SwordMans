@@ -24,8 +24,8 @@ public class PlayMenuManager : MonoBehaviour {
     public GameObject versusOptionsMenu;
     public Button versusOptionsMenuStartOption;
     // gun mans
-    public Button toggleGunMans;
-    private GameObject gunMansSelected;
+    public Text playModeText;
+    private VersusPlayMode playMode;
     // random stage
     public Button toggleRandomStageSelect;
     private GameObject randomStageSelectSelected;
@@ -84,7 +84,6 @@ public class PlayMenuManager : MonoBehaviour {
     {
         // versus options
         randomStageSelectSelected = toggleRandomStageSelect.transform.Find("Selected").gameObject;
-        gunMansSelected = toggleGunMans.transform.Find("Selected").gameObject;
 
         StartCoroutine(RepeatedlyTryToSetStages(0.1f));
 
@@ -128,7 +127,8 @@ public class PlayMenuManager : MonoBehaviour {
 
     public void SetSettings()
     {
-        gunMansSelected.SetActive(manager.gsm.gunMans);
+        playMode = manager.gsm.playMode;
+        playModeText.text = manager.gsm.playMode.ToString();
         SetWeapons();
 
         randomStageSelectSelected.SetActive(manager.gsm.settings.randomStageSelect);
@@ -139,11 +139,19 @@ public class PlayMenuManager : MonoBehaviour {
 
     private void SetWeapons()
     {
-        if (manager.gsm.gunMans)
+        if (manager.gsm.playMode == VersusPlayMode.Guns)
         {
             manager.customizationMenuManager.weapons = GameConstants.Weapons.guns;
         }
-        else
+        else if (manager.gsm.playMode == VersusPlayMode.Combined)
+        {
+            List<string> concatWeapons = new List<string>();
+            concatWeapons.AddRange(GameConstants.Weapons.swords);
+            concatWeapons.AddRange(GameConstants.Weapons.guns);
+
+            manager.customizationMenuManager.weapons = concatWeapons;
+        }
+        else // If SwordsOnly or nothing is selected, pick just swords
         {
             manager.customizationMenuManager.weapons = GameConstants.Weapons.swords;
         }
@@ -253,7 +261,7 @@ public class PlayMenuManager : MonoBehaviour {
 
     public void CoopButtonPressed()
     {
-        manager.gsm.gunMans = false; // can't play gun mans in arena or campaign (yet?)
+        manager.gsm.playMode = VersusPlayMode.Swords; // can't play gun mans in arena or campaign (yet?)
 
         playOptionsMenu.SetActive(false);
         manager.backButton.gameObject.SetActive(false);
@@ -652,9 +660,31 @@ public class PlayMenuManager : MonoBehaviour {
 
     //////////     VERSUS OPTIONS SETTINGS     //////////
     
-    public void ToggleGunMans()
+    public void BackPlayMode()
     {
-        manager.gsm.gunMans = !manager.gsm.gunMans;
+        playMode--;
+        if (playMode < VersusPlayMode.Swords)
+        {
+            playMode = VersusPlayMode.Combined;
+        }
+
+        SetPlayMode(playMode);
+    }
+
+    public void ForwardPlayMode()
+    {
+        playMode++;
+        if (playMode > VersusPlayMode.Combined)
+        {
+            playMode = VersusPlayMode.Swords;
+        }
+
+        SetPlayMode(playMode);
+    }
+
+    public void SetPlayMode(VersusPlayMode playModeSelection)
+    {
+        manager.gsm.playMode = playModeSelection;
 
         List<int> indeces = new List<int>();
         for (int i = 0; i < manager.gsm.playerWeapons.Count; i++)
@@ -668,11 +698,12 @@ public class PlayMenuManager : MonoBehaviour {
         {
             if (indeces[i] >= 0) // to handle the case where the customization menu has not yet been loaded.
             {
-                manager.gsm.playerWeapons[i] = manager.customizationMenuManager.weapons[indeces[i]];
+                var index = indeces[i] % manager.customizationMenuManager.weapons.Count; // To handle going from combined mode (20 weapons) to single mode (10 weapons)
+                manager.gsm.playerWeapons[i] = manager.customizationMenuManager.weapons[index];
             }
         }
 
-        gunMansSelected.SetActive(manager.gsm.gunMans);
+        playModeText.text = manager.gsm.playMode.ToString();
     }
 
     public void ToggleRandomStageSelect()
