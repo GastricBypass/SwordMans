@@ -147,6 +147,7 @@
     <Compile Include="Assets\Scripts\PlayerControllers\AIEnemy.cs" />
     <Compile Include="Assets\Scripts\PlayerControllers\AIEnemyGun.cs" />
     <Compile Include="Assets\Scripts\PlayerControllers\BodyPart.cs" />
+    <Compile Include="Assets\Scripts\PlayerControllers\DeferTarget.cs" />
     <Compile Include="Assets\Scripts\PlayerControllers\DestructibleBodyPart.cs" />
     <Compile Include="Assets\Scripts\PlayerControllers\IGun.cs" />
     <Compile Include="Assets\Scripts\PlayerControllers\Man.cs" />
