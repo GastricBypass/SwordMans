@@ -204,9 +204,17 @@ public class UIManager : MonoBehaviour
         if (paused)
         {
             Button resumeButton = pauseMenu.transform.Find("Resume Button").GetComponent<Button>();
-            if (resumeButton != null)
+            if (resumeButton != null && resumeButton.gameObject.activeSelf)
             {
                 resumeButton.Select();
+            }
+            else
+            {
+                Button playButton = pauseMenu.transform.Find("Go Button").GetComponent<Button>();
+                if (playButton != null && playButton.gameObject.activeSelf)
+                {
+                    playButton.Select();
+                }
             }
         }
     }

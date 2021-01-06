@@ -91,24 +91,30 @@ public class ArenaUIManager : UIManager
         int numPlayers = gsm.numberOfPlayers;
 
         int numBosses = (int)Mathf.Ceil((waveNumber * numPlayers) / 20f);
-
-        enemiesRemaining = numBosses;
-        enemiesRemainingText.text = "Enemies Remaining: " + enemiesRemaining;
-
+        
         int prefabIndex = Random.Range(0, possibleBossPrefabs.Count);
         foreach (var spawner in bossSpawners)
         {
             spawner.numEnemiesToSpawn = numBosses / numSpawners;
             spawner.enemyPrefab = possibleBossPrefabs[prefabIndex];
-            spawner.healthOverride = possibleBossPrefabs[prefabIndex].health + (possibleBossPrefabs[prefabIndex].health * numPlayers / 2f); // Should be unnecessary with boss EnemyMan changes
+            spawner.healthOverride = possibleBossPrefabs[prefabIndex].health; // Set the override to the original health (don't override)
+
+            if (spawner.enemyPrefab.name == "King Zombie") 
+            {
+                numBosses += 26; // King zombie adds 26 extra zombies which must be killed
+            }
             
-            bossMaxHealth = spawner.healthOverride;
+            bossMaxHealth = possibleBossPrefabs[prefabIndex].health + (possibleBossPrefabs[prefabIndex].health * numPlayers / 2f); // Set the ui healthbar to the scaled health.
+            // The actual boss prefab updates its own health, but the ui doesn't know that at this point. This prevents the boss from scaling its health twice.
 
             bossHealthBar.gameObject.SetActive(true);
-            bossHealthBar.maxValue = spawner.healthOverride;
-            bossHealthBar.value = spawner.healthOverride;
+            bossHealthBar.maxValue = bossMaxHealth;
+            bossHealthBar.value = bossMaxHealth;
             ChangeHealth(1, 0);
         }
+
+        enemiesRemaining = numBosses;
+        enemiesRemainingText.text = "Enemies Remaining: " + enemiesRemaining;
 
         for (int i = 0; i < numBosses % numSpawners; i++)
         {
@@ -265,7 +271,7 @@ public class ArenaUIManager : UIManager
     public override void ChangeHealth(float percent, int playerNumber)
     {
         base.ChangeHealth(percent, playerNumber);
-        if (waveNumber % roundsPerBossWave == 0 && playerNumber == 0)
+        if (waveNumber % roundsPerBossWave == 0 && (playerNumber == 0 || playerNumber > 4))
         {
             bossHealthBar.value = percent * bossMaxHealth;
             bossHealthValue.text = (Mathf.Ceil(bossHealthBar.value) + " / " + bossMaxHealth);

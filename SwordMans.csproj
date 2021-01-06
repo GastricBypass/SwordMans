@@ -631,6 +631,7 @@
     <Compile Include="Assets\Lava_Flowing_Shader\Scripts\ScrollingUVs_Layers.cs" />
     <Compile Include="Assets\Scripts\Enemy AIs\AISwordMan.cs" />
     <Compile Include="Assets\Scripts\Enemy AIs\EnemyMan.cs" />
+    <Compile Include="Assets\Scripts\Enemy AIs\King.cs" />
     <Compile Include="Assets\Scripts\Enemy AIs\RandomForceAdder.cs" />
     <Compile Include="Assets\Scripts\Enemy AIs\Spider.cs" />
     <Compile Include="Assets\Scripts\Enemy AIs\Squid.cs" />
@@ -638,6 +639,7 @@
     <Compile Include="Assets\Scripts\Managers\ArenaUIManager.cs" />
     <Compile Include="Assets\Scripts\Managers\ButtonSound.cs" />
     <Compile Include="Assets\Scripts\Managers\CameraFollow.cs" />
+    <Compile Include="Assets\Scripts\Managers\CampaignArenaUIManager.cs" />
     <Compile Include="Assets\Scripts\Managers\CampaignUIManager.cs" />
     <Compile Include="Assets\Scripts\Managers\CustomizationMenuManager.cs" />
     <Compile Include="Assets\Scripts\Managers\CutsceneMovingObject.cs" />
@@ -660,7 +662,9 @@
     <Compile Include="Assets\Scripts\Managers\StageMusic.cs" />
     <Compile Include="Assets\Scripts\Managers\UIManager.cs" />
     <Compile Include="Assets\Scripts\Managers\Utilities.cs" />
+    <Compile Include="Assets\Scripts\Managers\VersusPlayMode.cs" />
     <Compile Include="Assets\Scripts\Objects\AchievementUnlocker.cs" />
+    <Compile Include="Assets\Scripts\Objects\Activator.cs" />
     <Compile Include="Assets\Scripts\Objects\BearTrap.cs" />
     <Compile Include="Assets\Scripts\Objects\BoostPowerup.cs" />
     <Compile Include="Assets\Scripts\Objects\CollisionToggler.cs" />
@@ -683,12 +687,14 @@
     <Compile Include="Assets\Scripts\Objects\Oscillator.cs" />
     <Compile Include="Assets\Scripts\Objects\PathFollower.cs" />
     <Compile Include="Assets\Scripts\Objects\Pickup.cs" />
+    <Compile Include="Assets\Scripts\Objects\Protectable.cs" />
     <Compile Include="Assets\Scripts\Objects\PushingArea.cs" />
     <Compile Include="Assets\Scripts\Objects\RadialPushingArea.cs" />
     <Compile Include="Assets\Scripts\Objects\RigidbodyDestroyer.cs" />
     <Compile Include="Assets\Scripts\Objects\RotationalOscillator.cs" />
     <Compile Include="Assets\Scripts\Objects\ScalingOscillator.cs" />
     <Compile Include="Assets\Scripts\Objects\SelfDestructingObject.cs" />
+    <Compile Include="Assets\Scripts\Objects\Shooter.cs" />
     <Compile Include="Assets\Scripts\Objects\Spinner.cs" />
     <Compile Include="Assets\Scripts\Objects\Springboard.cs" />
     <Compile Include="Assets\Scripts\Objects\StageHazard.cs" />
@@ -703,6 +709,8 @@
     <Compile Include="Assets\Scripts\PlayerControllers\AIEnemy.cs" />
     <Compile Include="Assets\Scripts\PlayerControllers\AIEnemyGun.cs" />
     <Compile Include="Assets\Scripts\PlayerControllers\BodyPart.cs" />
+    <Compile Include="Assets\Scripts\PlayerControllers\DeferTarget.cs" />
+    <Compile Include="Assets\Scripts\PlayerControllers\DestructibleBodyPart.cs" />
     <Compile Include="Assets\Scripts\PlayerControllers\IGun.cs" />
     <Compile Include="Assets\Scripts\PlayerControllers\Man.cs" />
     <Compile Include="Assets\Scripts\PlayerControllers\Player.cs" />
